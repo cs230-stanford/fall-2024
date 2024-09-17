@@ -1,0 +1,73 @@
+    staff:
+        # - name: Andrew Ng
+        #   type: Instructor
+        #   url: https://www.andrewng.org/
+        #   image: andrew.jpg
+        # - name: Kian Katanforoosh
+        #   type: Instructor
+        #   url: https://www.linkedin.com/in/kiankatan/
+        #   image: kian.jpg
+        # - name: Amelie Byun
+        #   type: Coordinator
+        #   url:
+        #   image: amelie.jpg
+        # - name: Swati Dube Batra
+        #   type: Course Advisor
+        #   url:
+        #   image: swati.jpg
+        # - name: Ruta Joshi
+        #   type: Head TA
+        #   url:
+        #   image: ruta.jpg
+        #   zoom_id:
+        #   zoom_link:
+        #   calendly: https://calendly.com/ruta-joshi/cs230-project-office-hours-ruta
+        # - name: Sharan Ramjee
+        #   type: Head TA
+        #   url: https://www.linkedin.com/in/sharanramjee/
+        #   image: sharan.jpg
+        #   zoom_id:
+        #   zoom_link:
+        #   calendly: https://calendly.com/sramjee/cs230-project-oh
+    ta:
+        # - name: Ayush Kanodia
+        #   type: TA
+        #   url: https://kanodiaayush.github.io/
+        #   calendly: https://calendly.com/kanodiaayush/cs-230-project-oh
+        #   image: ayush.png
+        #   zoom_id:
+        # - name: Fenglu Hong
+        #   type: TA
+        #   url: https://www.linkedin.com/in/fenglu-hong-ba42b8156/
+        #   image: fenglu.jpg
+        #   zoom_id:
+        #   zoom_link:
+        #   calendly: https://calendly.com/hongfenglu33/cs-230-project-oh
+        # - name: Mauricio Wulfovich
+        #   type: TA
+        #   url: https://www.linkedin.com/in/mauriw
+        #   image: mauricio.jpg
+        #   zoom_id:
+        #   zoom_link:
+        #   calendly: https://calendly.com/mauriw/cs230-project-oh
+        # - name: Sarthak Kanodia
+        #   type: TA
+        #   url: https://www.linkedin.com/in/sarthakkanodia/
+        #   image: sarthak.jpg
+        #   zoom_id:
+        #   zoom_link:
+        #   calendly: https://calendly.com/sarthak-kanodia/cs230-project-oh
+        # - name: Vincent Li
+        #   type: TA
+        #   url: https://www.linkedin.com/in/songlin-li/
+        #   image: vincent.jpg
+        #   zoom_id:
+        #   zoom_link:
+        #   calendly: https://calendly.com/svli97/cs-230-project-office-hours-vincent-li
+        # - name: Yanjun Chen
+        #   type: TA
+        #   url: https://www.linkedin.com/in/yanjun-anthony-chen/
+        #   image: yanjun.jpg
+        #   zoom_id:
+        #   zoom_link:
+        #   calendly: https://calendly.com/yanjun_chen

@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, minimum-scale=1.0">
+<title>Logging and Hyperparameters</title>
+
+	<meta name="description" content="Best practices to log, load hyperparameters and do random search">
+
+
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat:400,400i,500,500i,700,700i|Noto+Sans:400,400i,700,700i|Source+Code+Pro&amp;subset=latin-ext">
+<link rel="stylesheet" href="/doks-theme/assets/css/style.css">
+<script type="text/javascript" async
+  src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+	</head>
+	<body class="blue" data-spy="scroll" data-target=".js-scrollspy">
+		
+	<div class="offcanvas visible-xs">
+		<ul class="offcanvas__nav">
+			
+				<li><a href="/syllabus">Syllabus</a></li>
+			
+				<li><a href="/officehours">Office Hours</a></li>
+			
+				<li><a href="/project">Project</a></li>
+			
+				<li><a href="/section">Section</a></li>
+			
+				<li><a href="/lecture">Lecture</a></li>
+			
+				<li><a href="/blog">Blog</a></li>
+			
+				<li><a href="/faq">FAQ</a></li>
+			
+		</ul><!-- /.offcanvas__nav -->
+	</div><!-- /.offcanvas -->
+
+
+
+	<header class="site-header">
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12">
+					
+						<a href="/" class="site-header__logo">
+							<img src="/doks-theme/assets/images/layout/logo.png">
+							CS230
+						</a>
+					
+					
+						<ul class="site-header__nav hidden-xs">
+							
+								<li><a href="/syllabus">Syllabus</a></li>
+							
+								<li><a href="/officehours">Office Hours</a></li>
+							
+								<li><a href="/project">Project</a></li>
+							
+								<li><a href="/section">Section</a></li>
+							
+								<li><a href="/lecture">Lecture</a></li>
+							
+								<li><a href="/blog">Blog</a></li>
+							
+								<li><a href="/faq">FAQ</a></li>
+							
+						</ul><!-- /.site-header__nav -->
+						<button class="offcanvas-toggle visible-xs">
+							<span></span>
+							<span></span>
+							<span></span>
+						</button><!-- /.offcanvas-toggle -->
+					
+				</div><!-- /.col -->
+			</div><!-- /.row -->
+		</div><!-- /.container -->
+	</header><!-- /.site-header -->
+
+
+		<div class="hero-subheader">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-7">
+						<div class="align-container" data-mh>
+							<div class="align-inner">
+								
+									<h1 class="hero-subheader__title">Logging and Hyperparameters</h1>
+								
+								
+									<p class="hero-subheader__desc">Best practices to log, load hyperparameters and do random search</p>
+								
+								
+									
+										<a href="/blog/split" class="btn btn--dark btn--rounded btn--w-icon btn--w-icon-left">
+											<i class="icon icon--arrow-left"></i>
+											Previous page
+										</a>
+									
+									
+								
+								
+							</div><!-- /.align-inner -->
+						</div><!-- /.align-container -->
+					</div><!-- /.col -->
+						<div class="col-md-4 col-md-offset-1 hidden-xs hidden-sm">
+							<div class="align-container" data-mh>
+								<div class="align-inner">
+									<div class="hero-subheader__author">
+										<h4>Instructors</h4>
+                                                                               
+                                                                               
+                                                                                    <div class="instructor">
+                                        <a target="_blank" href="">
+                    <img class="headshot" src="/doks-theme/assets/images/headshot/kian.jpg" style="text-align:center;">
+                <div style="text-align:center;">Kian Katanforoosh<br>Instructor</div>
+	</a>
+        </div>
+    
+
+                                                                               
+                                                                                    <div class="instructor">
+                                        <a target="_blank" href="">
+                    <img class="headshot" src="/doks-theme/assets/images/headshot/andrew.jpg" style="text-align:center;">
+                <div style="text-align:center;">Andrew Ng<br>Instructor</div>
+	</a>
+        </div>
+    
+
+                                                                               
+
+                                                                               
+
+										<h4>Time and Location</h4>
+                                                                                <p>In person lectures are on Tuesdays 11:30am-1:20pm. <br> Hewlett Teaching Center 200.</p>
+									</div><!-- /.hero-subheader__author -->
+								</div><!-- /.align-inner -->
+							</div><!-- /.align-container -->
+						</div><!-- /.col -->
+				</div><!-- /.row -->
+			</div><!-- /.container -->
+		</div><!-- /.hero-subheader -->
+		<div class="section">
+			<div class="container">
+				<div class="row">
+					
+					<div class="col-md-7">
+						<div class="content">
+							<p>Logging your outputs to a file is a general good practice in any project. An even more important good practice is to handle correctly the multiple hyperparameters that arise in any deep learning project. We need to be able to store them in a file and know the full set of hyperparameters used in any past experiment.</p>
+
+<p>This tutorial is among a series of tutorials explaining how to structure a deep learning project. Please see the full list of posts on the <a href="/blog">main page</a>.</p>
+
+<h2 id="logging"><strong>Logging</strong></h2>
+
+<p>A common problem when building a project is to forget about logging. In other words, as long as you write stuff in files and print things to the shell, people assume they’re going to be fine. A better practice is to write <strong>everything</strong> that you print to the terminal in a <code class="language-plaintext highlighter-rouge">log</code> file.</p>
+
+<p>That’s why in <code class="language-plaintext highlighter-rouge">train.py</code> and <code class="language-plaintext highlighter-rouge">evaluate.py</code> we initialize a <code class="language-plaintext highlighter-rouge">logger</code> using the built-in <code class="language-plaintext highlighter-rouge">logging</code> package with:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#Set the logger to write the logs of the training in train.log
+</span><span class="n">set_logger</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">args</span><span class="p">.</span><span class="n">model_dir</span><span class="p">,</span> <span class="s">'train.log'</span><span class="p">))</span>
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">set_logger</code> function is defined in <code class="language-plaintext highlighter-rouge">utils.py</code>.</p>
+
+<p>For instance during training this line of code will create a <code class="language-plaintext highlighter-rouge">train.log</code> file in <code class="language-plaintext highlighter-rouge">experiments/base_model/</code>. You don’t have to worry too much about how we set it. Whenever you want to print somehting, use <code class="language-plaintext highlighter-rouge">logging.info</code> instead of the usual <code class="language-plaintext highlighter-rouge">print</code>:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">logging</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="s">"It will be printed both to the Terminal and written in the .log file"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>That way, you’ll be able to both see it in the Terminal and remember it in the future when you’ll need to read the <code class="language-plaintext highlighter-rouge">train.log</code> file.</p>
+
+<h2 id="loading-hyperparameters-from-a-configuration-file"><strong>Loading hyperparameters from a configuration file</strong></h2>
+
+<p>You’ll quickly realize when doing a final project or any research project that you’ll need a way to specify some parameters to your model. You have different sorts of hyperparameters (not all of them are necessary):</p>
+<ul>
+  <li>hyperparameters for the model: number of layers, number of neurons per layer, activation functions, dropout rate…</li>
+  <li>hyperparameters for the training: number of epochs, learning rate, …</li>
+  <li>dataset choices: size of the dataset, size of the vocabulary for text, …</li>
+  <li>checkpoints: when to save the model, when to log to plot the loss, …</li>
+</ul>
+
+<p>There are multiple ways to load the hyperparameters:</p>
+
+<ol>
+  <li>Use the <code class="language-plaintext highlighter-rouge">argparse</code> module as we do to specify the <code class="language-plaintext highlighter-rouge">data_dir</code>:</li>
+</ol>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">parser</span><span class="p">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'--data_dir'</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s">'data/'</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">"Directory containing the dataset"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>When experimenting, you need to try multiples combinations of hyperparameters. This quickly becomes unmanageable because you cannot keep track of the hyperparameters you are testing . Plus, how do you even keep track of the parameters if you want to go back to a previous experiment ?</p>
+
+<ol>
+  <li>
+    <p>Hard-code the values of your hyperparameters in a new <code class="language-plaintext highlighter-rouge">params.py</code> file and import at the beginning of your <code class="language-plaintext highlighter-rouge">train.py</code> file for instance, get these hyperparameters. Again, you’ll need to find a way to save your config, and this is not very clean.</p>
+  </li>
+  <li>
+    <p>Write all your parameters in a file (we used <code class="language-plaintext highlighter-rouge">.json</code> but could be anything else) and store this file in the directory containing your experiment. If you need to go back to your experiment later, you can quickly review which hyperparameters yielded the performance etc.</p>
+  </li>
+</ol>
+
+<p>We chose to take this third approach in our code. We define a class <code class="language-plaintext highlighter-rouge">Params</code> in <code class="language-plaintext highlighter-rouge">utils.py</code>. Note that to be in accordance with the deep learning programming frameworks we use, we are refering to hyperparameters as <code class="language-plaintext highlighter-rouge">params</code> in the code.</p>
+
+<p>Loading the hyperparameters is as simple as writing</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">params</span> <span class="o">=</span> <span class="n">Params</span><span class="p">(</span><span class="s">"experiments/base_model/params.json"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>and if your params.json file looks like</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span>
+<span class="s">"model_version"</span><span class="p">:</span> <span class="s">"baseline"</span><span class="p">,</span>
+
+<span class="s">"learning_rate"</span><span class="p">:</span> <span class="mf">1e-3</span><span class="p">,</span>
+<span class="s">"batch_size"</span><span class="p">:</span> <span class="mi">32</span><span class="p">,</span>
+<span class="s">"num_epochs"</span><span class="p">:</span> <span class="mi">10</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>you’ll be able to access the different entries with</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">params</span><span class="p">.</span><span class="n">model_version</span>
+</code></pre></div></div>
+
+<p>In your code, once your params object is initialized, you can update it with another <code class="language-plaintext highlighter-rouge">.json</code> file with the <code class="language-plaintext highlighter-rouge">params.update("other_params.json")</code> method.</p>
+
+<p>Later, in your code, for example when you define your model, you can thus do something like</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="n">params</span><span class="p">.</span><span class="n">model_version</span> <span class="o">==</span> <span class="s">"baseline"</span><span class="p">:</span>
+    <span class="n">logits</span> <span class="o">=</span> <span class="n">build_model_baseline</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+<span class="k">elif</span> <span class="n">params</span><span class="p">.</span><span class="n">model_version</span> <span class="o">==</span> <span class="s">"simple_convolutions"</span><span class="p">:</span>
+    <span class="n">logits</span> <span class="o">=</span> <span class="n">bulid_model_simple_convolutions</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+</code></pre></div></div>
+<p>which will be quite handy to have different functions and behaviors depending on a set of hyperparameters !</p>
+
+<h2 id="hyperparameter-search"><strong>Hyperparameter search</strong></h2>
+
+<p>An important part of any machine learning project is hyperparameter tuning, please refer to the Coursera Deep Learning Specialization (<a href="https://www.coursera.org/learn/deep-neural-network">#2</a> and <a href="https://www.coursera.org/learn/machine-learning-projects">#3</a>) for more detailed information. In other words, you want to see how your model performs on the development set on different sets of hyperparameters. There are basically 2 ways to implement this:</p>
+
+<ol>
+  <li>Have a python loop over the different set of hyperparameters and at each iteration of the loop, run the <code class="language-plaintext highlighter-rouge">train_and_evaluate(model_spec, params, ...)</code> function, like</li>
+</ol>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="n">lr</span> <span class="ow">in</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.001</span><span class="p">]:</span>
+    <span class="n">params</span><span class="p">.</span><span class="n">learning_rate</span> <span class="o">=</span> <span class="n">lr</span>
+    <span class="n">train_and_evaluate</span><span class="p">(</span><span class="n">model_spec</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="p">...)</span>
+</code></pre></div></div>
+
+<ol>
+  <li>Have a more general script that will create a subfolder for each set of hyperparameteres and launch a training job using the <code class="language-plaintext highlighter-rouge">python train.py</code> command. While there is not much difference in the simplest setting, some more advanced clusters have some job managers and instead of running multiple <code class="language-plaintext highlighter-rouge">python train.py</code>, they instead do something like <code class="language-plaintext highlighter-rouge">job-manager-submit train.py</code> which will run the jobs concurrently, making the hyperparameter tuning much faster !</li>
+</ol>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="n">lr</span> <span class="ow">in</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.001</span><span class="p">]:</span>
+    <span class="n">params</span><span class="p">.</span><span class="n">learning_rate</span> <span class="o">=</span> <span class="n">lr</span>
+    <span class="c1">#Create new experiment directory and save the relevant params.json
+</span>    <span class="n">subfolder</span> <span class="o">=</span> <span class="n">create_subfolder</span><span class="p">(</span><span class="s">"lr_{}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">lr</span><span class="p">))</span>
+    <span class="n">export_params_to_json</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">subfolder</span><span class="p">)</span>
+    <span class="c1">#Launch a training in this directory -- it will call `train.py`
+</span>    <span class="n">lauch_training_job</span><span class="p">(</span><span class="n">model_dir</span><span class="o">=</span><span class="n">subfolder</span><span class="p">,</span> <span class="p">...)</span>
+</code></pre></div></div>
+
+<p>This is what the <code class="language-plaintext highlighter-rouge">search_hyperparams.py</code> file does. It is basically a python script that runs other python scripts. Once all the sub-jobs have ended, you’ll have the results of each experiment in a <code class="language-plaintext highlighter-rouge">metrics_eval_best_weights.json</code> file for each experiment directory.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">learning_rate</span><span class="o">/</span>
+    <span class="n">hyperparams</span><span class="p">.</span><span class="n">json</span>
+    <span class="n">learning_rate_0</span><span class="p">.</span><span class="mi">1</span><span class="o">/</span>
+        <span class="n">hyperparams</span><span class="p">.</span><span class="n">json</span>
+        <span class="n">metrics_eval_best_weights</span><span class="p">.</span><span class="n">json</span>
+    <span class="n">learning_rate_0</span><span class="p">.</span><span class="mi">01</span><span class="o">/</span>
+        <span class="n">hyperparams</span><span class="p">.</span><span class="n">json</span>
+        <span class="n">metrics_eval_best_weights</span><span class="p">.</span><span class="n">json</span>
+</code></pre></div></div>
+
+<p>and by running <code class="language-plaintext highlighter-rouge">python synthesize_results.py --model_dir experiments/learning_rate</code> you’ll be able to gather the different metrics achieved for the different sets of hyperparameters !</p>
+
+<p>From one experiment to another, it is very important to test hyperparameters one at a time. Comparing the dev-set performance of two models “A” and “B” which have a totally different set of hyperparameters will probably lead to wrong decisions. You need to vary only ONE hyperparameter (let’s say the learning rate) when comparing models “A” and “B”. Then, you can see the impact of this change on the dev-set performance.</p>
+
+
+						</div><!-- /.content -->
+					</div><!-- /.col -->
+					<div class="col-md-4 col-md-offset-1">
+						<div class="sections-list-wrapper">
+							<div class="sections-list js-sections js-affix js-scrollspy hidden-xs hidden-sm"></div><!-- /.sections-list -->
+						</div>
+					</div><!-- /.col -->
+					
+				</div><!-- /.row -->
+			</div><!-- /.container -->
+		</div><!-- /.section -->
+		
+		<div class="js-footer-area">
+			
+				<nav class="page-nav">
+					<div class="container">
+						<div class="row">
+							<div class="col-xs-12">
+								
+									<a href="/blog/split" class="page-nav__item page-nav__item--prev">
+										<i class="icon icon--arrow-left"></i>
+										Previous page
+									</a><!-- /.page-nav__item -->
+								
+								
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.container -->
+				</nav><!-- /.page-nav --> 
+			<div class="micro-nav">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12">
+				<a href="/blog" class="micro-nav__back">
+					<i class="icon icon--arrow-left"></i>
+					Back to Blog
+				</a><!-- /.micro-nav__back -->
+			</div><!-- /.col -->
+		</div><!-- /.row -->
+	</div><!-- /.container -->
+</div><!-- /.micro-nav -->
+
+			
+			
+	<footer class="site-footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-6">
+					
+					
+						<!-- <hr> -->
+						<p class="site-footer__copyright">Copyright &copy; 2024. - Stanford University <br>All rights reserved.</p>
+					
+				</div><!-- /.col -->
+				
+			</div><!-- /.row -->
+		</div><!-- /.container -->
+	</footer><!-- /.site-footer -->
+
+
+<script src="/doks-theme/assets/js/vendor/jquery.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/vendor/bootstrap/affix.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/vendor/bootstrap/scrollspy.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/vendor/matchHeight.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/scripts.min.js"></script>
+
+		</div><!-- /.js-footer-area -->
+	</body>
+</html>

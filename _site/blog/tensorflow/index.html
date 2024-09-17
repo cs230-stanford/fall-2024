@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, minimum-scale=1.0">
+<title>Introduction to Tensorflow</title>
+
+
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat:400,400i,500,500i,700,700i|Noto+Sans:400,400i,700,700i|Source+Code+Pro&amp;subset=latin-ext">
+<link rel="stylesheet" href="/doks-theme/assets/css/style.css">
+<script type="text/javascript" async
+  src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+	</head>
+	<body class="blue" data-spy="scroll" data-target=".js-scrollspy">
+		
+	<div class="offcanvas visible-xs">
+		<ul class="offcanvas__nav">
+			
+				<li><a href="/syllabus">Syllabus</a></li>
+			
+				<li><a href="/officehours">Office Hours</a></li>
+			
+				<li><a href="/project">Project</a></li>
+			
+				<li><a href="/section">Section</a></li>
+			
+				<li><a href="/lecture">Lecture</a></li>
+			
+				<li><a href="/blog">Blog</a></li>
+			
+				<li><a href="/faq">FAQ</a></li>
+			
+		</ul><!-- /.offcanvas__nav -->
+	</div><!-- /.offcanvas -->
+
+
+
+	<header class="site-header">
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12">
+					
+						<a href="/" class="site-header__logo">
+							<img src="/doks-theme/assets/images/layout/logo.png">
+							CS230
+						</a>
+					
+					
+						<ul class="site-header__nav hidden-xs">
+							
+								<li><a href="/syllabus">Syllabus</a></li>
+							
+								<li><a href="/officehours">Office Hours</a></li>
+							
+								<li><a href="/project">Project</a></li>
+							
+								<li><a href="/section">Section</a></li>
+							
+								<li><a href="/lecture">Lecture</a></li>
+							
+								<li><a href="/blog">Blog</a></li>
+							
+								<li><a href="/faq">FAQ</a></li>
+							
+						</ul><!-- /.site-header__nav -->
+						<button class="offcanvas-toggle visible-xs">
+							<span></span>
+							<span></span>
+							<span></span>
+						</button><!-- /.offcanvas-toggle -->
+					
+				</div><!-- /.col -->
+			</div><!-- /.row -->
+		</div><!-- /.container -->
+	</header><!-- /.site-header -->
+
+
+		<div class="hero-subheader">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-7">
+						<div class="align-container" data-mh>
+							<div class="align-inner">
+								
+									<h1 class="hero-subheader__title">Introduction to Tensorflow</h1>
+								
+								
+								
+									
+									
+										<a href="/blog/moretensorflow" class="btn btn--dark btn--rounded btn--w-icon">
+											<i class="icon icon--arrow-right"></i>
+											Next page
+										</a>
+									
+								
+								
+							</div><!-- /.align-inner -->
+						</div><!-- /.align-container -->
+					</div><!-- /.col -->
+						<div class="col-md-4 col-md-offset-1 hidden-xs hidden-sm">
+							<div class="align-container" data-mh>
+								<div class="align-inner">
+									<div class="hero-subheader__author">
+										<h4>Instructors</h4>
+                                                                               
+                                                                               
+                                                                                    <div class="instructor">
+                                        <a target="_blank" href="">
+                    <img class="headshot" src="/doks-theme/assets/images/headshot/kian.jpg" style="text-align:center;">
+                <div style="text-align:center;">Kian Katanforoosh<br>Instructor</div>
+	</a>
+        </div>
+    
+
+                                                                               
+                                                                                    <div class="instructor">
+                                        <a target="_blank" href="">
+                    <img class="headshot" src="/doks-theme/assets/images/headshot/andrew.jpg" style="text-align:center;">
+                <div style="text-align:center;">Andrew Ng<br>Instructor</div>
+	</a>
+        </div>
+    
+
+                                                                               
+
+                                                                               
+
+										<h4>Time and Location</h4>
+                                                                                <p>In person lectures are on Tuesdays 11:30am-1:20pm. <br> Hewlett Teaching Center 200.</p>
+									</div><!-- /.hero-subheader__author -->
+								</div><!-- /.align-inner -->
+							</div><!-- /.align-container -->
+						</div><!-- /.col -->
+				</div><!-- /.row -->
+			</div><!-- /.container -->
+		</div><!-- /.hero-subheader -->
+		<div class="section">
+			<div class="container">
+				<div class="row">
+					
+					<div class="col-md-7">
+						<div class="content">
+							<p>In this hands-on session, you will use two files:</p>
+<ul>
+  <li><a href="https://cs230.stanford.edu/files/tensorflow_tutorial.py">Tensorflow_tutorial.py</a> (Part I)</li>
+  <li><a href="https://github.com/cs230-stanford/cs230-code-examples">CS230 project example code</a> repository on github (Part II)</li>
+</ul>
+
+<h2 id="part-i---tensorflow-tutorial">Part I - Tensorflow Tutorial</h2>
+
+<p>The goal of this part is to quickly build a tensorflow code implementing a Neural Network to classify hand digits from the MNIST dataset.</p>
+
+<p>The steps you are going to implement are:</p>
+<ul>
+  <li>Load the dataset</li>
+  <li>Define placeholders</li>
+  <li>Define parameters of your model</li>
+  <li>Define the model’s graph (including the cost function)</li>
+  <li>Define your accuracy metric</li>
+  <li>Define the optimization method and the training step</li>
+  <li>Initialize the tensorflow graph</li>
+  <li>Optimize (loop)</li>
+  <li>Compute training and testing accuracies</li>
+</ul>
+
+<p><strong>Question 1:</strong> ​Open the starter code “tensorflow_tutorial.py”. Tensorflow stores the MNIST dataset in one of its dependencies called “tensorflow.examples.tutorials.mnist”. This part is very specific to MNIST so we have coded it for you. Please read the code that loads MNIST.</p>
+
+<p><strong>Question 2:</strong> Define the tensorflow placeholders X (data) and Y (labels). Recall that the data is stored in 28x28 grayscale images, and the labels are between 0 and 9</p>
+
+<p><strong>Question 3:</strong> For now, we are going to implement a very simple 2-layer neural network <em>(LINEAR-&gt;RELU-&gt;LINEAR-&gt;SOFTMAX)</em>. Define the parameters of your model in tensorflow. Make sure your shapes match.</p>
+
+<p><strong>Question 4:</strong> Using the parameters defined in question (3), implement the forward propagation (from the input X to the output probabilities A). Don’t forget to reshape your input, as you are using a fully-connected neural network.</p>
+
+<p><strong>Question 5:</strong> Recall that this is a 10-class classification task. What cost function should you use? Implement your cost function.</p>
+
+<p><strong>Question 6:</strong> What accuracy metric should you use? Implement your accuracy metric.</p>
+
+<p><strong>Question 7:</strong> Define the tensorflow optimizer you want to use, and the tensorflow training step. Running the training step in the tensorflow graph will perform one optimization step.</p>
+
+<p><strong>Question 8:</strong> As usual in tensorflow, you need to initialize the variables of the graph, create the tensorflow session and run the initializer on the session. Write code to do these steps.</p>
+
+<p><strong>Question 9:</strong> Implement the optimization loop for 20,000 steps. At every step, have to:
+    - Load the mini-batch of MNIST data (including images and labels)
+    - Create a feed dictionary to assign your placeholders to the data.
+    - Run the session defined above on the correct graph nodes to perform an optimization step and access the desired values of the graph.
+    - Print the cost and iteration number.</p>
+
+<p><strong>Question 10:</strong> Using your accuracy metric, compute the accuracy and the value of the cost function both on the train and test set.</p>
+
+<p>Run the code from your terminal using: <em>“python tensorflow_tutorial.py”</em></p>
+
+<p><strong>Question 11:</strong> Look at the outputs, accuracy and logs of your model. What improvements could be made? Take time at home to play with your code, and search for ideas online</p>
+
+<h2 id="part-ii---project-code-examples">Part II - Project Code Examples</h2>
+
+<p>The goal of this part is to become more familiar with the <a href="https://github.com/cs230-stanford/cs230-code-examples">CS230 project example code</a> that the
+teaching staff has provided. It’s meant to help you prototype ideas for your projects.</p>
+
+<p><strong>Question 1:</strong>  Please start by git cloning the “<a href="https://github.com/cs230-stanford/cs230-code-examples">cs230-code-examples</a>” repository on your local computer.</p>
+
+<p>This repository contains several project examples:
+    - Tensorflow vision (SIGNS dataset classification)
+    - Tensorflow nlp (Named Entity Recognition)
+    - Pytorch vision (SIGNS dataset classification)
+    - Pytorch nlp (Named Entity Recognition)</p>
+
+<p><strong>Question 2:</strong> You will start with the Tensorflow vision project example. On your terminal, and inside the cloned repository, navigate to <em>./tensorflow/vision</em>. Follow the instructions described in the “Requirements” section of the readme.</p>
+
+<p><strong>Question 3:</strong> Follow the guidelines described in the “Dowload the SIGNS dataset”.</p>
+
+<p><strong>Question 4:</strong> Follow the guidelines described in the “Quickstart”.</p>
+
+<p><strong>Question 5:</strong> Read through the code and find what you could modify. All the project examples are structured the same way, we invite you to try the one that matches your needs the best. This project example code has been coded to help you insert your dataset quickly, and start prototyping some results. It is meant to be a helper code for your project and for you to learn in-depth Tensorflow/Pytorch, it is not a starter code.</p>
+
+						</div><!-- /.content -->
+					</div><!-- /.col -->
+					<div class="col-md-4 col-md-offset-1">
+						<div class="sections-list-wrapper">
+							<div class="sections-list js-sections js-affix js-scrollspy hidden-xs hidden-sm"></div><!-- /.sections-list -->
+						</div>
+					</div><!-- /.col -->
+					
+				</div><!-- /.row -->
+			</div><!-- /.container -->
+		</div><!-- /.section -->
+		
+		<div class="js-footer-area">
+			
+				<nav class="page-nav">
+					<div class="container">
+						<div class="row">
+							<div class="col-xs-12">
+								
+								
+									<a href="/blog/moretensorflow" class="page-nav__item page-nav__item--next">
+										Next page
+										<i class="icon icon--arrow-right"></i>
+									</a><!-- /.page-nav__item -->
+								
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.container -->
+				</nav><!-- /.page-nav --> 
+			<div class="micro-nav">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12">
+				<a href="/blog" class="micro-nav__back">
+					<i class="icon icon--arrow-left"></i>
+					Back to Blog
+				</a><!-- /.micro-nav__back -->
+			</div><!-- /.col -->
+		</div><!-- /.row -->
+	</div><!-- /.container -->
+</div><!-- /.micro-nav -->
+
+			
+			
+	<footer class="site-footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-6">
+					
+					
+						<!-- <hr> -->
+						<p class="site-footer__copyright">Copyright &copy; 2024. - Stanford University <br>All rights reserved.</p>
+					
+				</div><!-- /.col -->
+				
+			</div><!-- /.row -->
+		</div><!-- /.container -->
+	</footer><!-- /.site-footer -->
+
+
+<script src="/doks-theme/assets/js/vendor/jquery.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/vendor/bootstrap/affix.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/vendor/bootstrap/scrollspy.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/vendor/matchHeight.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/scripts.min.js"></script>
+
+		</div><!-- /.js-footer-area -->
+	</body>
+</html>

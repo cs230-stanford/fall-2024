@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, minimum-scale=1.0">
+<title>Lecture 6</title>
+
+	<meta name="description" content="Add short description.">
+
+
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat:400,400i,500,500i,700,700i|Noto+Sans:400,400i,700,700i|Source+Code+Pro&amp;subset=latin-ext">
+<link rel="stylesheet" href="/doks-theme/assets/css/style.css">
+<script type="text/javascript" async
+  src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+	</head>
+	<body class="blue" data-spy="scroll" data-target=".js-scrollspy">
+		
+	<div class="offcanvas visible-xs">
+		<ul class="offcanvas__nav">
+			
+				<li><a href="/syllabus">Syllabus</a></li>
+			
+				<li><a href="/officehours">Office Hours</a></li>
+			
+				<li><a href="/project">Project</a></li>
+			
+				<li><a href="/section">Section</a></li>
+			
+				<li><a href="/lecture">Lecture</a></li>
+			
+				<li><a href="/blog">Blog</a></li>
+			
+				<li><a href="/faq">FAQ</a></li>
+			
+		</ul><!-- /.offcanvas__nav -->
+	</div><!-- /.offcanvas -->
+
+
+
+	<header class="site-header">
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12">
+					
+						<a href="/" class="site-header__logo">
+							<img src="/doks-theme/assets/images/layout/logo.png">
+							CS230
+						</a>
+					
+					
+						<ul class="site-header__nav hidden-xs">
+							
+								<li><a href="/syllabus">Syllabus</a></li>
+							
+								<li><a href="/officehours">Office Hours</a></li>
+							
+								<li><a href="/project">Project</a></li>
+							
+								<li><a href="/section">Section</a></li>
+							
+								<li><a href="/lecture">Lecture</a></li>
+							
+								<li><a href="/blog">Blog</a></li>
+							
+								<li><a href="/faq">FAQ</a></li>
+							
+						</ul><!-- /.site-header__nav -->
+						<button class="offcanvas-toggle visible-xs">
+							<span></span>
+							<span></span>
+							<span></span>
+						</button><!-- /.offcanvas-toggle -->
+					
+				</div><!-- /.col -->
+			</div><!-- /.row -->
+		</div><!-- /.container -->
+	</header><!-- /.site-header -->
+
+
+		<div class="hero-subheader">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-7">
+						<div class="align-container" data-mh>
+							<div class="align-inner">
+								
+									<h1 class="hero-subheader__title">Lecture 6</h1>
+								
+								
+									<p class="hero-subheader__desc">Add short description.</p>
+								
+								
+								
+							</div><!-- /.align-inner -->
+						</div><!-- /.align-container -->
+					</div><!-- /.col -->
+						<div class="col-md-4 col-md-offset-1 hidden-xs hidden-sm">
+							<div class="align-container" data-mh>
+								<div class="align-inner">
+									<div class="hero-subheader__author">
+										<h4>Instructors</h4>
+                                                                               
+                                                                               
+                                                                                    <div class="instructor">
+                                        <a target="_blank" href="">
+                    <img class="headshot" src="/doks-theme/assets/images/headshot/kian.jpg" style="text-align:center;">
+                <div style="text-align:center;">Kian Katanforoosh<br>Instructor</div>
+	</a>
+        </div>
+    
+
+                                                                               
+                                                                                    <div class="instructor">
+                                        <a target="_blank" href="">
+                    <img class="headshot" src="/doks-theme/assets/images/headshot/andrew.jpg" style="text-align:center;">
+                <div style="text-align:center;">Andrew Ng<br>Instructor</div>
+	</a>
+        </div>
+    
+
+                                                                               
+
+                                                                               
+
+										<h4>Time and Location</h4>
+                                                                                <p>In person lectures are on Tuesdays 11:30am-1:20pm. <br> Hewlett Teaching Center 200.</p>
+									</div><!-- /.hero-subheader__author -->
+								</div><!-- /.align-inner -->
+							</div><!-- /.align-container -->
+						</div><!-- /.col -->
+				</div><!-- /.row -->
+			</div><!-- /.container -->
+		</div><!-- /.hero-subheader -->
+		<div class="section">
+			<div class="container">
+				<div class="row">
+					
+					<div class="col-md-12">
+						<div class="content">
+							<h1 id="lecture-6-ai-in-healthcare-and-a-case-study-of-cell-segmentation">Lecture 6: AI in Healthcare and a Case Study of Cell Segmentation</h1>
+
+<p>In this lecture, firstly we will present some applications of AI in Healthcare and then, we will go over a case study: <strong>Cell Segmentation</strong>. Here is the outline:</p>
+
+<h2 id="ai-in-healthcare">AI in Healthcare</h2>
+
+<h4 id="healthcare-problems-of-interest">Healthcare problems of interest</h4>
+
+<ul>
+  <li>Descriptive (what happened?): e.g, What was a patient’s heart rate through their day.</li>
+  <li>Diagnostic (why did it happen?): e.g: Why is this patient coughing for 2 weeks? Does their chest-xray show signs of pneumonia?</li>
+  <li>Predictive (what will happen?): e.g: Will this patient develop heart failure as a result of chemotherapy?</li>
+  <li>Prescriptive (what should we do?): e.g: Should this diabetic patient be treated with metformin or through changes in lifestyle?</li>
+</ul>
+
+<p>These problems become more and more complex from top to bottom. Therefore, we need to take into account more things and so, more data.</p>
+
+<h4 id="paradigm-shift-of-deep-learning">Paradigm Shift of Deep Learning</h4>
+
+<p>One already happened and the other one is coming. In 2013-2014, there was an important paradigm shift from Feature Engineering + Machine Learning to End-to-End Deep Learning pipelines. The next paradigm shift will suppress the human as the designer of the deep learning architecture.</p>
+
+<h4 id="on-going-research-in-the-stanford-ml-group">On-going Research in the Stanford ML Group</h4>
+
+<h5 id="1d-example-detecting-arrhythmias-with-cnns">1D example: Detecting Arrhythmias with CNNs</h5>
+
+<p>Arrhythmias cost 12.8 billion dollars in the US. Current diagnostic tools are: ECGs, Holter Monitor and Patches. A patch records in 2 weeks 1.4 million heart beats with only a couple of electrodes. Therefore, the signal quality is not optimal. On the other hand, the interpretation of this large amount of data would take a long time for a doctor to analyze. Therefore, there is a need to automatize the ECG analysis.</p>
+
+<ul>
+  <li>Proposed architecture to detect 1D patterns in Arrhythmias: 34 layers CNN with residual blocks to stabilize training of this deep Neural Network.</li>
+  <li>Dataset was collected on patients wearing continuous ECG monitoring devices (~32k minutes, 29k patients, 600x bigger than open-source dataset MIT-BIH) and labelled by clinical ECG experts. The test set was more precisely labelled with a committee of cardiologists.</li>
+  <li>Interesting results: The model outperforms the human in terms of the F1 score and makes less dangerous mistakes.</li>
+</ul>
+
+<p>The project website can be found <a href="https://stanfordmlgroup.github.io/projects/ecg2/">here</a>.</p>
+
+<h5 id="2d-example-detection-of-pneumonia-on-chest-x-rays">2D example: Detection of Pneumonia on Chest X-Rays</h5>
+
+<p>Pneumonia causes 1 million hospitalizations and 50k deaths per year in the US alone. Appearance of pneumonia in X-ray images is often vague, and can mimic other abnormalities. If not pus filling alveoli, but:</p>
+
+<ul>
+  <li>Cells (Cancer)</li>
+  <li>Blood (Pulmonary Hemorrhage)</li>
+  <li>Fluid (Edema)</li>
+</ul>
+
+<p>The setup to detect Pneumonia is the following one:</p>
+
+<ul>
+  <li>The input is a frontal-view chest X-ray image and the output is a binary label $t \in  {0,1}$ indicating the absence or presence of pneumonia.</li>
+  <li>The model is a CNN over 224x224 images, pretrained on ImageNet with a 121 layer DenseNet architecture.</li>
+  <li>Test set of 420 samples, annotated by 4 Stanford radiologists. The F1-score is calculated by using each of the 4 radiologists as the ground truth independently.</li>
+</ul>
+
+<p>This research project focused on the interpretability problem as well. Would it be reasonable to trust the model to make decisions? To help answer this question, class activation maps are provided for each prediction. Class activation maps allow the doctor to see where the model is particularly looking at to make its decision. The project website can be found <a href="https://xray4all.com/">here</a>.</p>
+
+<h5 id="3d-example-ai-assisted-diagnosis-for-knee-mr">3D example: AI-assisted diagnosis for knee MR</h5>
+
+<p>MR of the knee is the standard of care modality to evaluate knee disorders. The prediction task is characterized by the following features:</p>
+
+<ul>
+  <li>Multi-Label problem: A training example consists in 3 groups of 3 images each and the output is the probability of three different medical conditions: Abnormality, ACL or Meniscus Disorder.</li>
+  <li>Size of training set: 1370 knee MR exams. The validation set has 120 knee MR exams labelled by a team of 3 musculoskeletal radiologists.</li>
+  <li>The model combines 9 ConvNets with AlexNet architecture and then uses a regression algorithm to output the final probabilities.</li>
+</ul>
+
+<p>The project website can be found <a href="https://stanfordmlgroup.github.io/projects/mrnet/">here</a>.</p>
+
+<h2 id="case-study-cell-segmentation">Case Study: Cell Segmentation</h2>
+
+<p><strong>Goal:</strong> Determine which parts of a microscopic image correspond to which individual cells.</p>
+
+<p><strong>Data:</strong> Doctors have collected 100,000 images from microscopes and gave them to you. Images have been taken from three types of microscopes.</p>
+
+<center>
+
+| Microscope | Data Size |
+|------------|:---------:|
+| Type A     | 50,000    |
+| Type B     | 25,000    |
+| Type C     | 25,000    |
+
+</center>
+
+<p align="center">
+<img src="cell_data.png" alt="cell_data" width="300" />
+</p>
+
+<h4 id="data">Data</h4>
+
+<p><strong>Question:</strong> The doctors who hired you would like to use your algorithm on images from microscope C. How would you split this dataset into train, dev, and test sets?</p>
+
+<p><em>Answer:</em></p>
+<ul>
+  <li>Based on the size of our dataset, a 90/5/5 percentage-wise split would work for our classification task.</li>
+  <li>Distribution of test and dev set should be the same. Since the algorithm is going to be used for classification on images from microscope type C, our test and dev split should contain only images of this type.</li>
+  <li>To improve performance, model needs to observe test data during training. Thus, there should be type C images in train split as well.</li>
+</ul>
+
+<p><strong>Question:</strong> Can you augment this dataset? If yes, give only 3 distinct methods you would use. If no, explain why (give only 2 reasons).</p>
+
+<p><em>Answer:</em> Many augmentation techniques would work in this case:</p>
+<ul>
+  <li>cropping</li>
+  <li>adding random noise</li>
+  <li>changing contrast, blurring</li>
+  <li>flip</li>
+  <li>rotate</li>
+</ul>
+
+<h4 id="architecture-and-loss">Architecture and Loss</h4>
+
+<p><strong>Question:</strong></p>
+<ul>
+  <li>What is the mathematical relation between nx and ny?</li>
+  <li>What should be the last activation function of your network?</li>
+  <li>What loss function should you use?</li>
+</ul>
+
+<p><em>Answer:</em></p>
+<ul>
+  <li>nx = 3 x ny</li>
+  <li>Sigmoid activation</li>
+  <li>Summation over all pixel value with cross entropy loss
+\(-\sum_{i=1}^{n_y} \left( y_i \log(\hat{y}_i) + (1-y_i)\log(1-\hat{y}_i) \right)\)</li>
+</ul>
+
+<h4 id="transfer-learning">Transfer Learning</h4>
+
+<p>Let’s assume that you have coded your neural network (Model M1), and have trained it for 1,000 epochs. But it does not perform well.</p>
+
+<p align="center">
+<img src="m1.png" alt="m1" width="400" />
+</p>
+
+<p>One of your friends suggests to use trasnfer learning using <strong>another labeled dataset</strong> made of 1,000,000 microscope images for skin disease classification (very similar images).</p>
+
+<p>A model (M2) has been trained on this dataset for a 10-class classification task. Here is an example of input/output of model M2.</p>
+
+<p align="center">
+<img src="m2.png" alt="m2" width="400" />
+</p>
+
+<p><strong>Question:</strong> Performing transfer learning from M2 to M1, what are the new hyperparameters that you will have to tune?</p>
+
+<p><em>Answer:</em> number of layers to be kept from the pretrained model, number of layers to be added, number of layers to be freezed. Note that after freezing parts of the pretrained network, rest of the layers will be trained on our dataset; pretrained weights will be used as initial weights for pretrained model’s layers, while new layers will be initialized randomly.</p>
+
+<h4 id="network-modification">Network Modification</h4>
+
+<p>Your model achives a good performance; however, looking at your outputs, you realize that the boundaries between cells are not as clear as doctors want them to be. Since they want the model to help with cell identification, boundaries need to be clear.</p>
+
+<p align="center">
+<img src="net_mod.png" alt="net_mod" width="400" />
+</p>
+
+<p><strong>Question:</strong> How can you correct your model and/or dataset to satisfy the doctors’ request?</p>
+
+<p><em>Answer:</em> Modify the dataset in order to label the boundaries between cells. In addition to the two labels associated with ‘cell’ or ‘not cell,’ there will be a third label classifying boundaries. On top of that, change the loss function to give more weight to boundaries or penalize false positives.</p>
+
+<p><strong>New Goal:</strong> You are given a dataset containing images similar to the previous ones. The difference is that each image is now labeled as 0 (there are no cancer cells on the image) or 1 (there are cancer cells on the image). You easily build a state-of-the-art model to classify these images with 99% accuracy. The doctors are astonished and surprised, they ask you to explain your network’s predictions.</p>
+
+<p><strong>Question:</strong> Given an image classified as 1 (cancer present), how can you figure out based on which cell(s) the model predicted 1?</p>
+
+<p><em>Answer:</em> Gradient of the output with respect to input X. The computed matrix will capture output’s sensitivity to changes in different pixels of input.</p>
+
+<p><strong>Question:</strong> Your model detects cancer on cells (test set) images with 99% accuracy, while a doctor would on average perform 97% accuracy on the same task. Is this possible? Explain.</p>
+
+<p><em>Answer:</em> If the dataset was entirely labeled by this one doctor with 97% accuracy, it is unlikely that the model can perform at 99% accuracy. However if annotated by multiple doctors, the network will learn from these several doctors and be able to outperform the one doctor with 97% accuracy. In this case, a panel composed of the doctors who labeled the data would likely perform at 99% accuracy or higher.</p>
+
+<p><strong>New New Goal:</strong> To solve your binary classification (presence/absence of cancer cell(s)), you decided to implement the following pipeline.</p>
+
+<p align="center">
+<img src="net_mod2.png" alt="net_mod2" width="400" />
+</p>
+
+<p><strong>Question:</strong></p>
+<ul>
+  <li>What are the advantages/disadvantages of this model compared to the previous end-to-end binary classifier?</li>
+  <li>If your model doesn’t perform well, how can you find what the problem is?</li>
+</ul>
+
+<p><em>Answer:</em></p>
+<ul>
+  <li>Advantages: requires less data in general by leveraging human crafted knowledge; still works if labelled data is not present in both ends
+Disadvantages: might limit the model’s potential performance if the hand-engineered components aren’t optimal</li>
+  <li>Isolating the modules and evaluating their performance individually</li>
+</ul>
+
+						</div><!-- /.content -->
+					</div>
+					
+				</div><!-- /.row -->
+			</div><!-- /.container -->
+		</div><!-- /.section -->
+		
+		<div class="js-footer-area">
+			
+			
+	<footer class="site-footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-6">
+					
+					
+						<!-- <hr> -->
+						<p class="site-footer__copyright">Copyright &copy; 2024. - Stanford University <br>All rights reserved.</p>
+					
+				</div><!-- /.col -->
+				
+			</div><!-- /.row -->
+		</div><!-- /.container -->
+	</footer><!-- /.site-footer -->
+
+
+<script src="/doks-theme/assets/js/vendor/jquery.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/vendor/bootstrap/affix.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/vendor/bootstrap/scrollspy.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/vendor/matchHeight.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/scripts.min.js"></script>
+
+		</div><!-- /.js-footer-area -->
+	</body>
+</html>

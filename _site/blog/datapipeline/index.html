@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, minimum-scale=1.0">
+<title>Building a data pipeline</title>
+
+	<meta name="description" content="Using Tensorflow tf.data for text and images">
+
+
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat:400,400i,500,500i,700,700i|Noto+Sans:400,400i,700,700i|Source+Code+Pro&amp;subset=latin-ext">
+<link rel="stylesheet" href="/doks-theme/assets/css/style.css">
+<script type="text/javascript" async
+  src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+	</head>
+	<body class="blue" data-spy="scroll" data-target=".js-scrollspy">
+		
+	<div class="offcanvas visible-xs">
+		<ul class="offcanvas__nav">
+			
+				<li><a href="/syllabus">Syllabus</a></li>
+			
+				<li><a href="/officehours">Office Hours</a></li>
+			
+				<li><a href="/project">Project</a></li>
+			
+				<li><a href="/section">Section</a></li>
+			
+				<li><a href="/lecture">Lecture</a></li>
+			
+				<li><a href="/blog">Blog</a></li>
+			
+				<li><a href="/faq">FAQ</a></li>
+			
+		</ul><!-- /.offcanvas__nav -->
+	</div><!-- /.offcanvas -->
+
+
+
+	<header class="site-header">
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12">
+					
+						<a href="/" class="site-header__logo">
+							<img src="/doks-theme/assets/images/layout/logo.png">
+							CS230
+						</a>
+					
+					
+						<ul class="site-header__nav hidden-xs">
+							
+								<li><a href="/syllabus">Syllabus</a></li>
+							
+								<li><a href="/officehours">Office Hours</a></li>
+							
+								<li><a href="/project">Project</a></li>
+							
+								<li><a href="/section">Section</a></li>
+							
+								<li><a href="/lecture">Lecture</a></li>
+							
+								<li><a href="/blog">Blog</a></li>
+							
+								<li><a href="/faq">FAQ</a></li>
+							
+						</ul><!-- /.site-header__nav -->
+						<button class="offcanvas-toggle visible-xs">
+							<span></span>
+							<span></span>
+							<span></span>
+						</button><!-- /.offcanvas-toggle -->
+					
+				</div><!-- /.col -->
+			</div><!-- /.row -->
+		</div><!-- /.container -->
+	</header><!-- /.site-header -->
+
+
+		<div class="hero-subheader">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-7">
+						<div class="align-container" data-mh>
+							<div class="align-inner">
+								
+									<h1 class="hero-subheader__title">Building a data pipeline</h1>
+								
+								
+									<p class="hero-subheader__desc">Using Tensorflow tf.data for text and images</p>
+								
+								
+									
+										<a href="/blog/moretensorflow" class="btn btn--dark btn--rounded btn--w-icon btn--w-icon-left">
+											<i class="icon icon--arrow-left"></i>
+											Previous page
+										</a>
+									
+									
+										<a href="/blog/createtrainmodel" class="btn btn--dark btn--rounded btn--w-icon">
+											<i class="icon icon--arrow-right"></i>
+											Next page
+										</a>
+									
+								
+								
+							</div><!-- /.align-inner -->
+						</div><!-- /.align-container -->
+					</div><!-- /.col -->
+						<div class="col-md-4 col-md-offset-1 hidden-xs hidden-sm">
+							<div class="align-container" data-mh>
+								<div class="align-inner">
+									<div class="hero-subheader__author">
+										<h4>Instructors</h4>
+                                                                               
+                                                                               
+                                                                                    <div class="instructor">
+                                        <a target="_blank" href="">
+                    <img class="headshot" src="/doks-theme/assets/images/headshot/kian.jpg" style="text-align:center;">
+                <div style="text-align:center;">Kian Katanforoosh<br>Instructor</div>
+	</a>
+        </div>
+    
+
+                                                                               
+                                                                                    <div class="instructor">
+                                        <a target="_blank" href="">
+                    <img class="headshot" src="/doks-theme/assets/images/headshot/andrew.jpg" style="text-align:center;">
+                <div style="text-align:center;">Andrew Ng<br>Instructor</div>
+	</a>
+        </div>
+    
+
+                                                                               
+
+                                                                               
+
+										<h4>Time and Location</h4>
+                                                                                <p>In person lectures are on Tuesdays 11:30am-1:20pm. <br> Hewlett Teaching Center 200.</p>
+									</div><!-- /.hero-subheader__author -->
+								</div><!-- /.align-inner -->
+							</div><!-- /.align-container -->
+						</div><!-- /.col -->
+				</div><!-- /.row -->
+			</div><!-- /.container -->
+		</div><!-- /.hero-subheader -->
+		<div class="section">
+			<div class="container">
+				<div class="row">
+					
+					<div class="col-md-7">
+						<div class="content">
+							<h2 id="motivation"><strong>Motivation</strong></h2>
+
+<p>Building the input pipeline in a machine learning project is always long and painful, and can take more time than building the actual model. In this tutorial we will learn how to use TensorFlow’s Dataset module <code class="language-plaintext highlighter-rouge">tf.data</code> to build efficient pipelines for images and text.</p>
+
+<p>This tutorial is among a series explaining how to structure a deep learning project:
+This tutorial is among a series explaining how to structure a deep learning project:</p>
+<ul>
+  <li><a href="/blog/tips">installation, get started with the code for the projects</a></li>
+  <li><a href="/blog/tensorflow">(TensorFlow) explain the global structure of the code</a></li>
+  <li><strong>this post: how to build the data pipeline</strong></li>
+  <li><a href="/blog/createtrainmodel">(Tensorflow) how to build the model and train it</a></li>
+</ul>
+
+<h2 id="goals-of-this-tutorial"><strong>Goals of this tutorial</strong></h2>
+
+<ul>
+  <li>learn how to use <code class="language-plaintext highlighter-rouge">tf.data</code> and the best practices</li>
+  <li>build an efficient pipeline for loading images and preprocessing them</li>
+  <li>build an efficient pipeline for text, including how to build a vocabulary</li>
+</ul>
+
+<h2 id="an-overview-of-tfdata"><strong>An overview of tf.data</strong></h2>
+
+<p>The <code class="language-plaintext highlighter-rouge">Dataset</code> API allows you to build an asynchronous, highly optimized data pipeline to prevent your GPU from <a href="https://www.tensorflow.org/guide/performance/overview#input_pipeline_optimization">data starvation</a>. It loads data from the disk (images or text), applies optimized transformations, creates batches and sends it to the GPU. Former data pipelines made the GPU wait for the CPU to load the data, leading to performance issues.</p>
+
+<p>Before explaining how <code class="language-plaintext highlighter-rouge">tf.data</code> works with a simple example, we’ll share some great official resources:</p>
+<ul>
+  <li><a href="https://www.tensorflow.org/api_docs/python/tf/data">API docs</a> for <code class="language-plaintext highlighter-rouge">tf.data</code></li>
+  <li><a href="https://www.tensorflow.org/api_docs/python/tf/contrib/data">API docs</a> for <code class="language-plaintext highlighter-rouge">tf.contrib.data</code>: new features still in beta mode. Contains useful functions that will soon be added to the main <code class="language-plaintext highlighter-rouge">tf.data</code></li>
+  <li><a href="https://www.tensorflow.org/guide/datasets_for_estimators">Datasets Quick Start</a>: gentle introduction to tf.data</li>
+  <li><a href="https://www.tensorflow.org/guide/datasets">Programmer’s guide</a>: more advanced and detailed guide to the best practices when using Datasets in TensorFlow</li>
+  <li><a href="https://www.tensorflow.org/guide/performance/overview#input_pipeline_optimization">Performance guide</a>: advanced guide to improve performance of the data pipeline</li>
+  <li><a href="https://developers.googleblog.com/2017/09/introducing-tensorflow-datasets.html">Official blog post</a> introducing Datasets and Estimators. We don’t use Estimators in our <a href="https://github.com/cs230-stanford/cs230-code-examples">code examples</a> so you can safely ignore them for now.</li>
+  <li><a href="https://docs.google.com/presentation/d/16kHNtQslt-yuJ3w8GIx-eEH6t_AvFeQOchqGRFpAD7U/edit#slide=id.p">Slides from the creator of tf.data</a> explaining the API, best practices (don’t forget to read the speaker notes below the slides)</li>
+  <li><a href="https://github.com/tensorflow/tensorflow/issues/7951">Origin github issue</a> for Datasets: a bit of history on the origin of <code class="language-plaintext highlighter-rouge">tf.data</code></li>
+  <li><a href="https://stackoverflow.com/questions/tagged/tensorflow-datasets">Stackoverflow</a> tag for the Datasets API</li>
+</ul>
+
+<p><strong>Introduction to tf.data with a Text Example</strong></p>
+
+<p>Let’s go over a quick example. Let’s say we have a <code class="language-plaintext highlighter-rouge">file.txt</code> file containing sentences</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">I</span> <span class="n">use</span> <span class="n">Tensorflow</span>
+<span class="n">You</span> <span class="n">use</span> <span class="n">PyTorch</span>
+<span class="n">Both</span> <span class="n">are</span> <span class="n">great</span>
+</code></pre></div></div>
+
+<p>Let’s read this file with the <code class="language-plaintext highlighter-rouge">tf.data</code> API:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dataset</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">TextLineDataset</span><span class="p">(</span><span class="s">"file.txt"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Let’s try to iterate over it</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">dataset</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>We get an error</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="nb">TypeError</span><span class="p">:</span> <span class="s">'TextLineDataset'</span> <span class="nb">object</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">iterable</span>
+</code></pre></div></div>
+
+<p>Wait… What just happened ? I thought it was supposed to read the data.</p>
+
+<p><strong>Iterators and transformations</strong></p>
+
+<p>What’s really happening is that <code class="language-plaintext highlighter-rouge">dataset</code> is a node of the Tensorflow <code class="language-plaintext highlighter-rouge">Graph</code> that contains instructions to read the file. We need to initialize the graph and evaluate this node in a Session if we want to read it. While this may sound awfully complicated, this is quite the oposite : now, even the dataset object is a part of the graph, so you don’t need to worry about how to feed the data into your model !</p>
+
+<p>We need to add a few things to make it work. First, let’s create an <code class="language-plaintext highlighter-rouge">iterator</code> object over the dataset</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">iterator</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">.</span><span class="n">make_one_shot_iterator</span><span class="p">()</span>
+<span class="n">next_element</span> <span class="o">=</span> <span class="n">iterator</span><span class="p">.</span><span class="n">get_next</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">one_shot_iterator</code> method creates an iterator that will be able to iterate once over the dataset. In other words, once we reach the end of the dataset, it will stop yielding elements and raise an Exception.</p>
+
+<p>Now, <code class="language-plaintext highlighter-rouge">next_element</code> is a graph’s node that will contain the next element of iterator over the Dataset at each execution. Now, let’s run it</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">with</span> <span class="n">tf</span><span class="p">.</span><span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">sess</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">sess</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="n">next_element</span><span class="p">))</span>
+
+<span class="o">&gt;</span><span class="s">'I use Tensorflow'</span>
+<span class="o">&gt;</span><span class="s">'You use PyTorch'</span>
+<span class="o">&gt;</span><span class="s">'Both are great'</span>
+</code></pre></div></div>
+
+<p>Now that you understand the idea behind the <code class="language-plaintext highlighter-rouge">tf.data</code> API, let’s quickly review some more advanced tricks. First, you can easily apply transformations to your dataset. For instance, splitting words by space is as easy as adding one line</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">.</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">string</span><span class="p">:</span> <span class="n">tf</span><span class="p">.</span><span class="n">string_split</span><span class="p">([</span><span class="n">string</span><span class="p">]).</span><span class="n">values</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Shuffling the dataset is also straightforward</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">buffer_size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>It will load elements 3 by 3 and shuffle them at each iteration.</p>
+
+<p>You can also create batches</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">.</span><span class="n">batch</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>and pre-fetch the data (in other words, it will always have one batch ready to be loaded).</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">.</span><span class="n">prefetch</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Now, let’s see what our iterator has become</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">iterator</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">.</span><span class="n">make_one_shot_iterator</span><span class="p">()</span>
+<span class="n">next_element</span> <span class="o">=</span> <span class="n">iterator</span><span class="p">.</span><span class="n">get_next</span><span class="p">()</span>
+<span class="k">with</span> <span class="n">tf</span><span class="p">.</span><span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">sess</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">sess</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="n">next_element</span><span class="p">))</span>
+
+<span class="o">&gt;</span><span class="p">[[</span><span class="s">'Both'</span> <span class="s">'are'</span> <span class="s">'great'</span><span class="p">]</span>
+  <span class="p">[</span><span class="s">'You'</span> <span class="s">'use'</span> <span class="s">'PyTorch'</span><span class="p">]]</span>
+</code></pre></div></div>
+
+<p>and as you can see, we now have a batch created from the shuffled Dataset !</p>
+
+<p>All the nodes in the Graph are assumed to be batched: every Tensor will have <code class="language-plaintext highlighter-rouge">shape = [None, ...]</code> where None corresponds to the (unspecified) batch dimension</p>
+
+<p><strong>Why we use initializable iterators</strong></p>
+
+<p>As you’ll see in the <code class="language-plaintext highlighter-rouge">input_fn.py</code> files, we decided to use an initializable iterator.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dataset</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">TextLineDataset</span><span class="p">(</span><span class="s">"file.txt"</span><span class="p">)</span>
+<span class="n">iterator</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">.</span><span class="n">make_initializable_iterator</span><span class="p">()</span>
+<span class="n">next_element</span> <span class="o">=</span> <span class="n">iterator</span><span class="p">.</span><span class="n">get_next</span><span class="p">()</span>
+<span class="n">init_op</span> <span class="o">=</span> <span class="n">iterator</span><span class="p">.</span><span class="n">initializer</span>
+</code></pre></div></div>
+
+<p>Its behavior is similar to the one above, but thanks to the <code class="language-plaintext highlighter-rouge">init_op</code> we can chose to “restart” from the beginning. This will become quite handy when we want to perform multiple epochs !</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">with</span> <span class="n">tf</span><span class="p">.</span><span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">sess</span><span class="p">:</span>
+    <span class="c1">#Initialize the iterator
+</span>    <span class="n">sess</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="n">init_op</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">sess</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="n">next_element</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">sess</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="n">next_element</span><span class="p">))</span>
+    <span class="c1">#Move the iterator back to the beginning
+</span>    <span class="n">sess</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="n">init_op</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">sess</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="n">next_element</span><span class="p">))</span>
+
+<span class="o">&gt;</span> <span class="s">'I use Tensorflow'</span>
+<span class="s">'You use PyTorch'</span>
+<span class="s">'I use Tensorflow'</span> <span class="c1"># Iterator moved back at the beginning
+</span></code></pre></div></div>
+
+<p>As we use only one session over the different epochs, we need to be able to restart the iterator. Some other approaches (like <code class="language-plaintext highlighter-rouge">tf.Estimator</code>) alleviate the need of using <code class="language-plaintext highlighter-rouge">initializable</code> iterators by creating a new session at each epoch. But this comes at a cost: the weights and the graph must be re-loaded and re-initialized with each call to <code class="language-plaintext highlighter-rouge">estimator.train()</code> or <code class="language-plaintext highlighter-rouge">estimator.evaluate()</code>.</p>
+
+<p><strong>Where do I find the data pipeline in the code examples ?</strong></p>
+
+<p>The <code class="language-plaintext highlighter-rouge">model/input_fn.py</code> defines a function <code class="language-plaintext highlighter-rouge">input_fn</code> that returns a dictionnary that looks like</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">images</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">iterator</span><span class="p">.</span><span class="n">get_next</span><span class="p">()</span>
+<span class="n">iterator_init_op</span> <span class="o">=</span> <span class="n">iterator</span><span class="p">.</span><span class="n">initializer</span>
+
+<span class="n">inputs</span> <span class="o">=</span> <span class="p">{</span><span class="s">'images'</span><span class="p">:</span> <span class="n">images</span><span class="p">,</span> <span class="s">'labels'</span><span class="p">:</span> <span class="n">labels</span><span class="p">,</span> <span class="s">'iterator_init_op'</span><span class="p">:</span> <span class="n">iterator_init_op</span><span class="p">}</span>
+</code></pre></div></div>
+
+<p>This dictionary of inputs will be passed to the model function, which we will detail in the <a href="/blog/createtrainmodel">next post</a>.</p>
+
+<h2 id="building-an-image-data-pipeline"><strong>Building an image data pipeline</strong></h2>
+
+<p>Here is what a Dataset for images might look like. Here we already have a list of <code class="language-plaintext highlighter-rouge">filenames</code> to jpeg images and a corresponding list of <code class="language-plaintext highlighter-rouge">labels</code>. We apply the following steps for training:</p>
+
+<ol>
+  <li>Create the dataset from slices of the filenames and labels</li>
+  <li>Shuffle the data with a buffer size equal to the length of the dataset. This ensures good shuffling (cf. <a href="https://stackoverflow.com/questions/46444018/meaning-of-buffer-size-in-dataset-map-dataset-prefetch-and-dataset-shuffle/48096625#48096625">this answer</a>)</li>
+  <li>Parse the images from filename to the pixel values. Use multiple threads to improve the speed of preprocessing</li>
+  <li>(Optional for training) Data augmentation for the images. Use multiple threads to improve the speed of preprocessing</li>
+  <li>Batch the images</li>
+  <li>Prefetch one batch to make sure that a batch is ready to be served at all time</li>
+</ol>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dataset</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">Dataset</span><span class="p">.</span><span class="n">from_tensor_slices</span><span class="p">((</span><span class="n">filenames</span><span class="p">,</span> <span class="n">labels</span><span class="p">))</span>
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">.</span><span class="n">shuffle</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">filenames</span><span class="p">))</span>
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">.</span><span class="nb">map</span><span class="p">(</span><span class="n">parse_function</span><span class="p">,</span> <span class="n">num_parallel_calls</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">.</span><span class="nb">map</span><span class="p">(</span><span class="n">train_preprocess</span><span class="p">,</span> <span class="n">num_parallel_calls</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">.</span><span class="n">batch</span><span class="p">(</span><span class="n">batch_size</span><span class="p">)</span>
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">.</span><span class="n">prefetch</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">parse_function</code> will do the following:</p>
+<ul>
+  <li>read the content of the file</li>
+  <li>decode using jpeg format</li>
+  <li>convert to float values in <code class="language-plaintext highlighter-rouge">[0, 1]</code></li>
+  <li>resize to size <code class="language-plaintext highlighter-rouge">(64, 64)</code></li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">parse_function</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
+    <span class="n">image_string</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">read_file</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+
+    <span class="c1">#Don't use tf.image.decode_image, or the output shape will be undefined
+</span>    <span class="n">image</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">image</span><span class="p">.</span><span class="n">decode_jpeg</span><span class="p">(</span><span class="n">image_string</span><span class="p">,</span> <span class="n">channels</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+    <span class="c1">#This will convert to float values in [0, 1]
+</span>    <span class="n">image</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">image</span><span class="p">.</span><span class="n">convert_image_dtype</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">tf</span><span class="p">.</span><span class="n">float32</span><span class="p">)</span>
+
+    <span class="n">image</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">image</span><span class="p">.</span><span class="n">resize_images</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="p">[</span><span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">resized_image</span><span class="p">,</span> <span class="n">label</span>
+</code></pre></div></div>
+
+<p>And finally the <code class="language-plaintext highlighter-rouge">train_preprocess</code> can be optionally used during training to perform data augmentation:</p>
+<ul>
+  <li>Horizontally flip the image with probability 1/2</li>
+  <li>Apply random brightness and saturation</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">train_preprocess</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">image</span><span class="p">.</span><span class="n">random_flip_left_right</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+
+    <span class="n">image</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">image</span><span class="p">.</span><span class="n">random_brightness</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">max_delta</span><span class="o">=</span><span class="mf">32.0</span> <span class="o">/</span> <span class="mf">255.0</span><span class="p">)</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">image</span><span class="p">.</span><span class="n">random_saturation</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">upper</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+
+    <span class="c1">#Make sure the image is still in [0, 1]
+</span>    <span class="n">image</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">clip_by_value</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">image</span><span class="p">,</span> <span class="n">label</span>
+</code></pre></div></div>
+
+<h2 id="building-a-text-data-pipeline"><strong>Building a text data pipeline</strong></h2>
+
+<p>Have a look at the Tensorflow seq2seq tutorial using the tf.data pipeline</p>
+<ul>
+  <li><a href="https://www.tensorflow.org/tutorials/">documentation</a></li>
+  <li><a href="https://github.com/tensorflow/nmt/">github</a></li>
+</ul>
+
+<p><strong>Files format</strong></p>
+
+<p>We’ve covered a simple example in the <strong>Overview of tf.data</strong> section. Now, let’s cover a more advanced example. Let’s assume that our task is <a href="https://en.wikipedia.org/wiki/Named-entity_recognition">Named Entity Recognition</a>. In other words, our input is a sentence, and our output is a label for each word, like in</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">John</span>   <span class="n">lives</span> <span class="ow">in</span> <span class="n">New</span>   <span class="n">York</span>
+<span class="n">B</span><span class="o">-</span><span class="n">PER</span>  <span class="n">O</span>     <span class="n">O</span>  <span class="n">B</span><span class="o">-</span><span class="n">LOC</span> <span class="n">I</span><span class="o">-</span><span class="n">LOC</span>
+</code></pre></div></div>
+
+<p>Our dataset will thus need to load both the sentences and the labels. We will store those in 2 different files, a <code class="language-plaintext highlighter-rouge">sentence.txt</code> file containing the sentences (one per line) and a <code class="language-plaintext highlighter-rouge">labels.txt</code> containing the labels. For example</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#sentences.txt
+</span><span class="n">John</span> <span class="n">lives</span> <span class="ow">in</span> <span class="n">New</span> <span class="n">York</span>
+<span class="n">Where</span> <span class="ow">is</span> <span class="n">John</span> <span class="err">?</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#labels.txt
+</span><span class="n">B</span><span class="o">-</span><span class="n">PER</span> <span class="n">O</span> <span class="n">O</span> <span class="n">B</span><span class="o">-</span><span class="n">LOC</span> <span class="n">I</span><span class="o">-</span><span class="n">LOC</span>
+<span class="n">O</span> <span class="n">O</span> <span class="n">B</span><span class="o">-</span><span class="n">PER</span> <span class="n">O</span>
+</code></pre></div></div>
+
+<p>Constructing <code class="language-plaintext highlighter-rouge">tf.data</code> objects that iterate over these files is easy</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#Load txt file, one example per line
+</span><span class="n">sentences</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">TextLineDataset</span><span class="p">(</span><span class="s">"sentences.txt"</span><span class="p">)</span>
+<span class="n">labels</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">TextLineDataset</span><span class="p">(</span><span class="s">"labels.txt"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><strong>Zip datasets together</strong></p>
+
+<p>At this stage, we might want to iterate over these 2 files at the same time. This operation is usually known as a “zip”. Luckilly, the <code class="language-plaintext highlighter-rouge">tf.data</code> comes with such a function</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#Zip the sentence and the labels together
+</span><span class="n">dataset</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">Dataset</span><span class="p">.</span><span class="nb">zip</span><span class="p">((</span><span class="n">sentences</span><span class="p">,</span> <span class="n">labels</span><span class="p">))</span>
+
+<span class="c1">#Create a one shot iterator over the zipped dataset
+</span><span class="n">iterator</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">.</span><span class="n">make_one_shot_iterator</span><span class="p">()</span>
+<span class="n">next_element</span> <span class="o">=</span> <span class="n">iterator</span><span class="p">.</span><span class="n">get_next</span><span class="p">()</span>
+
+<span class="c1">#Actually run in a session
+</span><span class="k">with</span> <span class="n">tf</span><span class="p">.</span><span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">sess</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">sess</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="n">dataset</span><span class="p">))</span>
+
+<span class="o">&gt;</span> <span class="p">(</span><span class="s">'John lives in New York'</span><span class="p">,</span> <span class="s">'B-PER O O B-LOC I-LOC'</span><span class="p">)</span>
+<span class="p">(</span><span class="s">'Where is John ?'</span><span class="p">,</span> <span class="s">'O O B-PER O'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><strong>Creating the vocabulary</strong></p>
+
+<p>Great, now we can get the sentence and the labels as we iterate. Let’s see how we can transform this string into a sequence of words and then in a sequence of ids.</p>
+
+<p>Most NLP systems rely on ids as input for the words, meaning that you’ll eventually have to convert your sentence into a sequence of ids.</p>
+
+<p>Here we assume that we ran some script, like <code class="language-plaintext highlighter-rouge">build_vocab.py</code> that created some vocabulary files in our <code class="language-plaintext highlighter-rouge">/data</code> directory. We’ll need one file for the words and one file for the labels. They will contain one token per line. For instance</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#words.txt
+</span><span class="n">John</span>
+<span class="n">lives</span>
+<span class="ow">in</span>
+<span class="p">...</span>
+</code></pre></div></div>
+
+<p>and</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#tags.txt
+</span><span class="n">B</span><span class="o">-</span><span class="n">PER</span>
+<span class="n">B</span><span class="o">-</span><span class="n">LOC</span>
+<span class="p">...</span>
+</code></pre></div></div>
+
+<p>Tensorflow has a cool built-in tool to take care of the mapping. We simply define 2 lookup tables</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">words</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">contrib</span><span class="p">.</span><span class="n">lookup</span><span class="p">.</span><span class="n">index_table_from_file</span><span class="p">(</span><span class="s">"data/words.txt"</span><span class="p">,</span> <span class="n">num_oov_buckets</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">tags</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">contrib</span><span class="p">.</span><span class="n">lookup</span><span class="p">.</span><span class="n">index_table_from_file</span><span class="p">(</span><span class="s">"data/tags.txt"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>The parameter <code class="language-plaintext highlighter-rouge">num_oov_buckets</code> specifies the number of buckets created for unknow words. The id will be determined by Tensorflow and we don’t have to worry about it. As in most of the cases, we just want to have one id reserved for the out-of-vocabulary words, we just use <code class="language-plaintext highlighter-rouge">num_oov_buckets=1</code>.</p>
+
+<p>Now that we initialized this lookup table, we are going to transform the way we read the files, by adding these extra lines</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#Convert line into list of tokens, splitting by white space
+</span><span class="n">sentences</span> <span class="o">=</span> <span class="n">sentences</span><span class="p">.</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">string</span><span class="p">:</span> <span class="n">tf</span><span class="p">.</span><span class="n">string_split</span><span class="p">([</span><span class="n">string</span><span class="p">]).</span><span class="n">values</span><span class="p">)</span>
+
+<span class="c1">#Lookup tokens to return their ids
+</span><span class="n">sentences</span> <span class="o">=</span> <span class="n">sentences</span><span class="p">.</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">tokens</span><span class="p">:</span> <span class="p">(</span><span class="n">words</span><span class="p">.</span><span class="n">lookup</span><span class="p">(</span><span class="n">tokens</span><span class="p">),</span> <span class="n">tf</span><span class="p">.</span><span class="n">size</span><span class="p">(</span><span class="n">tokens</span><span class="p">)))</span>
+</code></pre></div></div>
+
+<p>Be careful that <code class="language-plaintext highlighter-rouge">tf.string_split</code> returns a <code class="language-plaintext highlighter-rouge">tf.SparseTensor</code>, that’s why we need to extract the values.</p>
+
+<p><strong>Creating padded batches</strong></p>
+
+<p>Great! Now we can iterate and get a list of ids of words and labels for each sentence. We just need to take care of one final thing: <strong>batches</strong>! But here comes a problem: sentences have different length. Thus, we need to perform an extra <strong>padding</strong> operation that will add special token to shorter sentences so that our final batch Tensor is a tensor of shape <code class="language-plaintext highlighter-rouge">[batch_size, max_len_of_sentence_in_the_batch]</code>.</p>
+
+<p>We first need to specify the padding shapes and values</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#Create batches and pad the sentences of different length
+</span><span class="n">padded_shapes</span> <span class="o">=</span> <span class="p">(</span><span class="n">tf</span><span class="p">.</span><span class="n">TensorShape</span><span class="p">([</span><span class="bp">None</span><span class="p">]),</span>   <span class="c1"># sentence of unknown size
+</span>                <span class="n">tf</span><span class="p">.</span><span class="n">TensorShape</span><span class="p">([</span><span class="bp">None</span><span class="p">]))</span>  <span class="c1"># labels of unknown size
+</span>
+<span class="n">padding_values</span> <span class="o">=</span> <span class="p">(</span><span class="n">params</span><span class="p">.</span><span class="n">id_pad_word</span><span class="p">,</span>   <span class="c1"># sentence padded on the right with id_pad_word
+</span>                 <span class="n">params</span><span class="p">.</span><span class="n">id_pad_tag</span><span class="p">)</span>    <span class="c1"># labels padded on the right with id_pad_tag
+</span></code></pre></div></div>
+
+<p>Note that the padding_values must be in the vocabulary (otherwise we might have a problem later on). That’s why we get the id of the special “<pad>” token in `train.py` with `id_pad_word = words.lookup(tf.constant('<pad>'))`.</pad></pad></p>
+
+<p>Then, we can just use the tf.data padded_batch method, that takes care of the padding !</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#Shuffle the dataset and then create the padded batches
+</span><span class="n">dataset</span> <span class="o">=</span> <span class="p">(</span><span class="n">dataset</span>
+        <span class="p">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">buffer_size</span><span class="o">=</span><span class="n">buffer_size</span><span class="p">)</span>
+        <span class="p">.</span><span class="n">padded_batch</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="n">padded_shapes</span><span class="o">=</span><span class="n">padded_shapes</span><span class="p">,</span> <span class="n">padding_values</span><span class="o">=</span><span class="n">padding_values</span><span class="p">)</span>
+        <span class="p">)</span>
+</code></pre></div></div>
+
+<p><strong>Computing the sentence’s size</strong></p>
+
+<p>Is that all that we need in general ? Not quite. As we mentionned padding, we have to make sure that our model does not take the extra padded-tokens into account when computing its prediction. A common way of solving this issue is to add extra information to our data iterator and give the length of the input sentence as input. Later on, we will be able to give this argument to the <code class="language-plaintext highlighter-rouge">dynamic_rnn</code> function or create binary masks with <code class="language-plaintext highlighter-rouge">tf.sequence_mask</code>.</p>
+
+<p>Look at the model/input_fn.py file for more details. But basically, it boils down to adding one line, using tf.size</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sentences</span> <span class="o">=</span> <span class="n">sentences</span><span class="p">.</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">tokens</span><span class="p">:</span> <span class="p">(</span><span class="n">vocab</span><span class="p">.</span><span class="n">lookup</span><span class="p">(</span><span class="n">tokens</span><span class="p">),</span> <span class="n">tf</span><span class="p">.</span><span class="n">size</span><span class="p">(</span><span class="n">tokens</span><span class="p">)))</span>
+</code></pre></div></div>
+
+<p><strong>Advanced use - extracting characters</strong></p>
+
+<p>Now, let’s try to perform a more complicated operation. We want to extract characters from each word, maybe because our NLP system relies on characters. Our input is a file that looks like</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mi">1</span> <span class="mi">22</span>
+<span class="mi">3333</span> <span class="mi">4</span> <span class="mi">55</span>
+</code></pre></div></div>
+
+<p>We first create a dataset that yields the words for each sentence, as usual</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dataset</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">TextLineDataset</span><span class="p">(</span><span class="s">"file.txt"</span><span class="p">)</span>
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">.</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">token</span><span class="p">:</span> <span class="n">tf</span><span class="p">.</span><span class="n">string_split</span><span class="p">([</span><span class="n">token</span><span class="p">]).</span><span class="n">values</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Now, we are going to reuse the <code class="language-plaintext highlighter-rouge">tf.string_split function</code>. However, it outputs a sparse tensor, a convenient data representation in general but which doesn’t seem do be supported (yet) by <code class="language-plaintext highlighter-rouge">tf.data</code>. Thus, we need to convert this <code class="language-plaintext highlighter-rouge">SparseTensor</code> to a regular <code class="language-plaintext highlighter-rouge">Tensor</code>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">extract_char</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">default_value</span><span class="o">=</span><span class="s">"&lt;pad_char&gt;"</span><span class="p">):</span>
+    <span class="c1">#Split characters
+</span>    <span class="n">out</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">string_split</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s">''</span><span class="p">)</span>
+    <span class="c1">#Convert to Dense tensor, filling with default value
+</span>    <span class="n">out</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">sparse_tensor_to_dense</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">default_value</span><span class="o">=</span><span class="n">default_value</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">out</span>
+
+<span class="c1">#Dataset yields word and characters
+</span><span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">.</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">token</span><span class="p">:</span> <span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">extract_char</span><span class="p">(</span><span class="n">token</span><span class="p">)))</span>
+</code></pre></div></div>
+
+<p>Notice how we specified a <code class="language-plaintext highlighter-rouge">default_value</code> to the <code class="language-plaintext highlighter-rouge">tf.sparse_tensor_to_dense</code> function: words have different lengths, thus the <code class="language-plaintext highlighter-rouge">SparseTensor</code> that we need to convert has some unspecified entries !</p>
+
+<p>Creating the padded batches is still as easy as above</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#Creating the padded batch
+</span><span class="n">padded_shapes</span> <span class="o">=</span> <span class="p">(</span><span class="n">tf</span><span class="p">.</span><span class="n">TensorShape</span><span class="p">([</span><span class="bp">None</span><span class="p">]),</span>       <span class="c1"># padding the words
+</span>                <span class="n">tf</span><span class="p">.</span><span class="n">TensorShape</span><span class="p">([</span><span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">]))</span> <span class="c1"># padding the characters for each word
+</span><span class="n">padding_values</span> <span class="o">=</span> <span class="p">(</span><span class="s">'&lt;pad_word&gt;'</span><span class="p">,</span>  <span class="c1"># sentences padded on the right with &lt;pad&gt;
+</span>                <span class="s">'&lt;pad_char&gt;'</span><span class="p">)</span>  <span class="c1"># arrays of characters padded on the right with &lt;pad&gt;
+</span>
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">.</span><span class="n">padded_batch</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">padded_shapes</span><span class="o">=</span><span class="n">padded_shapes</span><span class="p">,</span> <span class="n">padding_values</span><span class="o">=</span><span class="n">padding_values</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>and you can test that the output matches your expectations</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">iterator</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">.</span><span class="n">make_one_shot_iterator</span><span class="p">()</span>
+<span class="n">next_element</span> <span class="o">=</span> <span class="n">iterator</span><span class="p">.</span><span class="n">get_next</span><span class="p">()</span>
+
+<span class="k">with</span> <span class="n">tf</span><span class="p">.</span><span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">sess</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">sentences</span><span class="p">,</span> <span class="n">characters</span> <span class="o">=</span> <span class="n">sess</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="n">next_element</span><span class="p">))</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">sentences</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">characters</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="o">&gt;</span> <span class="p">[</span><span class="s">'1'</span><span class="p">,</span> <span class="s">'22'</span><span class="p">,</span> <span class="s">'&lt;pad_word&gt;'</span><span class="p">]</span>               <span class="c1"># sentence 1 (words)
+</span>  <span class="p">[</span><span class="s">'2'</span><span class="p">,</span> <span class="s">'2'</span><span class="p">,</span> <span class="s">'&lt;pad_char&gt;'</span><span class="p">,</span> <span class="s">'&lt;pad_char&gt;'</span><span class="p">]</span>  <span class="c1"># sentence 1 word 2 (chars)
+</span></code></pre></div></div>
+
+<p>Can you explain why we have 2 <code class="language-plaintext highlighter-rouge">&lt;pad_char&gt;</code> and 1 <code class="language-plaintext highlighter-rouge">&lt;pad_word&gt;</code> in the first batch ?</p>
+
+<h2 id="best-practices"><strong>Best Practices</strong></h2>
+
+<p>One general tip mentioned in <a href="https://www.tensorflow.org/guide/performance/overview#input_pipeline_optimization">the performance guide</a> is to put all the data processing pipeline on the CPU to make sure that the GPU is only used for training the deep neural network model:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">with</span> <span class="n">tf</span><span class="p">.</span><span class="n">device</span><span class="p">(</span><span class="s">'/cpu:0'</span><span class="p">):</span>
+    <span class="n">dataset</span> <span class="o">=</span> <span class="p">...</span>
+</code></pre></div></div>
+
+<p><strong>Shuffle and repeat</strong></p>
+
+<p>When training on a dataset, we often need to repeat it for multiple epochs and we need to shuffle it.</p>
+
+<p>One big caveat when shuffling is to make sure that the <code class="language-plaintext highlighter-rouge">buffer_size</code> argument is big enough. The bigger it is, the longer it is going to take to load the data at the beginning. However a low buffer size can be disastrous for training. Here is a good <a href="https://stackoverflow.com/questions/46444018/meaning-of-buffer-size-in-dataset-map-dataset-prefetch-and-dataset-shuffle/48096625#48096625">answer</a> on stackoverflow detailing an example of why.</p>
+
+<p>The best way to avoid this kind of error might be to split the dataset into train / dev / test in advance and already shuffle the data there (see our other <a href="/blog/split">post</a>).</p>
+
+<p>In general, it is good to have the shuffling and repeat at the beginning of the pipeline. For instance if the input to the dataset is a list of filenames, if we directly shuffle after that the buffer of <code class="language-plaintext highlighter-rouge">tf.data.Dataset.shuffle()</code> will only contain filenames, which is very light on memory.</p>
+
+<p>When choosing the ordering between shuffle and repeat, you may consider two options:</p>
+<ul>
+  <li><strong>shuffle then repeat</strong>: we shuffle the dataset in a certain way, and repeat this shuffling for multiple epochs (ex: <code class="language-plaintext highlighter-rouge">[1, 3, 2, 1, 3, 2]</code> for 2 epochs with 3 elements in the dataset)</li>
+  <li><strong>repeat then shuffle</strong>: we repeat the dataset for multiple epochs and then shuffle (ex: <code class="language-plaintext highlighter-rouge">[1, 2, 1, 3, 3, 2]</code> for 2 epochs with 3 elements in the dataset)</li>
+</ul>
+
+<p>The second method provides a better shuffling, but you might wait multiple epochs without seeing an example. The first method makes sure that you always see every element in the dataset at each epoch. You can also use <code class="language-plaintext highlighter-rouge">tf.contrib.data.shuffle_and_repeat()</code> to perform shuffle and repeat.</p>
+
+<p><strong>Parallelization: using multiple threads</strong></p>
+
+<p>Parallelization of the data processing pipeline using multiple threads is almost transparent when using the tf.data module. We only need to add a num_parallel_calls argument to every dataset.map() call.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>num_threads = 4
+dataset = dataset.map(parse_function, num_parallel_calls=num_threads)
+</code></pre></div></div>
+
+<p><strong>Prefetch data</strong></p>
+
+<p>When the GPU is working on forward / backward propagation on the current batch, we want the CPU to process the next batch of data so that it is immediately ready. As the most expensive part of the computer, we want the GPU to be fully used all the time during training. We call this consumer / producer overlap, where the consumer is the GPU and the producer is the CPU.</p>
+
+<p>With <code class="language-plaintext highlighter-rouge">tf.data</code>, you can do this with a simple call to <code class="language-plaintext highlighter-rouge">dataset.prefetch(1)</code> at the end of the pipeline (after batching). This will always prefetch one batch of data and make sure that there is always one ready.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">.</span><span class="n">batch</span><span class="p">(</span><span class="mi">64</span><span class="p">)</span>
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">.</span><span class="n">prefetch</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>In some cases, it can be useful to prefetch more than one batch. For instance if the duration of the preprocessing varies a lot, prefetching 10 batches would average out the processing time over 10 batches, instead of sometimes waiting for longer batches.</p>
+
+<p>To give a concrete example, suppose than 10% of the batches take 10s to compute, and 90% take 1s. If the GPU takes 2s to train on one batch, by prefetching multiple batches you make sure that we never wait for these rare longer batches.</p>
+
+<p><strong>Order of the operations</strong></p>
+
+<p>To summarize, one good order for the different transformations is:</p>
+<ol>
+  <li>create the dataset</li>
+  <li>shuffle (with a big enough buffer size)
+3, repeat</li>
+  <li>map with the actual work (preprocessing, augmentation…) using multiple parallel calls</li>
+  <li>batch</li>
+  <li>prefetch</li>
+</ol>
+
+
+						</div><!-- /.content -->
+					</div><!-- /.col -->
+					<div class="col-md-4 col-md-offset-1">
+						<div class="sections-list-wrapper">
+							<div class="sections-list js-sections js-affix js-scrollspy hidden-xs hidden-sm"></div><!-- /.sections-list -->
+						</div>
+					</div><!-- /.col -->
+					
+				</div><!-- /.row -->
+			</div><!-- /.container -->
+		</div><!-- /.section -->
+		
+		<div class="js-footer-area">
+			
+				<nav class="page-nav">
+					<div class="container">
+						<div class="row">
+							<div class="col-xs-12">
+								
+									<a href="/blog/moretensorflow" class="page-nav__item page-nav__item--prev">
+										<i class="icon icon--arrow-left"></i>
+										Previous page
+									</a><!-- /.page-nav__item -->
+								
+								
+									<a href="/blog/createtrainmodel" class="page-nav__item page-nav__item--next">
+										Next page
+										<i class="icon icon--arrow-right"></i>
+									</a><!-- /.page-nav__item -->
+								
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.container -->
+				</nav><!-- /.page-nav --> 
+			<div class="micro-nav">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12">
+				<a href="/blog" class="micro-nav__back">
+					<i class="icon icon--arrow-left"></i>
+					Back to Blog
+				</a><!-- /.micro-nav__back -->
+			</div><!-- /.col -->
+		</div><!-- /.row -->
+	</div><!-- /.container -->
+</div><!-- /.micro-nav -->
+
+			
+			
+	<footer class="site-footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-6">
+					
+					
+						<!-- <hr> -->
+						<p class="site-footer__copyright">Copyright &copy; 2024. - Stanford University <br>All rights reserved.</p>
+					
+				</div><!-- /.col -->
+				
+			</div><!-- /.row -->
+		</div><!-- /.container -->
+	</footer><!-- /.site-footer -->
+
+
+<script src="/doks-theme/assets/js/vendor/jquery.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/vendor/bootstrap/affix.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/vendor/bootstrap/scrollspy.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/vendor/matchHeight.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/scripts.min.js"></script>
+
+		</div><!-- /.js-footer-area -->
+	</body>
+</html>

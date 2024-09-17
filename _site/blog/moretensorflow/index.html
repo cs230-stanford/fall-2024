@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, minimum-scale=1.0">
+<title>Introduction to Tensorflow (Graph, Session, Nodes and variable scope)</title>
+
+
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat:400,400i,500,500i,700,700i|Noto+Sans:400,400i,700,700i|Source+Code+Pro&amp;subset=latin-ext">
+<link rel="stylesheet" href="/doks-theme/assets/css/style.css">
+<script type="text/javascript" async
+  src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+	</head>
+	<body class="blue" data-spy="scroll" data-target=".js-scrollspy">
+		
+	<div class="offcanvas visible-xs">
+		<ul class="offcanvas__nav">
+			
+				<li><a href="/syllabus">Syllabus</a></li>
+			
+				<li><a href="/officehours">Office Hours</a></li>
+			
+				<li><a href="/project">Project</a></li>
+			
+				<li><a href="/section">Section</a></li>
+			
+				<li><a href="/lecture">Lecture</a></li>
+			
+				<li><a href="/blog">Blog</a></li>
+			
+				<li><a href="/faq">FAQ</a></li>
+			
+		</ul><!-- /.offcanvas__nav -->
+	</div><!-- /.offcanvas -->
+
+
+
+	<header class="site-header">
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12">
+					
+						<a href="/" class="site-header__logo">
+							<img src="/doks-theme/assets/images/layout/logo.png">
+							CS230
+						</a>
+					
+					
+						<ul class="site-header__nav hidden-xs">
+							
+								<li><a href="/syllabus">Syllabus</a></li>
+							
+								<li><a href="/officehours">Office Hours</a></li>
+							
+								<li><a href="/project">Project</a></li>
+							
+								<li><a href="/section">Section</a></li>
+							
+								<li><a href="/lecture">Lecture</a></li>
+							
+								<li><a href="/blog">Blog</a></li>
+							
+								<li><a href="/faq">FAQ</a></li>
+							
+						</ul><!-- /.site-header__nav -->
+						<button class="offcanvas-toggle visible-xs">
+							<span></span>
+							<span></span>
+							<span></span>
+						</button><!-- /.offcanvas-toggle -->
+					
+				</div><!-- /.col -->
+			</div><!-- /.row -->
+		</div><!-- /.container -->
+	</header><!-- /.site-header -->
+
+
+		<div class="hero-subheader">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-7">
+						<div class="align-container" data-mh>
+							<div class="align-inner">
+								
+									<h1 class="hero-subheader__title">Introduction to Tensorflow (Graph, Session, Nodes and variable scope)</h1>
+								
+								
+								
+									
+										<a href="/blog/tensorflow" class="btn btn--dark btn--rounded btn--w-icon btn--w-icon-left">
+											<i class="icon icon--arrow-left"></i>
+											Previous page
+										</a>
+									
+									
+										<a href="/blog/datapipeline" class="btn btn--dark btn--rounded btn--w-icon">
+											<i class="icon icon--arrow-right"></i>
+											Next page
+										</a>
+									
+								
+								
+							</div><!-- /.align-inner -->
+						</div><!-- /.align-container -->
+					</div><!-- /.col -->
+						<div class="col-md-4 col-md-offset-1 hidden-xs hidden-sm">
+							<div class="align-container" data-mh>
+								<div class="align-inner">
+									<div class="hero-subheader__author">
+										<h4>Instructors</h4>
+                                                                               
+                                                                               
+                                                                                    <div class="instructor">
+                                        <a target="_blank" href="">
+                    <img class="headshot" src="/doks-theme/assets/images/headshot/kian.jpg" style="text-align:center;">
+                <div style="text-align:center;">Kian Katanforoosh<br>Instructor</div>
+	</a>
+        </div>
+    
+
+                                                                               
+                                                                                    <div class="instructor">
+                                        <a target="_blank" href="">
+                    <img class="headshot" src="/doks-theme/assets/images/headshot/andrew.jpg" style="text-align:center;">
+                <div style="text-align:center;">Andrew Ng<br>Instructor</div>
+	</a>
+        </div>
+    
+
+                                                                               
+
+                                                                               
+
+										<h4>Time and Location</h4>
+                                                                                <p>In person lectures are on Tuesdays 11:30am-1:20pm. <br> Hewlett Teaching Center 200.</p>
+									</div><!-- /.hero-subheader__author -->
+								</div><!-- /.align-inner -->
+							</div><!-- /.align-container -->
+						</div><!-- /.col -->
+				</div><!-- /.row -->
+			</div><!-- /.container -->
+		</div><!-- /.hero-subheader -->
+		<div class="section">
+			<div class="container">
+				<div class="row">
+					
+					<div class="col-md-7">
+						<div class="content">
+							<p>This post follows the <a href="/blog/tips">main post</a> announcing the release of the CS230 code examples. We will explain here the TensorFlow part of the code, in our <a href="https://github.com/cs230-stanford/cs230-code-examples/tree/master/tensorflow">github repository</a>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">tensorflow</span><span class="o">/</span>
+    <span class="n">vision</span><span class="o">/</span>
+    <span class="n">nlp</span><span class="o">/</span>
+</code></pre></div></div>
+
+<p>This tutorial is among a series explaining how to structure a deep learning project:</p>
+<ul>
+  <li><a href="/blog/tips">installation, get started with the code for the projects</a></li>
+  <li><strong>this post: (TensorFlow) explain the global structure of the code</strong></li>
+  <li><a href="/blog/datapipeline">(TensorFlow) how to build the data pipeline</a></li>
+  <li><a href="/blog/createtrainmodel">(Tensorflow) how to build the model and train it</a></li>
+</ul>
+
+<h2 id="goals-of-this-tutorial"><strong>Goals of this tutorial</strong></h2>
+<ul>
+  <li>learn more about TensorFlow</li>
+  <li>learn an example of how to correctly structure a deep learning project in TensorFlow</li>
+  <li>fully understand the code to be able to use it for your own projects</li>
+</ul>
+
+<h2 id="resources"><strong>Resources</strong></h2>
+
+<p>For an official <strong>introduction</strong> to the Tensorflow concepts of <code class="language-plaintext highlighter-rouge">Graph()</code> and <code class="language-plaintext highlighter-rouge">Session()</code>, check out the <a href="https://www.tensorflow.org/tutorials/#tensorflow_core_tutorial">official introduction on tensorflow.org</a>.</p>
+
+<p>For a <strong>simple example on MNIST</strong>, read the <a href="https://www.tensorflow.org/tutorials/">official tutorial</a>, but keep in mind that some of the techniques are not recommended for big projects (they use <code class="language-plaintext highlighter-rouge">placeholders</code> instead of the new <code class="language-plaintext highlighter-rouge">tf.data</code> pipeline, they don’t use <code class="language-plaintext highlighter-rouge">tf.layers</code>, etc.).</p>
+
+<p>For a more <strong>detailed tour</strong> of Tensorflow, reading the <a href="https://www.tensorflow.org/guide/">programmer’s guide</a> is definitely worth the time. You’ll learn more about Tensors, Variables, Graphs and Sessions, as well as the saving mechanism or how to import data.</p>
+
+<p>For a <strong>more advanced use</strong> with concrete examples and code, we recommend reading <a href="https://www.tensorflow.org/tutorials/">the relevant tutorials</a> for your project. You’ll find good code and explanations, going from <a href="https://www.tensorflow.org/tutorials/">sequence-to-sequence in Tensorflow</a> to an <a href="https://www.tensorflow.org/tutorials/estimators/cnn#getting_started">introduction to TF layers for convolutionnal Neural Nets</a>.</p>
+
+<p>You might also be interested in <a href="http://web.stanford.edu/class/cs20si/">Stanford’s CS20 class: Tensorflow for Deep Learning Research</a> and its <a href="https://github.com/chiphuyen/stanford-tensorflow-tutorials">github repo</a> containing some cool examples.</p>
+
+<h2 id="structure-of-the-code"><strong>Structure of the code</strong></h2>
+
+<p>The code for each Tensorflow example shares a common structure:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">data</span><span class="o">/</span>
+<span class="n">experiments</span><span class="o">/</span>
+<span class="n">model</span><span class="o">/</span>
+    <span class="n">input_fn</span><span class="p">.</span><span class="n">py</span>
+    <span class="n">model_fn</span><span class="p">.</span><span class="n">py</span>
+    <span class="n">utils</span><span class="p">.</span><span class="n">py</span>
+    <span class="n">training</span><span class="p">.</span><span class="n">py</span>
+    <span class="n">evaluation</span><span class="p">.</span><span class="n">py</span>
+<span class="n">train</span><span class="p">.</span><span class="n">py</span>
+<span class="n">search_hyperparams</span><span class="p">.</span><span class="n">py</span>
+<span class="n">synthesize_results</span><span class="p">.</span><span class="n">py</span>
+<span class="n">evaluate</span><span class="p">.</span><span class="n">py</span>
+</code></pre></div></div>
+
+<p>Here is each <code class="language-plaintext highlighter-rouge">model/</code> file purpose:</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">model/input_fn.py</code>: where you define the input data pipeline</li>
+  <li><code class="language-plaintext highlighter-rouge">model/model_fn.py</code>: creates the deep learning model</li>
+  <li><code class="language-plaintext highlighter-rouge">model/utils.py</code>: utility functions for handling hyperparams / logging</li>
+  <li><code class="language-plaintext highlighter-rouge">model/training.py</code>: utility functions to train a model</li>
+  <li><code class="language-plaintext highlighter-rouge">model/evaluation.py</code>: utility functions to evaluate a model</li>
+</ul>
+
+<p>We recommend reading through <code class="language-plaintext highlighter-rouge">train.py</code> to get a high-level overview.</p>
+
+<p>Once you get the high-level idea, depending on your task and dataset, you might want to modify</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">model/model_fn.py</code> to change the model’s architecture, i.e. how you transform your input into your prediction as well as your loss, etc.</li>
+  <li><code class="language-plaintext highlighter-rouge">model/input_fn</code> to change the process of feeding data to the model.</li>
+  <li><code class="language-plaintext highlighter-rouge">train.py</code> and <code class="language-plaintext highlighter-rouge">evaluate.py</code> to change the story-line (maybe you need to change the filenames, load a vocabulary, etc.)</li>
+</ul>
+
+<p>Once you get something working for your dataset, feel free to edit any part of the code to suit your own needs.</p>
+
+<h2 id="graph-session-and-nodes"><strong>Graph, Session and nodes</strong></h2>
+
+<p>When designing a Model in Tensorflow, there are <a href="https://www.tensorflow.org/tutorials/#tensorflow_core_tutorial">basically 2 steps</a></p>
+
+<ol>
+  <li>building the computational graph, the nodes and operations and how they are connected to each other</li>
+  <li>evaluating / running this graph on some data</li>
+</ol>
+
+<p>As an example of <strong>step 1</strong>, if we define a TF constant (=a graph node), when we print it, we get a Tensor object (= a node) and not its value</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">constant</span><span class="p">(</span><span class="mf">1.</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="p">.</span><span class="n">float32</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">"my-node-x"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="o">&gt;</span> <span class="n">Tensor</span><span class="p">(</span><span class="s">"my-node-x:0"</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">float32</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Now, let’s get to <strong>step 2</strong>, and evaluate this node. We’ll need to create a <code class="language-plaintext highlighter-rouge">tf.Session</code> that will take care of actually evaluating the graph</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">with</span> <span class="n">tf</span><span class="p">.</span><span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">sess</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">sess</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="o">&gt;</span> <span class="mf">1.0</span>
+</code></pre></div></div>
+
+<p>In the code examples,</p>
+<ul>
+  <li><strong>step 1</strong> <code class="language-plaintext highlighter-rouge">model/input_fn.py</code> and <code class="language-plaintext highlighter-rouge">model/model_fn</code></li>
+  <li><strong>step 2</strong> <code class="language-plaintext highlighter-rouge">model/training.py</code> and <code class="language-plaintext highlighter-rouge">model/evaluation.py</code></li>
+</ul>
+
+<h2 id="a-word-about-variable-scopes"><strong>A word about <a href="https://www.tensorflow.org/guide/#the_problem">variable scopes</a></strong></h2>
+
+<p>When creating a node, Tensorflow will have a name for it. You can add a prefix to the nodes names. This is done with the <code class="language-plaintext highlighter-rouge">variable_scope</code> mechanism</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">with</span> <span class="n">tf</span><span class="p">.</span><span class="n">variable_scope</span><span class="p">(</span><span class="s">'model'</span><span class="p">):</span>
+    <span class="n">x1</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">get_variable</span><span class="p">(</span><span class="s">'x'</span><span class="p">,</span> <span class="p">[],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="p">.</span><span class="n">float32</span><span class="p">)</span> <span class="c1"># get or create variable with name 'model/x:0'
+</span>    <span class="k">print</span><span class="p">(</span><span class="n">x1</span><span class="p">)</span>
+<span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">tf</span><span class="p">.</span><span class="n">Variable</span> <span class="s">'model/x:0'</span> <span class="n">shape</span><span class="o">=</span><span class="p">()</span> <span class="n">dtype</span><span class="o">=</span><span class="n">float32_ref</span><span class="o">&gt;</span>
+</code></pre></div></div>
+
+<p>What happens if I instantiate <code class="language-plaintext highlighter-rouge">x</code> twice ?</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">with</span> <span class="n">tf</span><span class="p">.</span><span class="n">variable_scope</span><span class="p">(</span><span class="s">'model'</span><span class="p">):</span>
+    <span class="n">x2</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">get_variable</span><span class="p">(</span><span class="s">'x'</span><span class="p">,</span> <span class="p">[],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="p">.</span><span class="n">float32</span><span class="p">)</span>
+<span class="o">&gt;</span> <span class="nb">ValueError</span><span class="p">:</span> <span class="n">Variable</span> <span class="n">model</span><span class="o">/</span><span class="n">x</span> <span class="n">already</span> <span class="n">exists</span><span class="p">,</span> <span class="n">disallowed</span><span class="p">.</span>
+</code></pre></div></div>
+
+<p>When trying to create a new variable named <code class="language-plaintext highlighter-rouge">model/x</code>, we run into an Exception as a variable with the same name already exists. Thanks to this naming mechanism, you can actually control which value you give to the different nodes, and at different points of your code, decide to have 2 python objects correspond to the same node !</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">with</span> <span class="n">tf</span><span class="p">.</span><span class="n">variable_scope</span><span class="p">(</span><span class="s">'model'</span><span class="p">,</span> <span class="n">reuse</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+    <span class="n">x2</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">get_variable</span><span class="p">(</span><span class="s">'x'</span><span class="p">,</span> <span class="p">[],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="p">.</span><span class="n">float32</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">x2</span><span class="p">)</span>
+<span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">tf</span><span class="p">.</span><span class="n">Variable</span> <span class="s">'model/x:0'</span> <span class="n">shape</span><span class="o">=</span><span class="p">()</span> <span class="n">dtype</span><span class="o">=</span><span class="n">float32_ref</span><span class="o">&gt;</span>
+</code></pre></div></div>
+
+<p>We can check that they indeed have the same value</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">with</span> <span class="n">tf</span><span class="p">.</span><span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">sess</span><span class="p">:</span>
+    <span class="n">sess</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="n">tf</span><span class="p">.</span><span class="n">global_variables_initializer</span><span class="p">())</span> <span class="c1"># Initialize the Variables
+</span>    <span class="n">sess</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="n">tf</span><span class="p">.</span><span class="n">assign</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">tf</span><span class="p">.</span><span class="n">constant</span><span class="p">(</span><span class="mf">1.</span><span class="p">)))</span>    <span class="c1"># Change the value of x1
+</span>    <span class="n">sess</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="n">tf</span><span class="p">.</span><span class="n">assign</span><span class="p">(</span><span class="n">x2</span><span class="p">,</span> <span class="n">tf</span><span class="p">.</span><span class="n">constant</span><span class="p">(</span><span class="mf">2.</span><span class="p">)))</span>    <span class="c1"># Change the value of x2
+</span>    <span class="k">print</span><span class="p">(</span><span class="s">"x1 = "</span><span class="p">,</span> <span class="n">sess</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="n">x1</span><span class="p">),</span> <span class="s">" x2 = "</span><span class="p">,</span> <span class="n">sess</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="n">x2</span><span class="p">))</span>
+
+<span class="o">&gt;</span> <span class="n">x1</span> <span class="o">=</span>  <span class="mf">2.0</span>  <span class="n">x2</span> <span class="o">=</span>  <span class="mf">2.0</span>
+</code></pre></div></div>
+
+<h2 id="how-we-deal-with-different-training--evaluation-graphs"><strong>How we deal with different Training / Evaluation Graphs</strong></h2>
+
+<p>Code examples design choice: theoretically, the graphs you define for training and inference can be different, but they still need to share their weights. To remedy this issue, there are two possibilities</p>
+<ol>
+  <li>re-build the graph, create a new session and reload the weights from some file when we switch between training and inference.</li>
+  <li>create all the nodes for training and inference in the graph and make sure that the python code does not create the nodes twice by using the <code class="language-plaintext highlighter-rouge">reuse=True</code> trick explained above.</li>
+</ol>
+
+<p>We decided to go for this option. As you’ll notice in <code class="language-plaintext highlighter-rouge">train.py</code> we give an extra argument when we build our graphs</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">train_model_spec</span> <span class="o">=</span> <span class="n">model_fn</span><span class="p">(</span><span class="s">'train'</span><span class="p">,</span> <span class="n">train_inputs</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+<span class="n">eval_model_spec</span> <span class="o">=</span> <span class="n">model_fn</span><span class="p">(</span><span class="s">'eval'</span><span class="p">,</span> <span class="n">eval_inputs</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">reuse</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>When we create the graph for the evaluation (<code class="language-plaintext highlighter-rouge">eval_model_spec</code>), the <code class="language-plaintext highlighter-rouge">model_fn</code> will encapsulate all the nodes in a <code class="language-plaintext highlighter-rouge">tf.variable_scope("model", reuse=True)</code> so that the nodes that have the same names than in the training graph share their weights !</p>
+
+<p>For those interested in the problem of making training and eval graphs coexist, you can read this <a href="https://www.tensorflow.org/tutorials/">discussion</a> which advocates for the other option.</p>
+
+<p>As a side note, option 1 is also the one used in <a href="https://www.tensorflow.org/guide/estimators"><code class="language-plaintext highlighter-rouge">tf.Estimator</code></a>.</p>
+
+<p>Next page, you’ll see how you can input data to your model.</p>
+
+
+						</div><!-- /.content -->
+					</div><!-- /.col -->
+					<div class="col-md-4 col-md-offset-1">
+						<div class="sections-list-wrapper">
+							<div class="sections-list js-sections js-affix js-scrollspy hidden-xs hidden-sm"></div><!-- /.sections-list -->
+						</div>
+					</div><!-- /.col -->
+					
+				</div><!-- /.row -->
+			</div><!-- /.container -->
+		</div><!-- /.section -->
+		
+		<div class="js-footer-area">
+			
+				<nav class="page-nav">
+					<div class="container">
+						<div class="row">
+							<div class="col-xs-12">
+								
+									<a href="/blog/tensorflow" class="page-nav__item page-nav__item--prev">
+										<i class="icon icon--arrow-left"></i>
+										Previous page
+									</a><!-- /.page-nav__item -->
+								
+								
+									<a href="/blog/datapipeline" class="page-nav__item page-nav__item--next">
+										Next page
+										<i class="icon icon--arrow-right"></i>
+									</a><!-- /.page-nav__item -->
+								
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.container -->
+				</nav><!-- /.page-nav --> 
+			<div class="micro-nav">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12">
+				<a href="/blog" class="micro-nav__back">
+					<i class="icon icon--arrow-left"></i>
+					Back to Blog
+				</a><!-- /.micro-nav__back -->
+			</div><!-- /.col -->
+		</div><!-- /.row -->
+	</div><!-- /.container -->
+</div><!-- /.micro-nav -->
+
+			
+			
+	<footer class="site-footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-6">
+					
+					
+						<!-- <hr> -->
+						<p class="site-footer__copyright">Copyright &copy; 2024. - Stanford University <br>All rights reserved.</p>
+					
+				</div><!-- /.col -->
+				
+			</div><!-- /.row -->
+		</div><!-- /.container -->
+	</footer><!-- /.site-footer -->
+
+
+<script src="/doks-theme/assets/js/vendor/jquery.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/vendor/bootstrap/affix.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/vendor/bootstrap/scrollspy.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/vendor/matchHeight.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/scripts.min.js"></script>
+
+		</div><!-- /.js-footer-area -->
+	</body>
+</html>

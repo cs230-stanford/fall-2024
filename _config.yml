@@ -1,0 +1,235 @@
+# Temporary GitPage Host setup
+title: CS230 Deep Learning
+baseurl: "/cs230-2024-fall"
+repository: "cs230-stanford/website-winter-2022"
+
+# Theme settings
+doks:
+    color_theme: blue
+    header:
+        logo:
+            text: CS230
+            image: true
+        nav:
+            - item_name: Syllabus
+              item_url: '/syllabus'
+            - item_name: Office Hours
+              item_url: '/officehours'
+            - item_name: Project
+              item_url: '/project'
+            - item_name: Section
+              item_url: '/section'
+            - item_name: Lecture
+              item_url: '/lecture'
+            - item_name: Blog
+              item_url: '/blog'
+            - item_name: FAQ
+              item_url: '/faq'
+    footer:
+        content:
+            logo:
+                text:
+                image:
+            copyright: Copyright &copy; 2024. - Stanford University <br>All rights reserved.
+        social_list:
+            # - network_name: facebook
+            #   profile_url: '#'
+            # - network_name: twitter
+            #   profile_url: '#'
+    google_analytics: UA-124237072-3
+    comments:
+        disqus_forum_shortname: # Add your disqus forum shortname to activate comments
+
+# SASS settings
+sass:
+    sass_dir: ./doks-theme/_sass
+    style: :compressed
+
+# Jekyll settings
+plugins_dir: ./_plugins
+layouts_dir: ./doks-theme/_layouts
+includes_dir: ./doks-theme/_includes
+exclude: [ 'README.md', 'CHANGELOG.md', 'scripts']
+permalink: /:title/
+
+# Course logistics
+course:
+    quarter: 2024 Fall
+    time: In person lectures are on Tuesdays 11:30am-1:20pm.
+    section_time: TBD
+    venue:  Hewlett Teaching Center 200.
+    ed: &ed 'https://edstem.org/us/courses/65934'
+    gradescope: 'https://www.gradescope.com/courses/379380'
+    queuestatus:
+        url: &qs 'https://queuestatus.com'
+        name: 'CS230 (2022 Spring)'
+    canvas: &cvs 'https://canvas.stanford.edu/courses/195135'
+    qa: &qa 'cs230-qa@cs.stanford.edu'
+    midterm_time: ''
+    project_timeline:
+        proposal: 2024-10-08T23:59:00-07:00
+        milestone: 2024-11-15T23:59:00-07:00
+        poster_and_report: 2024-12-03T23:59:00-07:00
+        long_date_format: "%B %-d, %A %I:%M %p"
+        syllabus_date_format: "%m/%d %A %I:%M %p"
+    links:
+        syllabus:
+            icon:
+            content: Syllabus
+            url: '/syllabus'
+            external_url: false
+        past-projects:
+            icon:
+            content: Past Projects
+            url: '/past-projects'
+            external_url: false
+        project-2018-win:
+            icon:
+            content: Winter 2018
+            url: '/past-projects/#winter-2018'
+            external_url: false
+        project-2018-spr:
+            icon:
+            content: Spring 2018
+            url: '/past-projects/#spring-2018'
+            external_url: false
+        project-2018-fall:
+            icon:
+            content: Fall 2018
+            url: '/past-projects/#fall-2018'
+            external_url: false
+        project-2019-win:
+            icon:
+            content: Winter 2019
+            url: '/past-projects/#winter-2019'
+            external_url: false
+        project-2019-spr:
+            icon:
+            content: Spring 2019
+            url: '/past-projects/#spring-2019'
+            external_url: false
+        project-2019-fall:
+            icon:
+            content: Fall 2019
+            url: '/past-projects/#fall-2019'
+            external_url: false
+        project-2020-win:
+            icon:
+            content: Winter 2020
+            url: '/past-projects/#winter-2020'
+            external_url: false
+        project-2020-spr:
+            icon:
+            content: Spring 2020
+            url: '/past-projects/#spring-2020'
+            external_url: false
+        project-2020-fall:
+            icon:
+            content: Fall 2020
+            url: '/past-projects/#fall-2020'
+            external_url: false
+        project-2021-winter:
+            icon:
+            content: Winter 2021
+            url: '/past-projects/#winter-2021'
+            external_url: false
+        project-2021-spring:
+            icon:
+            content: Spring 2021
+            url: '/past-projects/#spring-2021'
+            external_url: false
+        video2018:
+            icon:
+            content: Lecture videos (Fall 2018)
+            url: '/lecture/'
+            external_url: false
+        ed:
+            icon:
+            content: Ed
+            url: *ed
+            external_url: true
+        video:
+            icon:
+            content: Lecture videos (Canvas)
+            url: 'https://canvas.stanford.edu/courses/154237/external_tools/3367'
+            external_url: true
+        canvas:
+            icon:
+            content: Canvas
+            url: *cvs
+            external_url: true
+        queuestatus:
+            icon:
+            content: QueueStatus
+            url: *qs
+            external_url: true
+        project_appt_calendly:
+            content: Meet with Project TA
+            url: '/officehours/#table'
+            external_url: true
+        zoom:
+            content: Zoom (link via Canvas)
+            url: https://canvas.stanford.edu/courses/154237
+            external_url: true
+    staff:
+        - name: Kian Katanforoosh
+          type: Instructor
+          url:
+          image: kian.jpg
+        - name: Andrew Ng
+          type: Instructor
+          url:
+          image: andrew.jpg
+        - name: Amelie Byun
+          type: Course Advisor
+          url:
+          image: amelie.jpg
+        - name: Shahab Mousavi
+          type: Head TA
+          url: 
+          image: shahab.jpg
+          zoom_id:
+          zoom_link:
+          calendly:
+          area:
+    ta:
+        - name: Hee Jung Choi
+          type: TA
+          url: 
+          image: choi.jpg
+          zoom_id:
+          zoom_link:
+          calendly: 
+          area: Healthcare
+        - name: Johnny Chang
+          type: TA
+          url: 
+          image: unknown.jpg
+          zoom_id:
+          zoom_link:
+          calendly: 
+          area:
+        - name: Sri Jaladi
+          type: TA
+          url: 
+          image: jaladi.png
+          zoom_id:
+          zoom_link:
+          calendly: 
+          area: Acceleration of models, Sequential models, Image models, Convolutional-based projects (1d, 2d)
+        - name: JB (Jong Beom) Lim
+          type: TA
+          url: 
+          image: lim.jpg
+          zoom_id:
+          zoom_link:
+          calendly: 
+          area: LLM agents, Ethics
+        - name: 
+          type: TA
+          url: 
+          image: unknown.jpg
+          zoom_id:
+          zoom_link:
+          calendly: 
+          area: 

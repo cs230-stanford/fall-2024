@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, minimum-scale=1.0">
+<title>Classifying Images of Hand Signs</title>
+
+	<meta name="description" content="Defining a Convolutional Network and Loading Image Data">
+
+
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat:400,400i,500,500i,700,700i|Noto+Sans:400,400i,700,700i|Source+Code+Pro&amp;subset=latin-ext">
+<link rel="stylesheet" href="/doks-theme/assets/css/style.css">
+<script type="text/javascript" async
+  src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+	</head>
+	<body class="blue" data-spy="scroll" data-target=".js-scrollspy">
+		
+	<div class="offcanvas visible-xs">
+		<ul class="offcanvas__nav">
+			
+				<li><a href="/syllabus">Syllabus</a></li>
+			
+				<li><a href="/officehours">Office Hours</a></li>
+			
+				<li><a href="/project">Project</a></li>
+			
+				<li><a href="/section">Section</a></li>
+			
+				<li><a href="/lecture">Lecture</a></li>
+			
+				<li><a href="/blog">Blog</a></li>
+			
+				<li><a href="/faq">FAQ</a></li>
+			
+		</ul><!-- /.offcanvas__nav -->
+	</div><!-- /.offcanvas -->
+
+
+
+	<header class="site-header">
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12">
+					
+						<a href="/" class="site-header__logo">
+							<img src="/doks-theme/assets/images/layout/logo.png">
+							CS230
+						</a>
+					
+					
+						<ul class="site-header__nav hidden-xs">
+							
+								<li><a href="/syllabus">Syllabus</a></li>
+							
+								<li><a href="/officehours">Office Hours</a></li>
+							
+								<li><a href="/project">Project</a></li>
+							
+								<li><a href="/section">Section</a></li>
+							
+								<li><a href="/lecture">Lecture</a></li>
+							
+								<li><a href="/blog">Blog</a></li>
+							
+								<li><a href="/faq">FAQ</a></li>
+							
+						</ul><!-- /.site-header__nav -->
+						<button class="offcanvas-toggle visible-xs">
+							<span></span>
+							<span></span>
+							<span></span>
+						</button><!-- /.offcanvas-toggle -->
+					
+				</div><!-- /.col -->
+			</div><!-- /.row -->
+		</div><!-- /.container -->
+	</header><!-- /.site-header -->
+
+
+		<div class="hero-subheader">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-7">
+						<div class="align-container" data-mh>
+							<div class="align-inner">
+								
+									<h1 class="hero-subheader__title">Classifying Images of Hand Signs</h1>
+								
+								
+									<p class="hero-subheader__desc">Defining a Convolutional Network and Loading Image Data</p>
+								
+								
+									
+										<a href="/blog/pytorch" class="btn btn--dark btn--rounded btn--w-icon btn--w-icon-left">
+											<i class="icon icon--arrow-left"></i>
+											Previous page
+										</a>
+									
+									
+										<a href="/blog/namedentity" class="btn btn--dark btn--rounded btn--w-icon">
+											<i class="icon icon--arrow-right"></i>
+											Next page
+										</a>
+									
+								
+								
+							</div><!-- /.align-inner -->
+						</div><!-- /.align-container -->
+					</div><!-- /.col -->
+						<div class="col-md-4 col-md-offset-1 hidden-xs hidden-sm">
+							<div class="align-container" data-mh>
+								<div class="align-inner">
+									<div class="hero-subheader__author">
+										<h4>Instructors</h4>
+                                                                               
+                                                                               
+                                                                                    <div class="instructor">
+                                        <a target="_blank" href="">
+                    <img class="headshot" src="/doks-theme/assets/images/headshot/kian.jpg" style="text-align:center;">
+                <div style="text-align:center;">Kian Katanforoosh<br>Instructor</div>
+	</a>
+        </div>
+    
+
+                                                                               
+                                                                                    <div class="instructor">
+                                        <a target="_blank" href="">
+                    <img class="headshot" src="/doks-theme/assets/images/headshot/andrew.jpg" style="text-align:center;">
+                <div style="text-align:center;">Andrew Ng<br>Instructor</div>
+	</a>
+        </div>
+    
+
+                                                                               
+
+                                                                               
+
+										<h4>Time and Location</h4>
+                                                                                <p>In person lectures are on Tuesdays 11:30am-1:20pm. <br> Hewlett Teaching Center 200.</p>
+									</div><!-- /.hero-subheader__author -->
+								</div><!-- /.align-inner -->
+							</div><!-- /.align-container -->
+						</div><!-- /.col -->
+				</div><!-- /.row -->
+			</div><!-- /.container -->
+		</div><!-- /.hero-subheader -->
+		<div class="section">
+			<div class="container">
+				<div class="row">
+					
+					<div class="col-md-7">
+						<div class="content">
+							<p>This post follows the <a href="/blog/tips">main post</a> announcing the CS230 Project Code Examples and the <a href="/blog/pytorch">PyTorch Introduction</a>. In this post, we go through an example from Computer Vision, in which we learn how to load images of hand signs and classify them.</p>
+
+<p>This tutorial is among a series explaining the code examples:</p>
+
+<ul>
+  <li><a href="/blog/tips">getting started: installation, getting started with the code for the projects</a></li>
+  <li><a href="/blog/pytorch">PyTorch Introduction: global structure of the PyTorch code examples</a></li>
+  <li>this post: predicting labels from images of hand signs</li>
+  <li><a href="/blog/namedentity">NLP: Named Entity Recognition (NER) tagging for sentences</a></li>
+</ul>
+
+<p><strong>Goals of this tutorial</strong></p>
+
+<ul>
+  <li>learn how to use PyTorch to load image data efficiently</li>
+  <li>specify a convolutional neural network</li>
+  <li>understand the key aspects of the code well-enough to modify it to suit your needs</li>
+</ul>
+
+<h2 id="problem-setup"><strong>Problem Setup</strong></h2>
+
+<p>We use images from deeplearning.ai’s SIGNS dataset that you have used in one of <a href="https://www.coursera.org/learn/deep-neural-network">Course 2</a>’s programming assignment. Each image from this dataset is a picture of a hand making a sign that represents a number between 1 and 6. It is 1080 training images and 120 test images. In our example, we use images scaled down to size <code class="language-plaintext highlighter-rouge">64x64</code>.</p>
+
+<h2 id="making-a-pytorch-dataset"><strong>Making a PyTorch Dataset</strong></h2>
+
+<p><code class="language-plaintext highlighter-rouge">torch.utils.data</code> provides some nifty functionality for loading data. We use <code class="language-plaintext highlighter-rouge">torch.utils.data.Dataset</code>, which is an abstract class representing a dataset. To make our own SIGNSDataset class, we need to inherit the <code class="language-plaintext highlighter-rouge">Dataset</code> class and override the following methods:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">__len__</code>: so that <code class="language-plaintext highlighter-rouge">len(dataset)</code> returns the size of the dataset</li>
+  <li><code class="language-plaintext highlighter-rouge">__getitem__</code>: to support indexing using <code class="language-plaintext highlighter-rouge">dataset[i]</code> to get the ith image</li>
+</ul>
+
+<p>We then define our class as below:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">Dataset</span><span class="p">,</span> <span class="n">DataLoader</span>
+
+<span class="k">class</span> <span class="nc">SIGNSDataset</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">,</span> <span class="n">transform</span><span class="p">):</span>      
+        <span class="c1">#store filenames
+</span>        <span class="bp">self</span><span class="p">.</span><span class="n">filenames</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">data_dir</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">filenames</span> <span class="o">=</span> <span class="p">[</span><span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">.</span><span class="n">filenames</span><span class="p">]</span>
+
+    <span class="c1">#the first character of the filename contains the label
+</span>    <span class="bp">self</span><span class="p">.</span><span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">filename</span><span class="p">.</span><span class="n">split</span><span class="p">(</span><span class="s">'/'</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span> <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">.</span><span class="n">filenames</span><span class="p">]</span>
+    <span class="bp">self</span><span class="p">.</span><span class="n">transform</span> <span class="o">=</span> <span class="n">transform</span>
+
+<span class="k">def</span> <span class="nf">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="c1">#return size of dataset
+</span>    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">filenames</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
+    <span class="c1">#open image, apply transforms and return with label
+</span>    <span class="n">image</span> <span class="o">=</span> <span class="n">Image</span><span class="p">.</span><span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">filenames</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>  <span class="c1"># PIL image
+</span>    <span class="n">image</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">transform</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">image</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">labels</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+</code></pre></div></div>
+
+<p>Notice that when we return an image-label pair using <code class="language-plaintext highlighter-rouge">__getitem__</code> we apply a <code class="language-plaintext highlighter-rouge">tranform</code> on the image. These transformations are a part of the <code class="language-plaintext highlighter-rouge">torchvision.transforms</code> <a href="https://pytorch.org/docs/master/torchvision/transforms.html">package</a>, that allow us to manipulate images easily. Consider the following composition of multiple transforms:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">train_transformer</span> <span class="o">=</span> <span class="n">transforms</span><span class="p">.</span><span class="n">Compose</span><span class="p">([</span>
+    <span class="n">transforms</span><span class="p">.</span><span class="n">Resize</span><span class="p">(</span><span class="mi">64</span><span class="p">),</span>              <span class="c1"># resize the image to 64x64 
+</span>    <span class="n">transforms</span><span class="p">.</span><span class="n">RandomHorizontalFlip</span><span class="p">(),</span>  <span class="c1"># randomly flip image horizontally
+</span>    <span class="n">transforms</span><span class="p">.</span><span class="n">ToTensor</span><span class="p">()])</span>             <span class="c1"># transform it into a PyTorch Tensor
+</span></code></pre></div></div>
+
+<p>When we apply <code class="language-plaintext highlighter-rouge">self.transform(image)</code> in <code class="language-plaintext highlighter-rouge">__getitem__</code>, we pass it through the above transformations before using it as a training example. The final output is a PyTorch Tensor. To augment the dataset during training, we also use the <code class="language-plaintext highlighter-rouge">RandomHorizontalFlip</code> transform when loading the image. We can specify a similar <code class="language-plaintext highlighter-rouge">eval_transformer</code> for evaluation without the random flip. To load a <code class="language-plaintext highlighter-rouge">Dataset</code> object for the different splits of our data, we simply use:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">train_dataset</span> <span class="o">=</span> <span class="n">SIGNSDataset</span><span class="p">(</span><span class="n">train_data_path</span><span class="p">,</span> <span class="n">train_transformer</span><span class="p">)</span>
+<span class="n">val_dataset</span> <span class="o">=</span> <span class="n">SIGNSDataset</span><span class="p">(</span><span class="n">val_data_path</span><span class="p">,</span> <span class="n">eval_transformer</span><span class="p">)</span>
+<span class="n">test_dataset</span> <span class="o">=</span> <span class="n">SIGNSDataset</span><span class="p">(</span><span class="n">test_data_path</span><span class="p">,</span> <span class="n">eval_transformer</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="loading-batches-of-data"><strong>Loading Batches of Data</strong></h2>
+
+<p><code class="language-plaintext highlighter-rouge">torch.utils.data.DataLoader</code> provides an iterator that takes in a <code class="language-plaintext highlighter-rouge">Dataset</code> object and performs batching, shuffling and loading of the data. This is crucial when images are big in size and take time to load. In such a case, the GPU can be left idling while the CPU fetches the images from file and then applies the transforms. In contrast, the DataLoader class (using multiprocessing) fetches the data asynchronously and prefetches batches to be sent to the GPU. Initialising the <code class="language-plaintext highlighter-rouge">DataLoader</code> is quite easy:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">train_dataloader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">SIGNSDataset</span><span class="p">(</span><span class="n">train_data_path</span><span class="p">,</span> <span class="n">train_transformer</span><span class="p">),</span> 
+                   <span class="n">batch_size</span><span class="o">=</span><span class="n">hyperparams</span><span class="p">.</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                   <span class="n">num_workers</span><span class="o">=</span><span class="n">hyperparams</span><span class="p">.</span><span class="n">num_workers</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>We can then iterate through batches of examples as follows:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="n">train_batch</span><span class="p">,</span> <span class="n">labels_batch</span> <span class="ow">in</span> <span class="n">train_dataloader</span><span class="p">:</span>
+    <span class="c1"># wrap Tensors in Variables
+</span>    <span class="n">train_batch</span><span class="p">,</span> <span class="n">labels_batch</span> <span class="o">=</span> <span class="n">Variable</span><span class="p">(</span><span class="n">train_batch</span><span class="p">),</span> <span class="n">Variable</span><span class="p">(</span><span class="n">labels_batch</span><span class="p">)</span>
+
+    <span class="c1"># pass through model, perform backpropagation and updates
+</span>    <span class="n">output_batch</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">train_batch</span><span class="p">)</span>
+    <span class="p">...</span>
+</code></pre></div></div>
+
+<p>Applying transformations on the data loads them as PyTorch Tensors. We wrap them in PyTorch Variables before passing them into the model. The <code class="language-plaintext highlighter-rouge">for</code> loop ends after one pass over the data, i.e. after one epoch. It can be reused again for another epoch without any changes. We can use similar data loaders for validation and test data.</p>
+
+<h2 id="convolutional-network-model"><strong>Convolutional Network Model</strong></h2>
+
+<p>Now that we have figured out how to load our images, let’s have a look at the pièce de résistance- the CNN model. As mentioned in the <a href="/blog/pytorch">previous</a> post, we first define the components of our model, followed by its functional form. Let’s have a look at the <code class="language-plaintext highlighter-rouge">__init__</code> function for our model that takes in a <code class="language-plaintext highlighter-rouge">3x64x64</code> image:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="n">nn</span>
+<span class="kn">import</span> <span class="nn">torch.nn.functional</span> <span class="k">as</span> <span class="n">F</span>
+
+<span class="k">class</span> <span class="nc">Net</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1">#we define convolutional layers 
+</span>        <span class="bp">self</span><span class="p">.</span><span class="n">conv1</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="n">in_channels</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">out_channels</span> <span class="o">=</span> <span class="mi">32</span><span class="p">,</span> <span class="n">kernel_size</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">strid</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">padding</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">bn1</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">BatchNorm2d</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">conv2</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="n">in_channels</span> <span class="o">=</span> <span class="mi">32</span><span class="p">,</span> <span class="n">out_channels</span> <span class="o">=</span> <span class="mi">64</span><span class="p">,</span> <span class="n">kernel_size</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">stride</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">padding</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">bn2</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">BatchNorm2d</span><span class="p">(</span><span class="mi">64</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">conv3</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="n">in_channels</span> <span class="o">=</span> <span class="mi">64</span><span class="p">,</span> <span class="n">in_channels</span> <span class="o">=</span> <span class="mi">128</span><span class="p">,</span> <span class="n">kernel_size</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">stride</span>  <span class="mi">1</span><span class="p">,</span> <span class="n">padding</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">bn3</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">BatchNorm2d</span><span class="p">(</span><span class="mi">128</span><span class="p">)</span>
+
+    <span class="c1">#2 fully connected layers to transform the output of the convolution layers to the final output
+</span>    <span class="bp">self</span><span class="p">.</span><span class="n">fc1</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">in_features</span> <span class="o">=</span> <span class="mi">8</span><span class="o">*</span><span class="mi">8</span><span class="o">*</span><span class="mi">128</span><span class="p">,</span> <span class="n">out_features</span> <span class="o">=</span> <span class="mi">128</span><span class="p">)</span>
+    <span class="bp">self</span><span class="p">.</span><span class="n">fcbn1</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">BatchNorm1d</span><span class="p">(</span><span class="mi">128</span><span class="p">)</span>
+    <span class="bp">self</span><span class="p">.</span><span class="n">fc2</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">in_features</span> <span class="o">=</span> <span class="mi">128</span><span class="p">,</span> <span class="n">out_features</span> <span class="o">=</span> <span class="mi">6</span><span class="p">)</span>       
+    <span class="bp">self</span><span class="p">.</span><span class="n">dropout_rate</span> <span class="o">=</span> <span class="n">hyperparams</span><span class="p">.</span><span class="n">dropout_rate</span>
+</code></pre></div></div>
+
+<p>The first parameter to the convolutional filter <code class="language-plaintext highlighter-rouge">nn.Conv2d</code> is the number of input channels, the second is the number of output channels, and the third is the size of the square filter (<code class="language-plaintext highlighter-rouge">3x3</code> in this case). Similarly, the batch normalisation layer takes as input the number of channels for 2D images and the number of features in the 1D case. The fully connected <code class="language-plaintext highlighter-rouge">Linear</code> layers take the input and output dimensions.</p>
+
+<p>In this example, we explicitly specify each of the values. In order to make the initialisation of the model more flexible, you can pass in parameters such as image size to the <code class="language-plaintext highlighter-rouge">__init__</code> function and use that to specify the sizes. You must be very careful when specifying parameter dimensions, since mismatches will lead to errors in the forward propagation. Let’s now look at the forward propagation:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
+    <span class="c1">#we apply the convolution layers, followed by batch normalisation, 
+</span>    <span class="c1">#maxpool and relu x 3
+</span>    <span class="n">s</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">bn1</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">conv1</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>        <span class="c1"># batch_size x 32 x 64 x 64
+</span>    <span class="n">s</span> <span class="o">=</span> <span class="n">F</span><span class="p">.</span><span class="n">relu</span><span class="p">(</span><span class="n">F</span><span class="p">.</span><span class="n">max_pool2d</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>     <span class="c1"># batch_size x 32 x 32 x 32
+</span>    <span class="n">s</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">bn2</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">conv2</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>        <span class="c1"># batch_size x 64 x 32 x 32
+</span>    <span class="n">s</span> <span class="o">=</span> <span class="n">F</span><span class="p">.</span><span class="n">relu</span><span class="p">(</span><span class="n">F</span><span class="p">.</span><span class="n">max_pool2d</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>     <span class="c1"># batch_size x 64 x 16 x 16
+</span>    <span class="n">s</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">bn3</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">conv3</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>        <span class="c1"># batch_size x 128 x 16 x 16
+</span>    <span class="n">s</span> <span class="o">=</span> <span class="n">F</span><span class="p">.</span><span class="n">relu</span><span class="p">(</span><span class="n">F</span><span class="p">.</span><span class="n">max_pool2d</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>     <span class="c1"># batch_size x 128 x 8 x 8
+</span>
+    <span class="c1">#flatten the output for each image
+</span>    <span class="n">s</span> <span class="o">=</span> <span class="n">s</span><span class="p">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="o">*</span><span class="mi">8</span><span class="o">*</span><span class="mi">128</span><span class="p">)</span>  <span class="c1"># batch_size x 8*8*128
+</span>
+    <span class="c1">#apply 2 fully connected layers with dropout
+</span>    <span class="n">s</span> <span class="o">=</span> <span class="n">F</span><span class="p">.</span><span class="n">dropout</span><span class="p">(</span><span class="n">F</span><span class="p">.</span><span class="n">relu</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">fcbn1</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">fc1</span><span class="p">(</span><span class="n">s</span><span class="p">))),</span> 
+    <span class="n">p</span><span class="o">=</span><span class="bp">self</span><span class="p">.</span><span class="n">dropout_rate</span><span class="p">,</span> <span class="n">training</span><span class="o">=</span><span class="bp">self</span><span class="p">.</span><span class="n">training</span><span class="p">)</span>    <span class="c1"># batch_size x 128
+</span>    <span class="n">s</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">fc2</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>                                     <span class="c1"># batch_size x 6
+</span>
+    <span class="k">return</span> <span class="n">F</span><span class="p">.</span><span class="n">log_softmax</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>We pass the image through 3 layers of <code class="language-plaintext highlighter-rouge">conv &gt; bn &gt; max_pool &gt; relu</code>, followed by flattening the image and then applying 2 fully connected layers. In flattening the output of the convolution layers to a single vector per image, we use <code class="language-plaintext highlighter-rouge">s.view(-1, 8*8*128)</code>. Here the size <code class="language-plaintext highlighter-rouge">-1</code> is implicitly inferred from the other dimension (batch size in this case). The output is a log_softmax over the 6 labels for each example in the batch. We use log_softmax since it is numerically more stable than first taking the softmax and then the log.</p>
+
+<p>And that’s it! We use an appropriate loss function (Negative Loss Likelihood, since the output is already softmax-ed and log-ed) and train the model as discussed in the previous post. Remember, you can set a breakpoint using <code class="language-plaintext highlighter-rouge">pdb.set_trace()</code> at any place in the forward function, examine the dimensions of the Variables, tinker around and diagnose what’s going wrong. That’s the beauty of PyTorch :).</p>
+
+<h2 id="resources"><strong>Resources</strong></h2>
+
+<ul>
+  <li><a href="https://pytorch.org/tutorials/beginner/data_loading_tutorial.html">Data Loading and Processing Tutorial</a>: an official tutorial from the PyTorch website</li>
+  <li><a href="https://github.com/pytorch/examples/blob/master/imagenet/main.py">ImageNet</a>: Code for training on ImageNet in PyTorch</li>
+</ul>
+
+<p>That concludes the description of the PyTorch Vision code example. You can proceed to the <a href="/blog/namedentity">NLP</a> example to understand how we load data and define models for text.</p>
+
+						</div><!-- /.content -->
+					</div><!-- /.col -->
+					<div class="col-md-4 col-md-offset-1">
+						<div class="sections-list-wrapper">
+							<div class="sections-list js-sections js-affix js-scrollspy hidden-xs hidden-sm"></div><!-- /.sections-list -->
+						</div>
+					</div><!-- /.col -->
+					
+				</div><!-- /.row -->
+			</div><!-- /.container -->
+		</div><!-- /.section -->
+		
+		<div class="js-footer-area">
+			
+				<nav class="page-nav">
+					<div class="container">
+						<div class="row">
+							<div class="col-xs-12">
+								
+									<a href="/blog/pytorch" class="page-nav__item page-nav__item--prev">
+										<i class="icon icon--arrow-left"></i>
+										Previous page
+									</a><!-- /.page-nav__item -->
+								
+								
+									<a href="/blog/namedentity" class="page-nav__item page-nav__item--next">
+										Next page
+										<i class="icon icon--arrow-right"></i>
+									</a><!-- /.page-nav__item -->
+								
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.container -->
+				</nav><!-- /.page-nav --> 
+			<div class="micro-nav">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12">
+				<a href="/blog" class="micro-nav__back">
+					<i class="icon icon--arrow-left"></i>
+					Back to Blog
+				</a><!-- /.micro-nav__back -->
+			</div><!-- /.col -->
+		</div><!-- /.row -->
+	</div><!-- /.container -->
+</div><!-- /.micro-nav -->
+
+			
+			
+	<footer class="site-footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-6">
+					
+					
+						<!-- <hr> -->
+						<p class="site-footer__copyright">Copyright &copy; 2024. - Stanford University <br>All rights reserved.</p>
+					
+				</div><!-- /.col -->
+				
+			</div><!-- /.row -->
+		</div><!-- /.container -->
+	</footer><!-- /.site-footer -->
+
+
+<script src="/doks-theme/assets/js/vendor/jquery.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/vendor/bootstrap/affix.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/vendor/bootstrap/scrollspy.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/vendor/matchHeight.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/scripts.min.js"></script>
+
+		</div><!-- /.js-footer-area -->
+	</body>
+</html>

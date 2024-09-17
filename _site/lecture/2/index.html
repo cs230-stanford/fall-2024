@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, minimum-scale=1.0">
+<title>Lecture 2</title>
+
+	<meta name="description" content="Add short description.">
+
+
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat:400,400i,500,500i,700,700i|Noto+Sans:400,400i,700,700i|Source+Code+Pro&amp;subset=latin-ext">
+<link rel="stylesheet" href="/doks-theme/assets/css/style.css">
+<script type="text/javascript" async
+  src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+	</head>
+	<body class="blue" data-spy="scroll" data-target=".js-scrollspy">
+		
+	<div class="offcanvas visible-xs">
+		<ul class="offcanvas__nav">
+			
+				<li><a href="/syllabus">Syllabus</a></li>
+			
+				<li><a href="/officehours">Office Hours</a></li>
+			
+				<li><a href="/project">Project</a></li>
+			
+				<li><a href="/section">Section</a></li>
+			
+				<li><a href="/lecture">Lecture</a></li>
+			
+				<li><a href="/blog">Blog</a></li>
+			
+				<li><a href="/faq">FAQ</a></li>
+			
+		</ul><!-- /.offcanvas__nav -->
+	</div><!-- /.offcanvas -->
+
+
+
+	<header class="site-header">
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12">
+					
+						<a href="/" class="site-header__logo">
+							<img src="/doks-theme/assets/images/layout/logo.png">
+							CS230
+						</a>
+					
+					
+						<ul class="site-header__nav hidden-xs">
+							
+								<li><a href="/syllabus">Syllabus</a></li>
+							
+								<li><a href="/officehours">Office Hours</a></li>
+							
+								<li><a href="/project">Project</a></li>
+							
+								<li><a href="/section">Section</a></li>
+							
+								<li><a href="/lecture">Lecture</a></li>
+							
+								<li><a href="/blog">Blog</a></li>
+							
+								<li><a href="/faq">FAQ</a></li>
+							
+						</ul><!-- /.site-header__nav -->
+						<button class="offcanvas-toggle visible-xs">
+							<span></span>
+							<span></span>
+							<span></span>
+						</button><!-- /.offcanvas-toggle -->
+					
+				</div><!-- /.col -->
+			</div><!-- /.row -->
+		</div><!-- /.container -->
+	</header><!-- /.site-header -->
+
+
+		<div class="hero-subheader">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-7">
+						<div class="align-container" data-mh>
+							<div class="align-inner">
+								
+									<h1 class="hero-subheader__title">Lecture 2</h1>
+								
+								
+									<p class="hero-subheader__desc">Add short description.</p>
+								
+								
+								
+							</div><!-- /.align-inner -->
+						</div><!-- /.align-container -->
+					</div><!-- /.col -->
+						<div class="col-md-4 col-md-offset-1 hidden-xs hidden-sm">
+							<div class="align-container" data-mh>
+								<div class="align-inner">
+									<div class="hero-subheader__author">
+										<h4>Instructors</h4>
+                                                                               
+                                                                               
+                                                                                    <div class="instructor">
+                                        <a target="_blank" href="">
+                    <img class="headshot" src="/doks-theme/assets/images/headshot/kian.jpg" style="text-align:center;">
+                <div style="text-align:center;">Kian Katanforoosh<br>Instructor</div>
+	</a>
+        </div>
+    
+
+                                                                               
+                                                                                    <div class="instructor">
+                                        <a target="_blank" href="">
+                    <img class="headshot" src="/doks-theme/assets/images/headshot/andrew.jpg" style="text-align:center;">
+                <div style="text-align:center;">Andrew Ng<br>Instructor</div>
+	</a>
+        </div>
+    
+
+                                                                               
+
+                                                                               
+
+										<h4>Time and Location</h4>
+                                                                                <p>In person lectures are on Tuesdays 11:30am-1:20pm. <br> Hewlett Teaching Center 200.</p>
+									</div><!-- /.hero-subheader__author -->
+								</div><!-- /.align-inner -->
+							</div><!-- /.align-container -->
+						</div><!-- /.col -->
+				</div><!-- /.row -->
+			</div><!-- /.container -->
+		</div><!-- /.hero-subheader -->
+		<div class="section">
+			<div class="container">
+				<div class="row">
+					
+					<div class="col-md-12">
+						<div class="content">
+							<h1 id="lecture-2-full-cycle-deep-learning">Lecture 2: Full Cycle Deep Learning</h1>
+
+<p>In this lecture, we will see how to manage a Deep Learning project. We will go from the early project idea to the maintenance of the associated Deep Learning product.</p>
+
+<p>Most of this knowledge can be acquired through years of experience working and leading Deep Learning projects in research or in the industry. You can consider this lecture as a crash course based on Professor Ng’s experience.</p>
+
+<p>During this lecture, we will use as an illustration the example of: developing a door lock that unlocks itself when it identifies your face through a camera. To achieve this task, you need to store a reference picture of yourself. You will have to train a Neural Network to tell whether two input images are from the same person, ie you. This is a binary classification task. If the images are of the same person, the system should open the door.</p>
+
+<h2 id="0-project-timeline">0. Project Timeline</h2>
+
+<p>Projects can be carried for very different amounts of time based on the complexity and the quantity of research involved in the project. However, most of them can be divided into the following steps:</p>
+
+<ol>
+  <li>
+    <p>Project selection</p>
+  </li>
+  <li>
+    <p>Data acquisition</p>
+  </li>
+  <li>
+    <p>Deep Learning model design</p>
+  </li>
+  <li>
+    <p>Model training</p>
+  </li>
+  <li>
+    <p>Model testing</p>
+  </li>
+  <li>
+    <p>Deployment</p>
+  </li>
+  <li>
+    <p>Maintenance</p>
+  </li>
+</ol>
+
+<p>We will describe in more details each step in the following sections.</p>
+
+<h2 id="1-project-selection">1. Project selection</h2>
+
+<p><img src="project_selection.jpg" alt="Alt text" /></p>
+
+<p>Before selecting a project and investing time and money in it, there are some criteria that you should consider:</p>
+
+<ul>
+  <li>
+    <p>Interest: of course, you would like to pick a project that interests you!</p>
+  </li>
+  <li>
+    <p>Impact: how will your project impact people’s lives? Will your project help people?</p>
+  </li>
+  <li>
+    <p>Data: are there already available datasets? If not, how can you acquire data? At this stage, you need to evaluate how much data you need and how much time (and money) it would take to acquire it. This step also involves thinking about the kind of preprocessing you would need to perform on your data.</p>
+  </li>
+  <li>
+    <p>Domain knowledge:  if your project belongs to a domain you are familiar with, you can provide a unique insight on the problem that other Deep Learning engineers do not necessarily have.</p>
+  </li>
+</ul>
+
+<p>Before committing to a project, it is important to evaluate its feasibility. You do not want to spend months acquiring data if you realize afterwards that your project had zero chance of success.
+The issue is that many companies’ CEOs are not aware of what Deep Learning can or cannot do. Good insights regarding the limits of Deep Learning can be obtained through years of experience. But you can get a good sense of it by staying updated about the state-of-the-art: regularly reading the most cited recent papers is a good idea.</p>
+
+<p>Moreover, a quick way to assess the feasibility of a project is to evaluate human performances on this task. If humans can do this task well given the same inputs, then there is a good chance that you could train a Deep Learning model to accomplish this task.</p>
+
+<p>In our example, humans are very good at face recognition. We should be able to train a Neural Network to do the same.</p>
+
+<h2 id="2-acquiring-data">2. Acquiring Data</h2>
+
+<p><img src="data_acquisition1.jpg" alt="Alt text" /></p>
+
+<p>Even if having more data never hurts, big data is not compulsory for Deep Learning projects. You may have some prior knowledge having worked on this (or a similar) task that tells you whether or not having a lot of a data is a prerequisite.</p>
+
+<p>But if you do not have prior knowledge, it is better to work at first on a smaller dataset collected in a few days. This will allow you to iterate more quickly: get a model running and identify possible problems.</p>
+
+<p>You may become aware of inherent issues with your dataset or the acquisition process. It is preferable to know these things after a few days rather than months of useless data acquisition.</p>
+
+<p>In our example about face recognition you need to collect a dataset of face pictures. In the end, you will probably need a dataset in the millions of samples. But if you start by spending two days scrapping internet for pictures of faces this could already help you identify early issues. For example, you may realize that because your dataset is only composed of daylight pictures, your algorithm fails at recognizing matching pairs when one picture has been taken at sunset. Then you will know that you probably need to include more pictures taken with low light.</p>
+
+<h2 id="3-deep-learning-model-design">3. Deep Learning model design</h2>
+
+<p><img src="model_design.jpg" alt="Alt text" /></p>
+
+<p>What Neural Networks architecture is the most suited for your task?</p>
+
+<p>This step involves doing literature review. There will be a specific class dedicated to running an efficient literature review.</p>
+
+<p>In our example, the inputs are images: a Convolutional Neural Network will be the most suited architecture. We will see in more details in class what architectures to choose for the purpose of face recognition; and how to train the model.</p>
+
+<h2 id="4-train-model">4. Train model</h2>
+
+<p><img src="model_training.jpg" alt="Alt text" /></p>
+
+<p>This step consists of several steps, namely, we first need to shuffle and split our
+dataset to train/validation/test datasets. The ratio of this split depends
+on the size of the dataset at hand. In traditional machine learning a 60/20/20
+split is a reasonable split. However, nowadays datasets are much larger
+than before. Because of this growth in the size of datasets it makes 
+sense to assign lower portions of the dataset to the validation and test
+tasks, and reserve most of the dataset for training. For example if we
+have a dataset of size 1M then the split 90/5/5 will be a good choice.</p>
+
+<p>The next step is initializing the weights in our model. As we will have 
+a session dedicated to this topic we will skip this step for now.</p>
+
+<p>Before diving into the training process, it is very important to make 
+sure that our model makes sense and our code is bug free. One way for
+testing this is to first try to overfit and get perfect results on a 
+handful number of training examples. If we fail to overfit to this small
+set of training examples then, we will realize that there is something
+wrong with our code. This method will save our time and effort.</p>
+
+<p>Another step in training is determining the best hyperparameters for our
+model such as learning rate, number of hidden layers, etc. We will
+elaborate on this in one of the Coursera videos.</p>
+
+<h2 id="5-test-model">5. Test model</h2>
+
+<p><img src="model_testing.jpg" alt="Alt text" /></p>
+
+<p>To be able to quantify your algorithm’s performance, you need to choose an evaluation metric to rank your models. You can additionally choose some satisfying metrics: these metrics tell you whether or not you should reject a given model.</p>
+
+<p>For our example of face detection, you may want to rank your models based on accuracy: the percentage of times the model makes a good prediction. However, you can not allow your model to make false positive predictions: this would allow a stranger to enter your home! So you probably want the false positive rate to be less than 0.01%</p>
+
+<p>Most of the time, a Deep Learning model will not work the 1st time. If your model does not satisfy your requirements, you need to run some error analysis to evaluate why your model is doing badly. This may involve iterating a couple of times over steps 2 and 5.</p>
+
+<p>In our example, you may realize that in real life, your face detection algorithm is performing poorly on night pictures. You may want to go back to data acquisition and obtain more pictures taken at darker hours of the day or include a preprocessing of night pictures.</p>
+
+<h2 id="6-deployment">6. Deployment</h2>
+
+<p><img src="deployment1.jpg" alt="Alt text" /></p>
+
+<p>Once you have a working Deep Learning model, you will want to think about how to deploy it in the real world. At this step, you will need to work with the whole system to make it fully autonomous and robust.</p>
+
+<p>In our example, most of the time nothing is happening at the front door. It would be too power-expensive to run a face recognition Neural Network non-stop 24/7. Instead you can think about adding an activity detection subsystem. In the best case, the subsystem will only trigger your face recognition network if there is a human standing at the door. This will drastically decrease the power consumption of the whole system.</p>
+
+<p>A question arises: will you build a Machine Learning or non-Machine Learning activity detection system?</p>
+
+<p>You could train a small neural network to recognize when a human is in front of the door. This neural network would be a lot smaller and consume much less energy than the face recognition network. Or you could use a non-Machine Learning approach. The activity detection can be an image processing algorithm checking changes in the frame pixels. If the frame pixels’ change is greater than a given threshold then the face recognition network is triggered.</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Type</td>
+      <td>non-ML</td>
+      <td>ML</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Pros</td>
+      <td>Easy to implement</td>
+      <td>More accurate</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
+    <tr>
+      <td> </td>
+      <td>More robust</td>
+      <td>Less false positives</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Cons</td>
+      <td>Less accurate</td>
+      <td>Longer to train and need data</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
+    <tr>
+      <td> </td>
+      <td>More false positives</td>
+      <td>Sensible to data mismatch</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>In this case, it would probably be better to implement the “quick and dirty” non-Machine Learning approach first. it is easy to conceive, and it allows to try the whole pipeline quickly. Moreover, it can be more robust: this algorithm is independent of the training data. If your system ends up being deployed in a different country where the light angles are different, the Deep Learning approach may fail as your model has never seen pictures lit this way. We call this a data mismatch problem.</p>
+
+<p>You can always in a second time evaluate the performances of the non-Machine Learning approach. If the number of false positives is too high, the subsystem will trigger the face recognition network too often. This could lead to a huge waste of energy, and in that case, you may want to switch to the machine learning approach instead.</p>
+
+<p>Finally: where to run your face recognition model? Do you want to run it on a remote server through wifi: cloud detector? Or do you want to run it on an onboard chip directly on your door: edge detector?</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Type</td>
+      <td>Cloud detector</td>
+      <td>Edge detector</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Pros</td>
+      <td>Larger model</td>
+      <td>Faster response</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
+    <tr>
+      <td> </td>
+      <td>User feedback</td>
+      <td>Privacy</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
+    <tr>
+      <td> </td>
+      <td>Easy Update</td>
+      <td>No Wifi needed</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Cons</td>
+      <td>Sensible to networks problem</td>
+      <td>Hard to update</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="7-maintenance">7. Maintenance</h2>
+
+<p><img src="maintenance.jpg" alt="Alt text" /></p>
+
+<p>Maintenance of the model is especially important in industry applications. 
+Imagine our model takes as input some sensor readings. Sensors might lose 
+their accuracy over time, a phenomenon known as encrustment of sensor. As 
+a result, a measured 100 degrees might not be 100 degrees anymore. This implies
+that the inputs to our model might change over time. Consequently, it is
+important keep the model updated and try to adapt to the change of environment,
+which we refer to as model maintenance.</p>
+
+						</div><!-- /.content -->
+					</div>
+					
+				</div><!-- /.row -->
+			</div><!-- /.container -->
+		</div><!-- /.section -->
+		
+		<div class="js-footer-area">
+			
+			
+	<footer class="site-footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-6">
+					
+					
+						<!-- <hr> -->
+						<p class="site-footer__copyright">Copyright &copy; 2024. - Stanford University <br>All rights reserved.</p>
+					
+				</div><!-- /.col -->
+				
+			</div><!-- /.row -->
+		</div><!-- /.container -->
+	</footer><!-- /.site-footer -->
+
+
+<script src="/doks-theme/assets/js/vendor/jquery.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/vendor/bootstrap/affix.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/vendor/bootstrap/scrollspy.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/vendor/matchHeight.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/scripts.min.js"></script>
+
+		</div><!-- /.js-footer-area -->
+	</body>
+</html>

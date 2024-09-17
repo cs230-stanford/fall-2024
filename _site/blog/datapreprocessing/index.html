@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, minimum-scale=1.0">
+<title>Data preprocessing</title>
+
+
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat:400,400i,500,500i,700,700i|Noto+Sans:400,400i,700,700i|Source+Code+Pro&amp;subset=latin-ext">
+<link rel="stylesheet" href="/doks-theme/assets/css/style.css">
+<script type="text/javascript" async
+  src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+	</head>
+	<body class="blue" data-spy="scroll" data-target=".js-scrollspy">
+		
+	<div class="offcanvas visible-xs">
+		<ul class="offcanvas__nav">
+			
+				<li><a href="/syllabus">Syllabus</a></li>
+			
+				<li><a href="/officehours">Office Hours</a></li>
+			
+				<li><a href="/project">Project</a></li>
+			
+				<li><a href="/section">Section</a></li>
+			
+				<li><a href="/lecture">Lecture</a></li>
+			
+				<li><a href="/blog">Blog</a></li>
+			
+				<li><a href="/faq">FAQ</a></li>
+			
+		</ul><!-- /.offcanvas__nav -->
+	</div><!-- /.offcanvas -->
+
+
+
+	<header class="site-header">
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12">
+					
+						<a href="/" class="site-header__logo">
+							<img src="/doks-theme/assets/images/layout/logo.png">
+							CS230
+						</a>
+					
+					
+						<ul class="site-header__nav hidden-xs">
+							
+								<li><a href="/syllabus">Syllabus</a></li>
+							
+								<li><a href="/officehours">Office Hours</a></li>
+							
+								<li><a href="/project">Project</a></li>
+							
+								<li><a href="/section">Section</a></li>
+							
+								<li><a href="/lecture">Lecture</a></li>
+							
+								<li><a href="/blog">Blog</a></li>
+							
+								<li><a href="/faq">FAQ</a></li>
+							
+						</ul><!-- /.site-header__nav -->
+						<button class="offcanvas-toggle visible-xs">
+							<span></span>
+							<span></span>
+							<span></span>
+						</button><!-- /.offcanvas-toggle -->
+					
+				</div><!-- /.col -->
+			</div><!-- /.row -->
+		</div><!-- /.container -->
+	</header><!-- /.site-header -->
+
+
+		<div class="hero-subheader">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-7">
+						<div class="align-container" data-mh>
+							<div class="align-inner">
+								
+									<h1 class="hero-subheader__title">Data preprocessing</h1>
+								
+								
+								
+									
+									
+										<a href="/blog/split" class="btn btn--dark btn--rounded btn--w-icon">
+											<i class="icon icon--arrow-right"></i>
+											Next page
+										</a>
+									
+								
+								
+							</div><!-- /.align-inner -->
+						</div><!-- /.align-container -->
+					</div><!-- /.col -->
+						<div class="col-md-4 col-md-offset-1 hidden-xs hidden-sm">
+							<div class="align-container" data-mh>
+								<div class="align-inner">
+									<div class="hero-subheader__author">
+										<h4>Instructors</h4>
+                                                                               
+                                                                               
+                                                                                    <div class="instructor">
+                                        <a target="_blank" href="">
+                    <img class="headshot" src="/doks-theme/assets/images/headshot/kian.jpg" style="text-align:center;">
+                <div style="text-align:center;">Kian Katanforoosh<br>Instructor</div>
+	</a>
+        </div>
+    
+
+                                                                               
+                                                                                    <div class="instructor">
+                                        <a target="_blank" href="">
+                    <img class="headshot" src="/doks-theme/assets/images/headshot/andrew.jpg" style="text-align:center;">
+                <div style="text-align:center;">Andrew Ng<br>Instructor</div>
+	</a>
+        </div>
+    
+
+                                                                               
+
+                                                                               
+
+										<h4>Time and Location</h4>
+                                                                                <p>In person lectures are on Tuesdays 11:30am-1:20pm. <br> Hewlett Teaching Center 200.</p>
+									</div><!-- /.hero-subheader__author -->
+								</div><!-- /.align-inner -->
+							</div><!-- /.align-container -->
+						</div><!-- /.col -->
+				</div><!-- /.row -->
+			</div><!-- /.container -->
+		</div><!-- /.hero-subheader -->
+		<div class="section">
+			<div class="container">
+				<div class="row">
+					
+					<div class="col-md-7">
+						<div class="content">
+							<h2 id="part-i---image-data-preprocessing"><strong>Part I - Image data preprocessing</strong></h2>
+
+<p>In this part, you will use the popular package “skimage” to preprocess and augment an image before sending it to a neural network coded in Keras.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">from</span> <span class="nn">keras.models</span> <span class="kn">import</span> <span class="n">Sequential</span>
+<span class="kn">from</span> <span class="nn">keras</span> <span class="kn">import</span> <span class="n">optimizers</span>
+<span class="kn">from</span> <span class="nn">keras.utils</span> <span class="kn">import</span> <span class="n">np_utils</span>
+<span class="kn">from</span> <span class="nn">keras.models</span> <span class="kn">import</span> <span class="n">Sequential</span>
+<span class="kn">from</span> <span class="nn">keras.layers</span> <span class="kn">import</span> <span class="n">Dense</span><span class="p">,</span> <span class="n">Conv2D</span><span class="p">,</span> <span class="n">Embedding</span><span class="p">,</span> <span class="n">Activation</span><span class="p">,</span> <span class="n">MaxPooling2D</span><span class="p">,</span> <span class="n">Dropout</span>
+<span class="kn">from</span> <span class="nn">keras.layers</span> <span class="kn">import</span> <span class="n">Flatten</span><span class="p">,</span> <span class="n">LSTM</span><span class="p">,</span> <span class="n">ZeroPadding2D</span><span class="p">,</span> <span class="n">BatchNormalization</span><span class="p">,</span> <span class="n">MaxPooling2D</span>
+
+<span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+</code></pre></div></div>
+
+<p><strong>Question 1</strong>: Use skimage to load your “iguana.jpg” and display it in your notebook.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">skimage.measure</span> <span class="kn">import</span> <span class="n">compare_ssim</span> <span class="k">as</span> <span class="n">ssim</span>
+<span class="kn">from</span> <span class="nn">skimage</span> <span class="kn">import</span> <span class="n">io</span>
+<span class="kn">from</span> <span class="nn">skimage.transform</span> <span class="kn">import</span> <span class="n">resize</span>
+
+<span class="c1"># Loading the image
+###START CODE HERE ###
+</span>
+<span class="c1">###END CODE HERE ###
+</span></code></pre></div></div>
+
+<p><strong>Question 2</strong>: Use skimage to zoom on the face of the iguana. Display the image.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#Zoom image
+###START CODE HERE ###
+</span>
+<span class="c1">###END CODE HERE ###
+</span></code></pre></div></div>
+
+<p><strong>Question 3</strong>: Use skimage to rescale the image to 20% of the initial size of the image. Display the image. Rescaling means lowering the resolution of the image. Remember that in class we talked about finding the computation/accuracy trade-off by showing different resolutions of the same image to humans and figuring out what is the minimum resolution leading to the maximum human accuracy.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#Rescale image to 25% of the initial size
+###START CODE HERE ###
+</span>
+<span class="c1">###END CODE HERE ###
+</span></code></pre></div></div>
+
+<p><strong>Question 4</strong>: Use skimage to add random noise to the image. Display the image.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#Add random noise
+###START CODE HERE ###
+</span>
+<span class="c1">###END CODE HERE ###
+</span></code></pre></div></div>
+
+<p><strong>Question 5</strong>: Use skimage to rotate the image by 45 degrees.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#Rotate
+###START CODE HERE ###
+</span>
+<span class="c1">###END CODE HERE ###
+</span></code></pre></div></div>
+
+<p><strong>Question 6</strong>: Use skimage to flip the image horizontaly and verticaly. Display the image.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#Horizontal flip
+###START CODE HERE ###
+</span>
+<span class="c1">###END CODE HERE ###
+</span></code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#Vertical flip
+###START CODE HERE ###
+</span>
+<span class="c1">###END CODE HERE ###
+</span></code></pre></div></div>
+
+<p><strong>Question 7</strong>: (Optional) Use skimage to (i) blur the image, (ii) enhance its contrast, (iii) convert to grayscale, (iv) invert colors…</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#Blur image
+###START CODE HERE ###
+</span>
+<span class="c1">###END CODE HERE ###
+</span>
+<span class="c1">#Convert to grayscale
+###START CODE HERE ###
+</span>
+<span class="c1">###END CODE HERE ###
+</span>
+<span class="c1">#Enhance contrast
+###START CODE HERE ###
+</span>
+<span class="c1">###END CODE HERE ###
+</span>
+<span class="c1">#Color inversion
+###START CODE HERE ###
+</span>
+<span class="c1">###END CODE HERE ###
+</span></code></pre></div></div>
+
+<p>Skimage is a popular package for customized data preprocessing and augmentation. However, deep learning frameworks such as Keras often incorporate functions to help you preprocess data in a few lines of code.</p>
+
+<p><strong>Question 8</strong>: Read and run the Keras code for image preprocessing. It will save augmented images in a folder called “preview” on the notebook’s directory.</p>
+
+<p><strong>Image preprocessing in Keras</strong></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#Image preprocessing in Keras
+</span>
+<span class="kn">from</span> <span class="nn">keras.preprocessing.image</span> <span class="kn">import</span> <span class="n">ImageDataGenerator</span><span class="p">,</span> <span class="n">array_to_img</span><span class="p">,</span> <span class="n">img_to_array</span><span class="p">,</span> <span class="n">load_img</span>
+
+<span class="n">datagen</span> <span class="o">=</span> <span class="n">ImageDataGenerator</span><span class="p">(</span>
+        <span class="n">rotation_range</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span>
+        <span class="n">width_shift_range</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span>
+        <span class="n">height_shift_range</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span>
+        <span class="n">shear_range</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span>
+        <span class="n">zoom_range</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span>
+        <span class="n">horizontal_flip</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+        <span class="n">fill_mode</span><span class="o">=</span><span class="s">'nearest'</span><span class="p">)</span>
+
+<span class="n">img</span> <span class="o">=</span> <span class="n">load_img</span><span class="p">(</span><span class="s">'iguana.jpg'</span><span class="p">)</span>  <span class="c1"># this is a PIL image
+</span><span class="n">x</span> <span class="o">=</span> <span class="n">img_to_array</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>  <span class="c1"># convert image to numpy array 
+</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">1</span><span class="p">,)</span> <span class="o">+</span> <span class="n">x</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span>  <span class="c1"># reshape image to (1, ..,..,..) to fit keras' standard shape
+</span>
+<span class="c1">#Use flow() to apply data augmentation randomly according to the datagenerator
+#and saves the results to the `preview/` directory
+</span><span class="n">num_image_generated</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">batch</span> <span class="ow">in</span> <span class="n">datagen</span><span class="p">.</span><span class="n">flow</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">save_to_dir</span><span class="o">=</span><span class="s">'preview'</span><span class="p">,</span> <span class="n">save_prefix</span><span class="o">=</span><span class="s">'cat'</span><span class="p">,</span> <span class="n">save_format</span><span class="o">=</span><span class="s">'jpeg'</span><span class="p">):</span>
+    <span class="n">num_image_generated</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">if</span> <span class="n">num_image_generated</span> <span class="o">&gt;</span> <span class="mi">20</span><span class="p">:</span>
+        <span class="k">break</span> <span class="c1"># stop the loop after num_image_generated iterations
+</span></code></pre></div></div>
+
+<p><strong>Question 9</strong>: (Optional) Train the CNN coded for you in the notebook (See Appendix below) on any of the pictures you created. Evaluate the model.</p>
+
+<h2 id="part-ii---text-data-preprocessing"><strong>Part II - Text data preprocessing</strong></h2>
+
+<p><strong>Question 1</strong>: Go on any static website online. Click right and select “View Page Source”. Copy a complicated part of the html code. Paste it in the notebook in the variable “html_page”.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">###START CODE HERE ###
+</span><span class="n">html_txt</span> <span class="o">=</span> <span class="s">""" """</span>
+<span class="c1">###END CODE HERE ###
+</span>
+<span class="k">print</span><span class="p">(</span><span class="n">html_txt</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><strong>Question 2</strong>: Use BeautifulSoup to parse the html_txt. Print the html_txt.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
+
+<span class="c1">#Parse the html input
+###START CODE HERE ###
+</span>
+<span class="c1">###END CODE HERE ###
+</span>
+<span class="k">print</span><span class="p">(</span><span class="n">html_txt</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><strong>Question 3</strong>: Use re to remove meta-characters such as squared brackets and anything between them. Print the html_txt.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">re</span><span class="p">,</span> <span class="n">string</span><span class="p">,</span> <span class="n">unicodedata</span>
+<span class="c1">#Remove meta characters and things between them.
+###START CODE HERE ###
+</span>
+<span class="c1">###END CODE HERE ###
+</span>
+<span class="k">print</span><span class="p">(</span><span class="n">html_txt</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><strong>Question 4</strong>: Using the Natural Language ToolKit (nltk), separate the text into a list of words.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">nltk</span>
+<span class="kn">from</span> <span class="nn">nltk</span> <span class="kn">import</span> <span class="n">word_tokenize</span><span class="p">,</span> <span class="n">sent_tokenize</span>
+
+<span class="c1">#Separate text into words
+###START CODE HERE ###
+</span>
+<span class="c1">###END CODE HERE ###
+</span></code></pre></div></div>
+
+<p><strong>Question 5</strong>: (Optional) Remove non ASCII characters. Convert to Lower case. Remove punctuation, stopwords, …</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">###START CODE HERE ###
+</span>
+<span class="c1">###END CODE HERE ###
+</span></code></pre></div></div>
+
+<p>A machine will not be able to read this list strings, you need to build a vocabulary and tokenize your words.</p>
+
+<p><strong>Question 6</strong>: Build the vocabulary from the list of words.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#Build Vocabulary
+###START CODE HERE ###
+</span>
+<span class="c1">###END CODE HERE ###
+</span></code></pre></div></div>
+
+<p><strong>Question 7</strong>: Build word to integer mapping in Python. It should be sorted.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#Build word to integer mapping in Python. It should be sorted.
+###START CODE HERE ###
+</span>
+<span class="c1">###END CODE HERE ###
+</span></code></pre></div></div>
+
+<p><strong>Question 8</strong>: Tokenize your text.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#Convert list of words into list of tokens using this mapping
+###START CODE HERE ###
+</span>
+<span class="c1">###END CODE HERE ###
+</span></code></pre></div></div>
+
+<p><strong>Question 9</strong>: Read and run the Keras code for text preprocessing. It uses the Tokenizer Function.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#Preprocess text with Keras for Sentiment classification
+</span><span class="kn">from</span> <span class="nn">keras.preprocessing.text</span> <span class="kn">import</span> <span class="n">Tokenizer</span>
+<span class="kn">from</span> <span class="nn">keras.preprocessing.sequence</span> <span class="kn">import</span> <span class="n">pad_sequences</span>
+
+<span class="n">examples</span> <span class="o">=</span> <span class="p">[</span><span class="s">'You are amazing!'</span><span class="p">,</span><span class="s">'It is so bad'</span><span class="p">,</span><span class="s">'Congratulations'</span><span class="p">,</span><span class="s">'You suck bro'</span><span class="p">,</span><span class="s">'Awesome dude!'</span><span class="p">]</span>
+<span class="n">Y</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+
+<span class="c1">#Define Tokenizer
+</span><span class="n">t</span> <span class="o">=</span> <span class="n">Tokenizer</span><span class="p">()</span>
+<span class="c1">#Fit Tokenizer on text (Build vocab etc..)
+</span><span class="n">t</span><span class="p">.</span><span class="n">fit_on_texts</span><span class="p">(</span><span class="n">examples</span><span class="p">)</span>
+<span class="c1">#Convert texts to sequences of integers
+</span><span class="n">X</span> <span class="o">=</span> <span class="n">t</span><span class="p">.</span><span class="n">texts_to_sequences</span><span class="p">(</span><span class="n">examples</span><span class="p">)</span>
+<span class="c1">#Pad sequences of integers
+</span><span class="n">X</span> <span class="o">=</span> <span class="n">pad_sequences</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">padding</span> <span class="o">=</span> <span class="s">'post'</span><span class="p">)</span>
+
+<span class="c1">#Get the vocabulary size, useful for the embedding layer.
+</span><span class="n">vocab_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">.</span><span class="n">word_index</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="k">print</span><span class="p">(</span><span class="n">vocab_size</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><strong>Question 10</strong>: (Optional) Train the RNN coded for you in the notebook on the sentiment classification class (with 5 examples). Evaluate the mode.</p>
+
+<h2 id="appendix-models-and-training-codes"><strong>Appendix: Models and training codes</strong></h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#CNN
+</span><span class="n">model_CNN</span> <span class="o">=</span> <span class="n">Sequential</span><span class="p">()</span>
+<span class="n">model_CNN</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">Conv2D</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span> <span class="n">strides</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">name</span> <span class="o">=</span> <span class="s">'conv0'</span><span class="p">,</span> <span class="n">input_shape</span> <span class="o">=</span> <span class="n">image</span><span class="p">.</span><span class="n">shape</span><span class="p">))</span>
+<span class="n">model_CNN</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">BatchNormalization</span><span class="p">(</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s">'bn0'</span><span class="p">))</span>
+<span class="n">model_CNN</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">Activation</span><span class="p">(</span><span class="s">'relu'</span><span class="p">))</span>
+<span class="n">model_CNN</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">MaxPooling2D</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s">'max_pool'</span><span class="p">))</span>
+<span class="n">model_CNN</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">Flatten</span><span class="p">())</span>
+<span class="n">model_CNN</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s">'sigmoid'</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">'fc'</span><span class="p">))</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#RNN
+</span><span class="n">model_RNN</span> <span class="o">=</span> <span class="n">Sequential</span><span class="p">()</span>
+<span class="n">model_RNN</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">Embedding</span><span class="p">(</span><span class="n">vocab_size</span><span class="p">,</span> <span class="mi">128</span><span class="p">))</span>
+<span class="n">model_RNN</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">LSTM</span><span class="p">(</span><span class="mi">128</span><span class="p">))</span>
+<span class="n">model_RNN</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s">'sigmoid'</span><span class="p">))</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#training code for CNN
+</span><span class="n">sgd</span> <span class="o">=</span> <span class="n">optimizers</span><span class="p">.</span><span class="n">SGD</span><span class="p">(</span><span class="n">lr</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">decay</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">,</span> <span class="n">momentum</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">nesterov</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">model_CNN</span><span class="p">.</span><span class="nb">compile</span><span class="p">(</span><span class="n">loss</span><span class="o">=</span><span class="s">'binary_crossentropy'</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="n">sgd</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s">'accuracy'</span><span class="p">])</span>
+<span class="n">model_CNN</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">]),</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#training code for RNN
+</span><span class="n">sgd</span> <span class="o">=</span> <span class="n">optimizers</span><span class="p">.</span><span class="n">SGD</span><span class="p">(</span><span class="n">lr</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">decay</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">,</span> <span class="n">momentum</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">nesterov</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">model_RNN</span><span class="p">.</span><span class="nb">compile</span><span class="p">(</span><span class="n">loss</span><span class="o">=</span><span class="s">'binary_crossentropy'</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="n">sgd</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s">'accuracy'</span><span class="p">])</span>
+<span class="n">model_RNN</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="n">Y</span><span class="p">),</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#testing code for CNN
+</span><span class="n">model_CNN</span><span class="p">.</span><span class="n">predict</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">image_blured</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+</code></pre></div></div>
+
+						</div><!-- /.content -->
+					</div><!-- /.col -->
+					<div class="col-md-4 col-md-offset-1">
+						<div class="sections-list-wrapper">
+							<div class="sections-list js-sections js-affix js-scrollspy hidden-xs hidden-sm"></div><!-- /.sections-list -->
+						</div>
+					</div><!-- /.col -->
+					
+				</div><!-- /.row -->
+			</div><!-- /.container -->
+		</div><!-- /.section -->
+		
+		<div class="js-footer-area">
+			
+				<nav class="page-nav">
+					<div class="container">
+						<div class="row">
+							<div class="col-xs-12">
+								
+								
+									<a href="/blog/split" class="page-nav__item page-nav__item--next">
+										Next page
+										<i class="icon icon--arrow-right"></i>
+									</a><!-- /.page-nav__item -->
+								
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.container -->
+				</nav><!-- /.page-nav --> 
+			<div class="micro-nav">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12">
+				<a href="/blog" class="micro-nav__back">
+					<i class="icon icon--arrow-left"></i>
+					Back to Blog
+				</a><!-- /.micro-nav__back -->
+			</div><!-- /.col -->
+		</div><!-- /.row -->
+	</div><!-- /.container -->
+</div><!-- /.micro-nav -->
+
+			
+			
+	<footer class="site-footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-6">
+					
+					
+						<!-- <hr> -->
+						<p class="site-footer__copyright">Copyright &copy; 2024. - Stanford University <br>All rights reserved.</p>
+					
+				</div><!-- /.col -->
+				
+			</div><!-- /.row -->
+		</div><!-- /.container -->
+	</footer><!-- /.site-footer -->
+
+
+<script src="/doks-theme/assets/js/vendor/jquery.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/vendor/bootstrap/affix.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/vendor/bootstrap/scrollspy.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/vendor/matchHeight.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/scripts.min.js"></script>
+
+		</div><!-- /.js-footer-area -->
+	</body>
+</html>
