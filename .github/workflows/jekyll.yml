@@ -16,8 +16,7 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.0 # Set this to your project's Ruby version
-
+          ruby-version: 3.1.0
       - name: Build with Jekyll
         run: |
           gem install bundler
