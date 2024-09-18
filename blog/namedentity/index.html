@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, minimum-scale=1.0">
+<title>Named Entity Recognition Tagging</title>
+
+	<meta name="description" content="Defining a Recurrent Network and Loading Text Data">
+
+
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat:400,400i,500,500i,700,700i|Noto+Sans:400,400i,700,700i|Source+Code+Pro&amp;subset=latin-ext">
+<link rel="stylesheet" href="/doks-theme/assets/css/style.css">
+<script type="text/javascript" async
+  src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+<script>
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-124237072-3', 'auto');
+	ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+	</head>
+	<body class="blue" data-spy="scroll" data-target=".js-scrollspy">
+		
+	<div class="offcanvas visible-xs">
+		<ul class="offcanvas__nav">
+			
+				<li><a href="/syllabus">Syllabus</a></li>
+			
+				<li><a href="/officehours">Office Hours</a></li>
+			
+				<li><a href="/project">Project</a></li>
+			
+				<li><a href="/section">Section</a></li>
+			
+				<li><a href="/lecture">Lecture</a></li>
+			
+				<li><a href="/blog">Blog</a></li>
+			
+				<li><a href="/faq">FAQ</a></li>
+			
+		</ul><!-- /.offcanvas__nav -->
+	</div><!-- /.offcanvas -->
+
+
+
+	<header class="site-header">
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12">
+					
+						<a href="/" class="site-header__logo">
+							<img src="/doks-theme/assets/images/layout/logo.png">
+							CS230
+						</a>
+					
+					
+						<ul class="site-header__nav hidden-xs">
+							
+								<li><a href="/syllabus">Syllabus</a></li>
+							
+								<li><a href="/officehours">Office Hours</a></li>
+							
+								<li><a href="/project">Project</a></li>
+							
+								<li><a href="/section">Section</a></li>
+							
+								<li><a href="/lecture">Lecture</a></li>
+							
+								<li><a href="/blog">Blog</a></li>
+							
+								<li><a href="/faq">FAQ</a></li>
+							
+						</ul><!-- /.site-header__nav -->
+						<button class="offcanvas-toggle visible-xs">
+							<span></span>
+							<span></span>
+							<span></span>
+						</button><!-- /.offcanvas-toggle -->
+					
+				</div><!-- /.col -->
+			</div><!-- /.row -->
+		</div><!-- /.container -->
+	</header><!-- /.site-header -->
+
+
+		<div class="hero-subheader">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-7">
+						<div class="align-container" data-mh>
+							<div class="align-inner">
+								
+									<h1 class="hero-subheader__title">Named Entity Recognition Tagging</h1>
+								
+								
+									<p class="hero-subheader__desc">Defining a Recurrent Network and Loading Text Data</p>
+								
+								
+									
+										<a href="/blog/handsigns" class="btn btn--dark btn--rounded btn--w-icon btn--w-icon-left">
+											<i class="icon icon--arrow-left"></i>
+											Previous page
+										</a>
+									
+									
+								
+								
+							</div><!-- /.align-inner -->
+						</div><!-- /.align-container -->
+					</div><!-- /.col -->
+						<div class="col-md-4 col-md-offset-1 hidden-xs hidden-sm">
+							<div class="align-container" data-mh>
+								<div class="align-inner">
+									<div class="hero-subheader__author">
+										<h4>Instructors</h4>
+                                                                               
+                                                                               
+                                                                                    <div class="instructor">
+                                        <a target="_blank" href="">
+                    <img class="headshot" src="/doks-theme/assets/images/headshot/kian.jpg" style="text-align:center;">
+                <div style="text-align:center;">Kian Katanforoosh<br>Instructor</div>
+	</a>
+        </div>
+    
+
+                                                                               
+                                                                                    <div class="instructor">
+                                        <a target="_blank" href="">
+                    <img class="headshot" src="/doks-theme/assets/images/headshot/andrew.jpg" style="text-align:center;">
+                <div style="text-align:center;">Andrew Ng<br>Instructor</div>
+	</a>
+        </div>
+    
+
+                                                                               
+
+                                                                               
+
+                                                                               
+
+										<h4>Time and Location</h4>
+                                                                                <p>In person lectures are on Tuesdays 11:30am-1:20pm. <br> Hewlett Teaching Center 200</p>
+									</div><!-- /.hero-subheader__author -->
+								</div><!-- /.align-inner -->
+							</div><!-- /.align-container -->
+						</div><!-- /.col -->
+				</div><!-- /.row -->
+			</div><!-- /.container -->
+		</div><!-- /.hero-subheader -->
+		<div class="section">
+			<div class="container">
+				<div class="row">
+					
+					<div class="col-md-7">
+						<div class="content">
+							<p>This post follows the <a href="/blog/tips">main post</a> announcing the CS230 Project Code Examples and the <a href="/blog/pytorch">PyTorch Introduction</a>. In this post, we go through an example from Natural Language Processing, in which we learn how to load text data and perform Named Entity Recognition (NER) tagging for each token.</p>
+
+<p>This tutorial is among a series explaining the code examples:</p>
+
+<ul>
+  <li><a href="/blog/tips">getting started: installation, getting started with the code for the projects</a></li>
+  <li><a href="/blog/pytorch">PyTorch Introduction: global structure of the PyTorch code examples</a></li>
+  <li><a href="/blog/handsigns">Vision: predicting labels from images of hand signs</a></li>
+  <li>this post: Named Entity Recognition (NER) tagging for sentences</li>
+</ul>
+
+<h2 id="goals-of-this-tutorial"><strong>Goals of this tutorial</strong></h2>
+
+<ul>
+  <li>learn how to use PyTorch to load sequential data</li>
+  <li>specify a recurrent neural network</li>
+  <li>understand the key aspects of the code well-enough to modify it to suit your needs</li>
+</ul>
+
+<h2 id="problem-setup"><strong>Problem Setup</strong></h2>
+
+<p>We explore the problem of <a href="https://en.wikipedia.org/wiki/Named-entity_recognition">Named Entity Recognition</a> (NER) tagging of sentences. The task is to tag each token in a given sentence with an appropriate tag such as Person, Location, etc.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">John</span>   <span class="n">lives</span> <span class="ow">in</span> <span class="n">New</span>   <span class="n">York</span>
+<span class="n">B</span><span class="o">-</span><span class="n">PER</span>  <span class="n">O</span>     <span class="n">O</span>  <span class="n">B</span><span class="o">-</span><span class="n">LOC</span> <span class="n">I</span><span class="o">-</span><span class="n">LOC</span>
+</code></pre></div></div>
+
+<p>Our dataset will thus need to load both the sentences and labels. We will store those in 2 different files, a <code class="language-plaintext highlighter-rouge">sentence.txt</code> file containing the sentences (one per line) and a <code class="language-plaintext highlighter-rouge">labels.txt</code> containing the labels. For example:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#sentences.txt
+</span><span class="n">John</span> <span class="n">lives</span> <span class="ow">in</span> <span class="n">New</span> <span class="n">York</span>
+<span class="n">Where</span> <span class="ow">is</span> <span class="n">John</span> <span class="err">?</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#labels.txt
+</span><span class="n">B</span><span class="o">-</span><span class="n">PER</span> <span class="n">O</span> <span class="n">O</span> <span class="n">B</span><span class="o">-</span><span class="n">LOC</span> <span class="n">I</span><span class="o">-</span><span class="n">LOC</span>
+<span class="n">O</span> <span class="n">O</span> <span class="n">B</span><span class="o">-</span><span class="n">PER</span> <span class="n">O</span>
+</code></pre></div></div>
+
+<p>Here we assume that we ran the <code class="language-plaintext highlighter-rouge">build_vocab.py</code> script that creates a vocabulary file in our <code class="language-plaintext highlighter-rouge">/data</code> directory. Running the script gives us one file for the words and one file for the labels. They will contain one token per line. For instance</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#words.txt
+</span><span class="n">John</span>
+<span class="n">lives</span>
+<span class="ow">in</span>
+<span class="p">...</span>
+</code></pre></div></div>
+
+<p>and</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#tags.txt
+</span><span class="n">B</span><span class="o">-</span><span class="n">PER</span>
+<span class="n">B</span><span class="o">-</span><span class="n">LOC</span>
+<span class="p">...</span>
+</code></pre></div></div>
+
+<h2 id="loading-the-text-data"><strong>Loading the Text Data</strong></h2>
+
+<p>In NLP applications, a sentence is represented by the sequence of indices of the words in the sentence. For example if our vocabulary is <code class="language-plaintext highlighter-rouge">{'is':1, 'John':2, 'Where':3, '.':4, '?':5}</code> then the sentence “Where is John ?” is represented as <code class="language-plaintext highlighter-rouge">[3,1,2,5]</code>. We read the <code class="language-plaintext highlighter-rouge">words.txt</code> file and populate our vocabulary:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">vocab</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">words_path</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">f</span><span class="p">.</span><span class="n">read</span><span class="p">().</span><span class="n">splitlines</span><span class="p">()):</span>
+        <span class="n">vocab</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
+</code></pre></div></div>
+
+<p>In a similar way, we load a mapping <code class="language-plaintext highlighter-rouge">tag_map</code> from our labels from <code class="language-plaintext highlighter-rouge">tags.txt</code> to indices. Doing so gives us indices for labels in the range <code class="language-plaintext highlighter-rouge">[0,1,...,NUM_TAGS-1]</code>.</p>
+
+<p>In addition to words read from English sentences, <code class="language-plaintext highlighter-rouge">words.txt</code> contains two special tokens: an <code class="language-plaintext highlighter-rouge">UNK</code> token to represent any word that is not present in the vocabulary, and a <code class="language-plaintext highlighter-rouge">PAD</code> token that is used as a filler token at the end of a sentence when one batch has sentences of unequal lengths.</p>
+
+<p>We are now ready to load our data. We read the sentences in our dataset (either train, validation or test) and convert them to a sequence of indices by looking up the vocabulary:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">train_sentences</span> <span class="o">=</span> <span class="p">[]</span>        
+<span class="n">train_labels</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">train_sentences_file</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">sentence</span> <span class="ow">in</span> <span class="n">f</span><span class="p">.</span><span class="n">read</span><span class="p">().</span><span class="n">splitlines</span><span class="p">():</span>
+        <span class="c1">#replace each token by its index if it is in vocab
+</span>        <span class="c1">#else use index of UNK
+</span>        <span class="n">s</span> <span class="o">=</span> <span class="p">[</span><span class="n">vocab</span><span class="p">[</span><span class="n">token</span><span class="p">]</span> <span class="k">if</span> <span class="n">token</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">.</span><span class="n">vocab</span> 
+            <span class="k">else</span> <span class="n">vocab</span><span class="p">[</span><span class="s">'UNK'</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">sentence</span><span class="p">.</span><span class="n">split</span><span class="p">(</span><span class="s">' '</span><span class="p">)]</span>
+        <span class="n">train_sentences</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">train_labels_file</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">sentence</span> <span class="ow">in</span> <span class="n">f</span><span class="p">.</span><span class="n">read</span><span class="p">().</span><span class="n">splitlines</span><span class="p">():</span>
+        <span class="c1">#replace each label by its index
+</span>        <span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="n">tag_map</span><span class="p">[</span><span class="n">label</span><span class="p">]</span> <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">sentence</span><span class="p">.</span><span class="n">split</span><span class="p">(</span><span class="s">' '</span><span class="p">)]</span>
+        <span class="n">train_labels</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>  
+</code></pre></div></div>
+
+<p>We can load the validation and test data in a similar fashion.</p>
+
+<h2 id="preparing-a-batch"><strong>Preparing a Batch</strong></h2>
+
+<p>This is where it gets fun. When we sample a batch of sentences, not all the sentences usually have the same length. Let’s say we have a batch of sentences <code class="language-plaintext highlighter-rouge">batch_sentences</code> that is a Python list of lists, with its corresponding <code class="language-plaintext highlighter-rouge">batch_tags</code> which has a tag for each token in <code class="language-plaintext highlighter-rouge">batch_sentences</code>. We convert them into a batch of PyTorch Variables as follows:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#compute length of longest sentence in batch
+</span><span class="n">batch_max_len</span> <span class="o">=</span> <span class="nb">max</span><span class="p">([</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">batch_sentences</span><span class="p">])</span>
+
+<span class="c1">#prepare a numpy array with the data, initializing the data with 'PAD' 
+#and all labels with -1; initializing labels to -1 differentiates tokens 
+#with tags from 'PAD' tokens
+</span><span class="n">batch_data</span> <span class="o">=</span> <span class="n">vocab</span><span class="p">[</span><span class="s">'PAD'</span><span class="p">]</span><span class="o">*</span><span class="n">np</span><span class="p">.</span><span class="n">ones</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">batch_sentences</span><span class="p">),</span> <span class="n">batch_max_len</span><span class="p">))</span>
+<span class="n">batch_labels</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="o">*</span><span class="n">np</span><span class="p">.</span><span class="n">ones</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">batch_sentences</span><span class="p">),</span> <span class="n">batch_max_len</span><span class="p">))</span>
+
+<span class="c1">#copy the data to the numpy array
+</span><span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">batch_sentences</span><span class="p">)):</span>
+    <span class="n">cur_len</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">batch_sentences</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+    <span class="n">batch_data</span><span class="p">[</span><span class="n">j</span><span class="p">][:</span><span class="n">cur_len</span><span class="p">]</span> <span class="o">=</span> <span class="n">batch_sentences</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+    <span class="n">batch_labels</span><span class="p">[</span><span class="n">j</span><span class="p">][:</span><span class="n">cur_len</span><span class="p">]</span> <span class="o">=</span> <span class="n">batch_tags</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+
+<span class="c1">#since all data are indices, we convert them to torch LongTensors
+</span><span class="n">batch_data</span><span class="p">,</span> <span class="n">batch_labels</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">LongTensor</span><span class="p">(</span><span class="n">batch_data</span><span class="p">),</span> <span class="n">torch</span><span class="p">.</span><span class="n">LongTensor</span><span class="p">(</span><span class="n">batch_labels</span><span class="p">)</span>
+
+<span class="c1">#convert Tensors to Variables
+</span><span class="n">batch_data</span><span class="p">,</span> <span class="n">batch_labels</span> <span class="o">=</span> <span class="n">Variable</span><span class="p">(</span><span class="n">batch_data</span><span class="p">),</span> <span class="n">Variable</span><span class="p">(</span><span class="n">batch_labels</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>A lot of things happened in the above code. We first calculated the length of the longest sentence in the batch. We then initialized NumPy arrays of dimension <code class="language-plaintext highlighter-rouge">(num_sentences, batch_max_len)</code> for the sentence and labels, and filled them in from the lists. Since the values are indices (and not floats), PyTorch’s Embedding layer expects inputs to be of the <code class="language-plaintext highlighter-rouge">Long</code> type. We hence convert them to <code class="language-plaintext highlighter-rouge">LongTensor</code>.</p>
+
+<p>After filling them in, we observe that the sentences that are shorter than the longest sentence in the batch have the special token <code class="language-plaintext highlighter-rouge">PAD</code> to fill in the remaining space. Moreover, the <code class="language-plaintext highlighter-rouge">PAD</code> tokens, introduced as a result of packaging the sentences in a matrix, are assigned a label of -1. Doing so differentiates them from other tokens that have label indices in the range <code class="language-plaintext highlighter-rouge">[0,1,...,NUM_TAGS-1]</code>. This will be crucial when we calculate the loss for our model’s prediction, and we’ll come to that in a bit.</p>
+
+<p>In our code, we package the above code in a custom data_iterator function. Hyperparameters are stored in a data structure called “params”. We can then use the generator as follows:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#train_data contains train_sentences and train_labels
+#params contains batch_size
+</span><span class="n">train_iterator</span> <span class="o">=</span> <span class="n">data_iterator</span><span class="p">(</span><span class="n">train_data</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>    
+
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_training_steps</span><span class="p">):</span>
+    <span class="n">batch_sentences</span><span class="p">,</span> <span class="n">batch_labels</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">train_iterator</span><span class="p">)</span>
+
+    <span class="c1">#pass through model, perform backpropagation and updates
+</span>    <span class="n">output_batch</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">train_batch</span><span class="p">)</span>
+    <span class="p">...</span>
+</code></pre></div></div>
+
+<h2 id="recurrent-network-model"><strong>Recurrent Network Model</strong></h2>
+
+<p>Now that we have figured out how to load our sentences and tags, let’s have a look at the Recurrent Neural Network model. As mentioned in the <a href="/blog/pytorch">previous</a> post, we first define the components of our model, followed by its functional form. Let’s have a look at the <code class="language-plaintext highlighter-rouge">__init__</code> function for our model that takes in <code class="language-plaintext highlighter-rouge">(batch_size, batch_max_len)</code> dimensional data:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="n">nn</span>
+<span class="kn">import</span> <span class="nn">torch.nn.functional</span> <span class="k">as</span> <span class="n">F</span>
+
+<span class="k">class</span> <span class="nc">Net</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Net</span><span class="p">,</span> <span class="bp">self</span><span class="p">).</span><span class="n">__init__</span><span class="p">()</span>
+
+    <span class="c1">#maps each token to an embedding_dim vector
+</span>    <span class="bp">self</span><span class="p">.</span><span class="n">embedding</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Embedding</span><span class="p">(</span><span class="n">params</span><span class="p">.</span><span class="n">vocab_size</span><span class="p">,</span> <span class="n">params</span><span class="p">.</span><span class="n">embedding_dim</span><span class="p">)</span>
+
+    <span class="c1">#the LSTM takens embedded sentence
+</span>    <span class="bp">self</span><span class="p">.</span><span class="n">lstm</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">LSTM</span><span class="p">(</span><span class="n">params</span><span class="p">.</span><span class="n">embedding_dim</span><span class="p">,</span> <span class="n">params</span><span class="p">.</span><span class="n">lstm_hidden_dim</span><span class="p">,</span> <span class="n">batch_first</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+    <span class="c1">#fc layer transforms the output to give the final output layer
+</span>    <span class="bp">self</span><span class="p">.</span><span class="n">fc</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">params</span><span class="p">.</span><span class="n">lstm_hidden_dim</span><span class="p">,</span> <span class="n">params</span><span class="p">.</span><span class="n">number_of_tags</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>We use an LSTM for the recurrent network. Before running the LSTM, we first transform each word in our sentence to a vector of dimension <code class="language-plaintext highlighter-rouge">embedding_dim</code>. We then run the LSTM over this sentence. Finally, we have a fully connected layer that transforms the output of the LSTM for each token to a distribution over tags. This is implemented in the forward propagation function:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
+    <span class="c1">#apply the embedding layer that maps each token to its embedding
+</span>    <span class="n">s</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">embedding</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>   <span class="c1"># dim: batch_size x batch_max_len x embedding_dim
+</span>
+    <span class="c1">#run the LSTM along the sentences of length batch_max_len
+</span>    <span class="n">s</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">lstm</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>     <span class="c1"># dim: batch_size x batch_max_len x lstm_hidden_dim                
+</span>
+    <span class="c1">#reshape the Variable so that each row contains one token
+</span>    <span class="n">s</span> <span class="o">=</span> <span class="n">s</span><span class="p">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">s</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>  <span class="c1"># dim: batch_size*batch_max_len x lstm_hidden_dim
+</span>
+    <span class="c1">#apply the fully connected layer and obtain the output for each token
+</span>    <span class="n">s</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">fc</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>          <span class="c1"># dim: batch_size*batch_max_len x num_tags
+</span>
+    <span class="k">return</span> <span class="n">F</span><span class="p">.</span><span class="n">log_softmax</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>   <span class="c1"># dim: batch_size*batch_max_len x num_tags
+</span></code></pre></div></div>
+
+<p>The embedding layer augments an extra dimension to our input which then has shape <code class="language-plaintext highlighter-rouge">(batch_size, batch_max_len, embedding_dim)</code>. We run it through the LSTM which gives an output for each token of length <code class="language-plaintext highlighter-rouge">lstm_hidden_dim</code>. In the next step, we open up the 3D Variable and reshape it such that we get the hidden state for each token, i.e. the new dimension is <code class="language-plaintext highlighter-rouge">(batch_size*batch_max_len, lstm_hidden_dim)</code>. Here the <code class="language-plaintext highlighter-rouge">-1</code> is implicitly inferred to be equal to <code class="language-plaintext highlighter-rouge">batch_size*batch_max_len</code>. The reason behind this reshaping is that the fully connected layer assumes a 2D input, with one example along each row.</p>
+
+<p>After the reshaping, we apply the fully connected layer which gives a vector of <code class="language-plaintext highlighter-rouge">NUM_TAGS</code> for each token in each sentence. The output is a log_softmax over the tags for each token. We use log_softmax since it is numerically more stable than first taking the softmax and then the log.</p>
+
+<p>All that is left is to compute the loss. But there’s a catch- we can’t use a <code class="language-plaintext highlighter-rouge">torch.nn.loss</code> function straight out of the box because that would add the loss from the <code class="language-plaintext highlighter-rouge">PAD</code> tokens as well. Here’s where the power of PyTorch comes into play- we can write our own custom loss function!</p>
+
+<h2 id="writing-a-custom-loss-function"><strong>Writing a Custom Loss Function</strong></h2>
+
+<p>In the section on preparing batches, we ensured that the labels for the <code class="language-plaintext highlighter-rouge">PAD</code> tokens were set to <code class="language-plaintext highlighter-rouge">-1</code>. We can leverage this to filter out the <code class="language-plaintext highlighter-rouge">PAD</code> tokens when we compute the loss. Let us see how:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">loss_fn</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
+    <span class="c1">#reshape labels to give a flat vector of length batch_size*seq_len
+</span>    <span class="n">labels</span> <span class="o">=</span> <span class="n">labels</span><span class="p">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>  
+
+    <span class="c1">#mask out 'PAD' tokens
+</span>    <span class="n">mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">labels</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">).</span><span class="nb">float</span><span class="p">()</span>
+
+    <span class="c1">#the number of tokens is the sum of elements in mask
+</span>    <span class="n">num_tokens</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">torch</span><span class="p">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">mask</span><span class="p">).</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="c1">#pick the values corresponding to labels and multiply by mask
+</span>    <span class="n">outputs</span> <span class="o">=</span> <span class="n">outputs</span><span class="p">[</span><span class="nb">range</span><span class="p">(</span><span class="n">outputs</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">labels</span><span class="p">]</span><span class="o">*</span><span class="n">mask</span>
+
+    <span class="c1">#cross entropy loss for all non 'PAD' tokens
+</span>    <span class="k">return</span> <span class="o">-</span><span class="n">torch</span><span class="p">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">outputs</span><span class="p">)</span><span class="o">/</span><span class="n">num_tokens</span>
+</code></pre></div></div>
+
+<p>The input labels has dimension <code class="language-plaintext highlighter-rouge">(batch_size, batch_max_len)</code> while outputs has dimension <code class="language-plaintext highlighter-rouge">(batch_size*batch_max_len, NUM_TAGS)</code>. We compute a mask using the fact that all <code class="language-plaintext highlighter-rouge">PAD</code> tokens in <code class="language-plaintext highlighter-rouge">labels</code> have the value <code class="language-plaintext highlighter-rouge">-1</code>. We then compute the Negative Log Likelihood Loss (remember the output from the network is already softmax-ed and log-ed!) for all the non <code class="language-plaintext highlighter-rouge">PAD</code> tokens. We can now compute derivates by simply calling <code class="language-plaintext highlighter-rouge">.backward()</code> on the loss returned by this function.</p>
+
+<p>Remember, you can set a breakpoint using <code class="language-plaintext highlighter-rouge">pdb.set_trace()</code> at any place in the forward function, loss function or virtually anywhere and examine the dimensions of the Variables, tinker around and diagnose what’s going wrong. That’s the beauty of PyTorch :).</p>
+
+<h2 id="resources"><strong>Resources</strong></h2>
+
+<ul>
+  <li><a href="https://pytorch.org/tutorials/intermediate/char_rnn_generation_tutorial.html#sphx-glr-intermediate-char-rnn-generation-tutorial-py">Generating Names</a>: a tutorial on character-level RNN</li>
+  <li><a href="https://pytorch.org/tutorials/intermediate/seq2seq_translation_tutorial.html#sphx-glr-intermediate-seq2seq-translation-tutorial-py">Sequence to Sequence models</a>: a tutorial on translation</li>
+</ul>
+
+<p>That concludes the description of the PyTorch NLP code example. If you haven’t, take a look at the <a href="/blog/handsigns">Vision</a> example to understand how we load data and define models for images</p>
+
+						</div><!-- /.content -->
+					</div><!-- /.col -->
+					<div class="col-md-4 col-md-offset-1">
+						<div class="sections-list-wrapper">
+							<div class="sections-list js-sections js-affix js-scrollspy hidden-xs hidden-sm"></div><!-- /.sections-list -->
+						</div>
+					</div><!-- /.col -->
+					
+				</div><!-- /.row -->
+			</div><!-- /.container -->
+		</div><!-- /.section -->
+		
+		<div class="js-footer-area">
+			
+				<nav class="page-nav">
+					<div class="container">
+						<div class="row">
+							<div class="col-xs-12">
+								
+									<a href="/blog/handsigns" class="page-nav__item page-nav__item--prev">
+										<i class="icon icon--arrow-left"></i>
+										Previous page
+									</a><!-- /.page-nav__item -->
+								
+								
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.container -->
+				</nav><!-- /.page-nav --> 
+			<div class="micro-nav">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12">
+				<a href="/blog" class="micro-nav__back">
+					<i class="icon icon--arrow-left"></i>
+					Back to Blog
+				</a><!-- /.micro-nav__back -->
+			</div><!-- /.col -->
+		</div><!-- /.row -->
+	</div><!-- /.container -->
+</div><!-- /.micro-nav -->
+
+			
+			
+	<footer class="site-footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-6">
+					
+					
+						<!-- <hr> -->
+						<p class="site-footer__copyright">Copyright &copy; 2024. - Stanford University <br>All rights reserved.</p>
+					
+				</div><!-- /.col -->
+				
+			</div><!-- /.row -->
+		</div><!-- /.container -->
+	</footer><!-- /.site-footer -->
+
+
+<script src="/doks-theme/assets/js/vendor/jquery.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/vendor/bootstrap/affix.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/vendor/bootstrap/scrollspy.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/vendor/matchHeight.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/scripts.min.js"></script>
+
+		</div><!-- /.js-footer-area -->
+	</body>
+</html>

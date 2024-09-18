@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, minimum-scale=1.0">
+<title>Section 2 (Week 2)</title>
+
+	<meta name="description" content="Understanding gradient descent and backpropagation. We will go through four different neural network examples and explicitly compute the backpropagation equations.">
+
+
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat:400,400i,500,500i,700,700i|Noto+Sans:400,400i,700,700i|Source+Code+Pro&amp;subset=latin-ext">
+<link rel="stylesheet" href="/doks-theme/assets/css/style.css">
+<script type="text/javascript" async
+  src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+<script>
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-124237072-3', 'auto');
+	ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+	</head>
+	<body class="blue" data-spy="scroll" data-target=".js-scrollspy">
+		
+	<div class="offcanvas visible-xs">
+		<ul class="offcanvas__nav">
+			
+				<li><a href="/syllabus">Syllabus</a></li>
+			
+				<li><a href="/officehours">Office Hours</a></li>
+			
+				<li><a href="/project">Project</a></li>
+			
+				<li><a href="/section">Section</a></li>
+			
+				<li><a href="/lecture">Lecture</a></li>
+			
+				<li><a href="/blog">Blog</a></li>
+			
+				<li><a href="/faq">FAQ</a></li>
+			
+		</ul><!-- /.offcanvas__nav -->
+	</div><!-- /.offcanvas -->
+
+
+
+	<header class="site-header">
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12">
+					
+						<a href="/" class="site-header__logo">
+							<img src="/doks-theme/assets/images/layout/logo.png">
+							CS230
+						</a>
+					
+					
+						<ul class="site-header__nav hidden-xs">
+							
+								<li><a href="/syllabus">Syllabus</a></li>
+							
+								<li><a href="/officehours">Office Hours</a></li>
+							
+								<li><a href="/project">Project</a></li>
+							
+								<li><a href="/section">Section</a></li>
+							
+								<li><a href="/lecture">Lecture</a></li>
+							
+								<li><a href="/blog">Blog</a></li>
+							
+								<li><a href="/faq">FAQ</a></li>
+							
+						</ul><!-- /.site-header__nav -->
+						<button class="offcanvas-toggle visible-xs">
+							<span></span>
+							<span></span>
+							<span></span>
+						</button><!-- /.offcanvas-toggle -->
+					
+				</div><!-- /.col -->
+			</div><!-- /.row -->
+		</div><!-- /.container -->
+	</header><!-- /.site-header -->
+
+
+		<div class="hero-subheader">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-7">
+						<div class="align-container" data-mh>
+							<div class="align-inner">
+								
+									<h1 class="hero-subheader__title">Section 2 (Week 2)</h1>
+								
+								
+									<p class="hero-subheader__desc">Understanding gradient descent and backpropagation. We will go through four different neural network examples and explicitly compute the backpropagation equations.</p>
+								
+								
+								
+							</div><!-- /.align-inner -->
+						</div><!-- /.align-container -->
+					</div><!-- /.col -->
+						<div class="col-md-4 col-md-offset-1 hidden-xs hidden-sm">
+							<div class="align-container" data-mh>
+								<div class="align-inner">
+									<div class="hero-subheader__author">
+										<h4>Instructors</h4>
+                                                                               
+                                                                               
+                                                                                    <div class="instructor">
+                                        <a target="_blank" href="">
+                    <img class="headshot" src="/doks-theme/assets/images/headshot/kian.jpg" style="text-align:center;">
+                <div style="text-align:center;">Kian Katanforoosh<br>Instructor</div>
+	</a>
+        </div>
+    
+
+                                                                               
+                                                                                    <div class="instructor">
+                                        <a target="_blank" href="">
+                    <img class="headshot" src="/doks-theme/assets/images/headshot/andrew.jpg" style="text-align:center;">
+                <div style="text-align:center;">Andrew Ng<br>Instructor</div>
+	</a>
+        </div>
+    
+
+                                                                               
+
+                                                                               
+
+                                                                               
+
+										<h4>Time and Location</h4>
+                                                                                <p>In person lectures are on Tuesdays 11:30am-1:20pm. <br> Hewlett Teaching Center 200</p>
+									</div><!-- /.hero-subheader__author -->
+								</div><!-- /.align-inner -->
+							</div><!-- /.align-container -->
+						</div><!-- /.col -->
+				</div><!-- /.row -->
+			</div><!-- /.container -->
+		</div><!-- /.hero-subheader -->
+		<div class="section">
+			<div class="container">
+				<div class="row">
+					
+					<div class="col-md-7">
+						<div class="content">
+							<h1 id="introduction">Introduction</h1>
+
+<p>When datasets are large and high-dimensional, it is computationally very expensive (sometimes impossible!) to find an analytical solution for the optimal parameters of your network. Instead, we use optimization methods. A vanilla optimization approach would be to sample different combinations of parameters and choose the one with the lowest loss value.</p>
+<ul>
+  <li><strong>Is this a good idea?</strong></li>
+  <li><strong>Would it be possible to extract another piece of information to direct our search towards the optimal parameters?</strong></li>
+</ul>
+
+<table class="image">
+<caption align="bottom"><small>The trajectory through a loss landscape for a linear regression model trained with gradient descent. The red dot indicates the value of the loss function corresponding to the initial parameter values. (<a href="https://rawgit.com/danielkunin/Deeplearning-Visualizations/master/optimization/index.html">source</a>)</small></caption> 
+<tr><td><img src="/doks-theme/assets/images/section/3/optimization.png" style="width: 100%" /></td></tr>
+</table>
+
+<p>This is exactly what <em>gradient descent</em> does!  Apart from the loss value, gradient descent computes the local gradient of the loss when evaluating potential parameters. This information is used to decide which direction the search should go to find better parameter values. This extra piece of information (the local gradient) can be computed relatively easily using <em>backpropagation</em>. This recursive algorithm breaks up complex derivatives into smaller parts through the <em>chain rule</em>.</p>
+
+<p>To help understand gradient descent, let’s <strong><a href="https://rawgit.com/danielkunin/Deeplearning-Visualizations/master/optimization/index.html">visualize</a></strong> the setup.</p>
+
+<h1 id="univariate-regression">Univariate Regression</h1>
+<p>Let’s consider a linear regression. You have a data set \((x,y)\) with \(m\) examples. In other words, \(x = (x_1,\dots , x_m)\) and \(y = (y_1, \dots, y_m)\) are row vectors of \(m\) scalar examples . The goal is to find the scalar parameters \(w\) and \(b\) such that the line \(y = wx + b\) optimally fits the data. This can be achieved using gradient descent.</p>
+
+<table class="image">
+
+<tr><td><img src="/doks-theme/assets/images/section/3/1/model.png" style="width: 100%" /></td></tr>
+</table>
+
+<h3 id="forward-propagation">Forward Propagation</h3>
+<p>The first step of gradient descent is to compute the loss. To do this, define your model’s output and loss function. In this regression setting, we use the mean squared error loss.</p>
+
+\[\begin{align}
+	\hat{y} &amp;= wx + b\\\\
+	\mathcal{L} &amp;= \frac{1}{m}||\hat{y} - y||^2
+\end{align}\]
+
+<h3 id="backward-propagation">Backward Propagation</h3>
+<p>The next step is to compute the local gradient of the loss with respect to the parameters (i.e. \(w\) and \(b\)). This means you need to calculate derivatives. Note that values stored during the forward propagation are used in the gradient equations.</p>
+
+\[\begin{align}
+	\frac{\partial\mathcal{L}}{\partial w} &amp;= \frac{2}{m}(\hat{y} - y)x^\intercal\\\\
+	\frac{\partial\mathcal{L}}{\partial b} &amp;= \frac{2}{m}(\hat{y} - y)\vec{1}
+\end{align}\]
+
+<h1 id="multivariate-regression">Multivariate Regression</h1>
+
+<p>Now, consider the case where \(X\) is a matrix of shape \((n,m)\) and \(y\) is still a row vector of shape \((1,m)\). Instead of a single scalar value, the weights will be a vector (one element per feature) of shape \((1,n)\). The bias parameter is still a scalar.</p>
+<table class="image">
+
+<tr><td><img src="/doks-theme/assets/images/section/3/2/model.png" style="width: 100%" /></td></tr>
+</table>
+
+<h3 id="forward-propagation-1">Forward Propagation</h3>
+
+\[\begin{align}
+	\hat{y} &amp;= wX + b\\\\
+	\mathcal{L} &amp;= \frac{1}{m}||\hat{y} - y||^2
+\end{align}\]
+
+<h3 id="backward-propagation-1">Backward Propagation</h3>
+
+\[\begin{align}
+	\frac{\partial\mathcal{L}}{\partial w} &amp;= \frac{2}{m}(\hat{y} - y)X^\intercal\\\\
+	\frac{\partial\mathcal{L}}{\partial b} &amp;= \frac{2}{m}(\hat{y} - y)\vec{1}
+\end{align}\]
+
+<h1 id="two-layer-linear-network">Two Layer Linear Network</h1>
+<p>Consider stacking two linear layers together. You can introduce a hidden variable \(Z\) of shape \((k, m)\), which is the output of the first linear layer. The first layer is parameterized by a weight matrix \(W_1\) of shape \((k,n)\) and bias \(b_1\) of shape \((k, 1)\) broadcasted to \((k, m)\). The second layer will be the same as in the multivariate regression case, but its input will be \(Z\) instead of \(X\).</p>
+<table class="image">
+
+<tr><td><img src="/doks-theme/assets/images/section/3/3/model.png" style="width: 100%" /></td></tr>
+</table>
+
+<h3 id="forward-propagation-2">Forward Propagation</h3>
+
+\[\begin{align}
+	Z &amp;= W_1 X + b_1\\\\
+	\hat{y} &amp;= w_2Z + b_2\\\\
+	\mathcal{L} &amp;= \frac{1}{m}||\hat{y} - y||^2
+\end{align}\]
+
+<h3 id="backward-propagation-2">Backward Propagation</h3>
+
+\[\begin{align}
+	\frac{\partial\mathcal{L}}{\partial W_1} &amp;= w_2^\intercal\frac{2}{m}(\hat{y} - y)X^\intercal\\\\
+	\frac{\partial\mathcal{L}}{\partial b_1} &amp;= w_2^\intercal\frac{2}{m}(\hat{y} - y)\vec{1}\\\\
+	\frac{\partial\mathcal{L}}{\partial w_2} &amp;= \frac{2}{m}(\hat{y} - y)Z^\intercal\\\\
+	\frac{\partial\mathcal{L}}{\partial b_2} &amp;= \frac{2}{m}(\hat{y} - y)\vec{1}
+\end{align}\]
+
+<h1 id="two-layer-nonlinear-network">Two Layer Nonlinear Network</h1>
+<p>In this example, before sending \(Z\) as the input to the second layer, you will pass it through the sigmoid function. The output is denoted \(A\) and is the input of the second layer.</p>
+<table class="image">
+
+<tr><td><img src="/doks-theme/assets/images/section/3/4/model.png" style="width: 100%" /></td></tr>
+</table>
+
+<h3 id="forward-propagation-3">Forward Propagation</h3>
+
+\[\begin{align}
+	Z &amp;= W_1 X + b_1\\\\
+	A &amp;= \sigma(Z)\\\\
+	\hat{y} &amp;= w_2A + b_2\\\\
+	\mathcal{L} &amp;= \frac{1}{m}||\hat{y} - y||^2
+\end{align}\]
+
+<h3 id="backward-propagation-3">Backward Propagation</h3>
+
+\[\begin{align}
+	\frac{\partial\mathcal{L}}{\partial W_1} &amp;= \left(\left(w_2^\intercal\frac{2}{m}(\hat{y} - y)\right)\odot A \odot (1 - A)\right)X^\intercal\\\\
+	\frac{\partial\mathcal{L}}{\partial b_1} &amp;= \left(\left(w_2^\intercal\frac{2}{m}(\hat{y} - y)\right)\odot A \odot (1 - A)\right)\vec{1}\\\\
+	\frac{\partial\mathcal{L}}{\partial w_2} &amp;= \frac{2}{m}(\hat{y} - y)A^\intercal\\\\
+	\frac{\partial\mathcal{L}}{\partial b_2} &amp;= \frac{2}{m}(\hat{y} - y)\vec{1}
+\end{align}\]
+
+<h1 id="extended-notes">Extended Notes</h1>
+
+<p>We have compiled <a href="/syllabus/fall_2021/section3_hand_notes.pdf">an illustrative set of handwritten notes</a> that cover:</p>
+<ul>
+  <li>Scalar Operations and their derivatives,</li>
+  <li>Detailed visualizations of the backprop calculation for logistic regression and a 2-layer perceptron,</li>
+  <li>An overview of common optimization techniques: mini-batch GD, momentum, RMSprop, and Adam.</li>
+</ul>
+
+<h1 id="exercises">Exercises</h1>
+
+<p>We also put together <a href="/winter2020/section3_exercises.pdf">a sheet of exercises</a> (and their solutions) to help you test your understanding of gradient descent and backpropogation, as well as provide useful practice for the exam.</p>
+
+<h1 id="even-more-resources">Even more Resources</h1>
+
+<ul>
+  <li><a href="http://www.gatsby.ucl.ac.uk/teaching/courses/sntn/sntn-2017/resources/Matrix_derivatives_cribsheet.pdf">Matrix derivatives “cheat” sheet</a></li>
+  <li>Chapter 7 of <a href="https://cs229.stanford.edu/lectures-spring2022/master.pdf">CS229 Lecture Notes</a></li>
+</ul>
+
+
+						</div><!-- /.content -->
+					</div><!-- /.col -->
+					<div class="col-md-4 col-md-offset-1">
+						<div class="sections-list-wrapper">
+							<div class="sections-list js-sections js-affix js-scrollspy hidden-xs hidden-sm"></div><!-- /.sections-list -->
+						</div>
+					</div><!-- /.col -->
+					
+				</div><!-- /.row -->
+			</div><!-- /.container -->
+		</div><!-- /.section -->
+		
+		<div class="js-footer-area">
+			
+			
+	<footer class="site-footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-6">
+					
+					
+						<!-- <hr> -->
+						<p class="site-footer__copyright">Copyright &copy; 2024. - Stanford University <br>All rights reserved.</p>
+					
+				</div><!-- /.col -->
+				
+			</div><!-- /.row -->
+		</div><!-- /.container -->
+	</footer><!-- /.site-footer -->
+
+
+<script src="/doks-theme/assets/js/vendor/jquery.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/vendor/bootstrap/affix.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/vendor/bootstrap/scrollspy.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/vendor/matchHeight.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/scripts.min.js"></script>
+
+		</div><!-- /.js-footer-area -->
+	</body>
+</html>

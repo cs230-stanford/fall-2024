@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, minimum-scale=1.0">
+<title>Lecture 4</title>
+
+	<meta name="description" content="Add short description.">
+
+
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat:400,400i,500,500i,700,700i|Noto+Sans:400,400i,700,700i|Source+Code+Pro&amp;subset=latin-ext">
+<link rel="stylesheet" href="/doks-theme/assets/css/style.css">
+<script type="text/javascript" async
+  src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+<script>
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-124237072-3', 'auto');
+	ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+	</head>
+	<body class="blue" data-spy="scroll" data-target=".js-scrollspy">
+		
+	<div class="offcanvas visible-xs">
+		<ul class="offcanvas__nav">
+			
+				<li><a href="/syllabus">Syllabus</a></li>
+			
+				<li><a href="/officehours">Office Hours</a></li>
+			
+				<li><a href="/project">Project</a></li>
+			
+				<li><a href="/section">Section</a></li>
+			
+				<li><a href="/lecture">Lecture</a></li>
+			
+				<li><a href="/blog">Blog</a></li>
+			
+				<li><a href="/faq">FAQ</a></li>
+			
+		</ul><!-- /.offcanvas__nav -->
+	</div><!-- /.offcanvas -->
+
+
+
+	<header class="site-header">
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12">
+					
+						<a href="/" class="site-header__logo">
+							<img src="/doks-theme/assets/images/layout/logo.png">
+							CS230
+						</a>
+					
+					
+						<ul class="site-header__nav hidden-xs">
+							
+								<li><a href="/syllabus">Syllabus</a></li>
+							
+								<li><a href="/officehours">Office Hours</a></li>
+							
+								<li><a href="/project">Project</a></li>
+							
+								<li><a href="/section">Section</a></li>
+							
+								<li><a href="/lecture">Lecture</a></li>
+							
+								<li><a href="/blog">Blog</a></li>
+							
+								<li><a href="/faq">FAQ</a></li>
+							
+						</ul><!-- /.site-header__nav -->
+						<button class="offcanvas-toggle visible-xs">
+							<span></span>
+							<span></span>
+							<span></span>
+						</button><!-- /.offcanvas-toggle -->
+					
+				</div><!-- /.col -->
+			</div><!-- /.row -->
+		</div><!-- /.container -->
+	</header><!-- /.site-header -->
+
+
+		<div class="hero-subheader">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-7">
+						<div class="align-container" data-mh>
+							<div class="align-inner">
+								
+									<h1 class="hero-subheader__title">Lecture 4</h1>
+								
+								
+									<p class="hero-subheader__desc">Add short description.</p>
+								
+								
+								
+							</div><!-- /.align-inner -->
+						</div><!-- /.align-container -->
+					</div><!-- /.col -->
+						<div class="col-md-4 col-md-offset-1 hidden-xs hidden-sm">
+							<div class="align-container" data-mh>
+								<div class="align-inner">
+									<div class="hero-subheader__author">
+										<h4>Instructors</h4>
+                                                                               
+                                                                               
+                                                                                    <div class="instructor">
+                                        <a target="_blank" href="">
+                    <img class="headshot" src="/doks-theme/assets/images/headshot/kian.jpg" style="text-align:center;">
+                <div style="text-align:center;">Kian Katanforoosh<br>Instructor</div>
+	</a>
+        </div>
+    
+
+                                                                               
+                                                                                    <div class="instructor">
+                                        <a target="_blank" href="">
+                    <img class="headshot" src="/doks-theme/assets/images/headshot/andrew.jpg" style="text-align:center;">
+                <div style="text-align:center;">Andrew Ng<br>Instructor</div>
+	</a>
+        </div>
+    
+
+                                                                               
+
+                                                                               
+
+                                                                               
+
+										<h4>Time and Location</h4>
+                                                                                <p>In person lectures are on Tuesdays 11:30am-1:20pm. <br> Hewlett Teaching Center 200</p>
+									</div><!-- /.hero-subheader__author -->
+								</div><!-- /.align-inner -->
+							</div><!-- /.align-container -->
+						</div><!-- /.col -->
+				</div><!-- /.row -->
+			</div><!-- /.container -->
+		</div><!-- /.hero-subheader -->
+		<div class="section">
+			<div class="container">
+				<div class="row">
+					
+					<div class="col-md-12">
+						<div class="content">
+							<h1 id="lecture-generative-adversarial-networks">Lecture: Generative Adversarial Networks</h1>
+<h4 id="kian-katanforoosh">Kian Katanforoosh</h4>
+
+<p>Neural networks are widely used to predict. What if they could be used to generate new images, texts or even audio clips?</p>
+
+<p>Imagine training a robotic arm to localize objects on a table (in order to grasp them.) Collecting real data for this task is expensive. It requires to position objects on a table, take pictures and label with bounding boxes. Alternatively, taking screenshots in simulations allows you to virtually generate millions of labelled images. The downside is that a network trained on simulated data might not generalize to real data. Having a network that generates real homologues of simulated images would be a game changer. This is one example of application of Generative Adversarial Networks (GANs.)</p>
+
+<table class="image">
+
+<tr><td><img src="/doks-theme/assets/images/lecture/4b/simulator_to_real.png" style="width: 100%" /></td></tr>
+</table>
+
+<p>This lecture will give you a thorough grounding on GANs and how to apply them to cutting-edge tasks.</p>
+
+<h3 id="motivation">Motivation</h3>
+
+<p>Are networks capable of generating images of cats they have never seen? Intuitively, they should be. If a cat vs. non-cat classifier generalizes to unseen data, it means that it understands the salient features of the data (i.e. what a cat is and isn’t) instead of overfitting the training data. Similarly, a generative model should be able to generate pictures of cats it has never seen because its complexity (~ number of parameters) doesn’t allow it to memorize the training set.</p>
+
+<p>For instance, the following cats, cars and faces were generated by Karras et al. <a href="http://www.image-net.org/papers/imagenet_cvpr09.pdf">1</a> using GANs. They do not exist in reality!</p>
+<table class="image">
+
+<tr><td><img src="/doks-theme/assets/images/lecture/4b/fake_cats.png" style="width: 100%" /></td></tr>
+</table>
+<table class="image">
+
+<tr><td><img src="/doks-theme/assets/images/lecture/4b/fake_cars.png" style="width: 100%" /></td></tr>
+</table>
+<table class="image">
+
+<tr><td><img src="/doks-theme/assets/images/lecture/4b/fake_faces.png" style="width: 100%" /></td></tr>
+</table>
+
+<h3 id="the-generator-vs-discriminator-game">The generator vs. discriminator game</h3>
+
+<p>Although there exist various generative algorithms, this article will focus on the study of GANs.</p>
+
+<p>A GAN <a href="https://arxiv.org/abs/1406.2661">2</a> involves two neural networks. The first network is called the “generator” ($G$) and its goal is to generate realistic samples. The second network is a binary classifier called the “discriminator”, and its goal is to differentiate fake samples (label $0$) from real sample (label $1$.)</p>
+
+<p>These two networks play a game. $D$ alternatively receives real samples from a database and fake samples generated by $G$, and has to learn to differentiate them. At the same time, $G$ learns to fool $D$. The game ends when $G$ generates samples that are realistic enough to fool $D$. When training ends successfully, you can use $G$ to generate realistic samples. Here’s an illustration of the GAN game.</p>
+
+<p><img src="GAN_game.png" alt="Alt text" /></p>
+
+<p>It is common to choose a random code $z$ as input to $G$, such that $x = G(z)$ is a generated image. Later, you will learn alternative designs for z allowing you to choose the features of $x$.</p>
+
+<h3 id="training-gans">Training GANs</h3>
+
+<p>To training the GAN, you need to optimize two cost function simultaneously.</p>
+<ul>
+  <li>Discrimator cost $J^{(D)}$: $D$ is a binary classifier aiming to map inputs $x=G(z)$ to $y = 0$ and inputs $x=x_{real}$ to $y = 1$. Thus, the logistic loss (a.k.a. binary cross-entropy) is appropriate:</li>
+</ul>
+
+\[J^{(D)} = -\frac{1}{m_{\text{real}}}\sum_{i=1}^{m_{\text{real}}} y_{\text{real}}^{(i)}\log (D(x^{(i)})) -\frac{1}{m_{\text{gen}}}\sum_{i=1}^{m_{\text{gen}}} (1-y_{\text{gen}}^{(i)})\log (1-D(G(z^{(i)})))\]
+
+<p>where $m_{\text{real}}$ (resp. $m_{\text{gen}}$) is the number of real (resp. generated) examples in a batch. $y_{\text{gen}}$ = 0$ and $y_{\text{real}} = 1$.</p>
+
+<ul>
+  <li>Generator cost $J^{(G)}$: Since success is measured by the ability of $G$ to fool $D$, $J^{(G)}$ should be the opposite of $J^{(D)}$:</li>
+</ul>
+
+\[J^{(G)} = \frac{1}{m_{\text{gen}}}\sum_{i=1}^{m_{\text{gen}}} \log (1-D(G(z^{(i)})))\]
+
+<p>Note: the first term of $J^{(D)}$ does not appear in $J^{(G)}$ because it is independent of $z$ and will entail no gradient during optimization.</p>
+
+<p>You can run an optimization algorithm such as Adam <a href="https://arxiv.org/abs/1412.6980">3</a> simultaneously using two mini-batches of real and fake samples. You can think of it as a two step process:</p>
+<ol>
+  <li>Forward propagate a mini-batch of real samples, compute $J^{(D)}$. Then, backprogate to compute $\frac{\partial J^{(D)}}{\partial W_D}$ where $W_D denotes the parameters of $D$.</li>
+  <li>Forward propagate a mini-batch of samples freshly generated by $G$, compute $J^{(D)}$ and $J^{(G)}$. Then backpropagate to compute $\frac{\partial J^{(D)}}{\partial W_D}$ and $\frac{\partial J^{(G)}}{\partial W_G}$ where $W_G denotes the parameters of $G$.</li>
+</ol>
+
+<p><img src="GAN_game_training.png" alt="Alt text" /></p>
+
+<p>If training is successful, the distribution of fake samples coming from $G$ should match the true distribution of data.</p>
+
+<p>In mathematical terms, convergence is guaranteed. Here’s why….</p>
+
+<p>This [repository]](https://github.com/eriklindernoren/Keras-GAN/blob/master/gan/gan.py) is a nice code example on how to train a GAN.</p>
+
+<h3 id="tips-to-train-gans">Tips to train GANs</h3>
+
+<p>In practice, training GANs is hard and requires subtle tricks.</p>
+
+<h4 id="trick-1-using-a-non-saturating-cost">Trick 1: Using a non-saturating cost</h4>
+
+<p>GAN training is an iterative game between $D$ and $G$. If $G(z)$ isn’t realistic, $D$ doesn’t need to improve. Alternatively, if $D$ is easy to fool, $G$ doesn’t need to improve the realism of the generated samples. Consequently, $D$ and $G$ need to grow together in quality.</p>
+
+<p>Early in the training, $G$ is usually generating random noise and $D$ easily differentiates $x=G(z)$ from real samples. This unbalanced power hinders training. To understand why, let’s plot $J^{(G)}$ against $D(G(z))$:</p>
+
+<p><img src="sat_cost_alone.png" alt="Alt text" />
+On the graph above, consider the x-axis to be $D(G(z))$ “in expectation” over a given batch of examples.</p>
+
+<p>The gradient $\frac{\partial J^{(G)}}{\partial D(G(z))}$ represented by the slope of the plotted function is small early in the training (i.e. when D(G(z)) is close to 0.) As a consequence, the backpropagated gradient $\frac{\partial J^{(G)}}{\partial W_G}$ is also small. Fortunately, the following simple mathematical trick solves the problem:</p>
+
+\[min (J^{(G)}) = \min \Big[ \frac{1}{m_{\text{gen}}}\sum_{i=1}^{m_{\text{gen}}} \log (1-D(G(z^{(i)}))) \Big] = \max \Big[ \frac{1}{m_{\text{gen}}}\sum_{i=1}^{m_{\text{gen}}} \log (D(G(z^{(i)}))) \Big] = \min \Big[ - \frac{1}{m_{\text{gen}}}\sum_{i=1}^{m_{\text{gen}}} \log (D(G(z^{(i)}))) \Big]\]
+
+<p>As you can see on the graph below, minimizing $ - \frac{1}{m_{\text{gen}}}\sum_{i=1}^{m_{\text{gen}}} \log (D(G(z^{(i)})))$ instead of $ \frac{1}{m_{\text{gen}}}\sum_{i=1}^{m_{\text{gen}}} \log (1-D(G(z^{(i)})))$ ensures a higher gradient signal early in the training. Because a successful training will end when $D(G(z)) ≈ 0.5$ (i.e. $D$ is unable to differentiate a generated sample from a real sample), the low slope for $D(G(z)) ≈ 1$ doesn’t slow training.</p>
+
+<p><img src="sat_vs_unsat_costs.png" alt="Alt text" /></p>
+
+<p>This approach is known as the <em>non-saturating trick</em> and ensures that $G$ and $D$ receive a stronger gradient when they are “weaker” than their counterpart.</p>
+
+<p>You can find a more detailed explanation of the saturating cost trick in <a href="https://arxiv.org/pdf/1701.00160.pdf">Goodfellow’s NIPS tutorial</a> (2016).</p>
+
+<h4 id="trick-2-keeping-d-up-to-date">Trick 2: Keeping D up-to-date</h4>
+
+<p>According to the non-saturating graph above, $G$ doesn’t undergo a strong gradient when it easily fools $D$ (i.e. in expectation $D(G(z)) ≈ 1$.) Thus, it is strategic to ensure $D$ is “stronger” when updating $G$. This is achievable by updating $D$ $k$ times more than $G$, with $k&gt;1$.</p>
+
+<p>There exist many other tricks to successfully train GANs, this <a href="https://github.com/soumith/ganhacks">repository</a> contains helpful supplements to our class.</p>
+
+<h3 id="examples-of-gan-applications-and-nice-results">Examples of GAN applications and nice results</h3>
+
+<p>GANs have been applied in myriads of applications including compressing and reconstructing images for efficient memory storage, generating super-resolution images <a href="https://arxiv.org/pdf/1609.04802.pdf">4</a> <a href="https://arxiv.org/pdf/1809.00219.pdf">5</a>, preserving privacy for clinical data sharing <a href="https://www.biorxiv.org/content/biorxiv/early/2018/12/20/159756.full.pdf">6</a>, generating images based on text descriptions <a href="http://proceedings.mlr.press/v48/reed16.pdf">7</a>, converting maps images corresponding satellite images, street scene translation <a href="https://papers.nips.cc/paper/6672-unsupervised-image-to-image-translation-networks.pdf">8</a>, mass customization of medical products
+such as dental crowns <a href="https://arxiv.org/pdf/1804.00064.pdf">9</a>, cracking enciphered language data <a href="https://arxiv.org/pdf/1801.04883.pdf">10</a> and many more. Let’s delve into some of them.</p>
+
+<h4 id="operation-on-latent-codes">Operation on latent codes</h4>
+
+<p>The latent space of random noise input, from which $G$ maps to the real sample space, usually contains sound meanings. For instance, Radford et al. <a href="https://arxiv.org/pdf/1511.06434.pdf">11</a> show that inputing in $G$ the latent code $z = z_{\text{a man wearing glasses}} + z_{\text{a man without glasses}} - z_{\text{a woman without glasses}}$ leads to a generated image $G(z)$ representing “a woman wearing glasses.”</p>
+
+<p><img src="latent_code.png" alt="Alt text" /></p>
+
+<h3 id="generating-super-resolution-sr-images">Generating super-resolution (SR) images</h3>
+
+<p>There is promising research in GANs to recover high-resolution (HR) image from low-resolution (LR) images. Specifically, it is challenging to recover the finer texture details when super-resolving at large upscaling factors.</p>
+
+<p>Practical applications of SR includes fast-moving vehicles identification, number plates reading <a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.214.2810&amp;rep=rep1&amp;type=pdf">12</a>, biomedical applications such as accurate measurement and visualization of structure in living tissues, and biometrics regnition, to name a few.</p>
+
+<p>The following picture compares different SR algorithms’ outcome. The ground thruth is the left-most picture.</p>
+
+<p><img src="super-resolution.png" alt="Alt text" /></p>
+
+<p>Here’s a picture generated by a CS230 project award winner student <a href="http://cs230.stanford.edu/projects_fall_2018/reports/12365342.pdf">13</a> in Fall 2018. From left to right: 32x32 LR input, SRPGGAN Output (256x256) and HR ground-truth (256x256.)</p>
+
+<p><img src="res_GAN.png" alt="Alt text" /></p>
+
+<h3 id="image-to-image-translation-via-cycle-gans">Image to Image translation via Cycle-GANs</h3>
+
+<p>Translating images between different domains has been an important application of GANs. For example, CycleGANs <a href="https://arxiv.org/pdf/1703.10593.pdf">14</a> translate horses into zebras, apples to oranges, summer features into winter features and vice-versa.</p>
+
+<p><img src="cyclegan.png" alt="Alt text" /></p>
+
+<p>They consist of two pairs of generator-discriminator players: $(G_1,D_1)$ and $(G_2,D_2)$.</p>
+
+<p>The goal of the $(G_1, D_1)$ game is to turn domain 1 samples into domain 2 samples. In contrast, the goal of $(G_2, D_2)$ game is to turn domain 2 samples into domain 1 samples.</p>
+
+<p>A necessary cycle constraint imposes that the composition of $G_1$ and $G_2$ results in the identity function, to ensure that the non-changing features (non-horse or zebra elements) are saved during the translation.</p>
+
+<p>The training of this four-player game is summarized in five cost functions:</p>
+
+<ul>
+  <li>
+    <p>$D_1$’s cost: $J^{(D_1)} = -\frac{1}{m_{\text{real}}}\sum_{i=1}^{m_{\text{real}}} \log (D_1(z^{(i)})) -\frac{1}{m_{\text{gen}}}\sum_{i=1}^{m_{\text{gen}}} \log (1-D_1(G_1(H^{(i)})))$</p>
+  </li>
+  <li>
+    <p>$G_1$’s cost: $ J^{(G_1)} = - \frac{1}{m_{\text{gen}}}\sum_{i=1}^{m_{\text{gen}}} \log (D_1(G_1(H^{(i)})))$</p>
+  </li>
+  <li>
+    <p>$D_2$’s cost: $J^{(D_2)} = -\frac{1}{m_{\text{real}}}\sum_{i=1}^{m_{\text{real}}} \log (D_2(h^{(i)})) -\frac{1}{m_{\text{gen}}}\sum_{i=1}^{m_{\text{gen}}} \log (1-D_2(G_2(Z^{(i)})))$</p>
+  </li>
+  <li>
+    <p>$G_2$’s cost: $ J^{(G_2)} = - \frac{1}{m_{\text{gen}}}\sum_{i=1}^{m_{\text{gen}}} \log (D_2(G_2(Z^{(i)})))$</p>
+  </li>
+  <li>
+    <p>Cycle-consistent cost: $ J^{\text{cycle}} = - \frac{1}{m_{\text{gen}}}\sum_{i=1}^{m_{\text{gen}}} \Vert G_2(G_1(H^{(i)})) - H^{(i)} \Vert_1 - \frac{1}{m_{\text{gen}}}\sum_{i=1}^{m_{\text{gen}}} \Vert G_1(G_2(Z^{(i)})) - Z^{(i)} \Vert_1 $</p>
+  </li>
+</ul>
+
+<h3 id="references">References</h3>
+
+<p>[1] Tero Karras, Samuli Laine, Timo Aila: A Style-Based Generator Architecture for Generative Adversarial Networks (2019)
+[2] Ian J. Goodfellow, Jean Pouget-Abadie, Mehdi Mirza, Bing Xu, David Warde-Farley, Sherjil Ozair, Aaron Courville, Yoshua Bengio: Generative Adversarial Networks (2014)
+[3] Diederik P. Kingma, Jimmy Ba: Adam: A Method for Stochastic Optimization (2014)
+[4] Christian Ledig, Lucas Theis, Ferenc Huszar, Jose Caballero, Andrew Cunningham, Alejandro Acosta, Andrew Aitken, Alykhan Tejani, Johannes Totz, Zehan Wang, Wenzhe Shi: Photo-Realistic Single Image Super-Resolution Using a Generative Adversarial Network (2016)
+[5] Xintao Wang, Ke Yu, Shixiang Wu, Jinjin Gu, Yihao Liu, Chao Dong, Chen Change Loy, Yu Qiao, Xiaoou Tang: ESRGAN: Enhanced Super-Resolution Generative Adversarial Networks (2018)
+[6] Brett K. Beaulieu-Jones, Zhiwei Steven Wu, Chris Williams, Ran Lee, Sanjeev P. Bhavnani, James Brian Byrd, Casey S. Greene: Privacy-preserving generative deep neural networks support clinical data sharing (2017)
+[7] Scott Reed, Zeynep Akata, Xinchen Yan, Lajanugen Logeswaran, Bernt Schiele, Honglak Lee: Generative Adversarial Text to Image Synthesis (2016)
+[8] Ming-Yu Liu, Thomas Breuel, Jan Kautz: Unsupervised Image-to-Image Translation Networks (2017)
+[9] Jyh-Jing Hwang, Sergei Azernikov, Alexei A. Efros, Stella X. Yu: Learning Beyond Human Expertise with Generative Models for Dental Restorations (2018)
+[10] Aidan N. Gomez, Sicong Huang, Ivan Zhang, Bryan M. Li, Muhammad Osama, Lukasz Kaiser: Unsupervised Cipher Cracking Using Discrete GANs (2018)
+[11] Alec Radford, Luke Metz, Soumith Chintala: Unsupervised Representation Learning with Deep Convolutional Generative Adversarial Networks (2015)
+[12] Yuan Jie, Du Si-dan, Zhu Xiang: Fast Super-resolution for License Plate Image Reconstruction  (2008)
+[13] Yujie Shu: Human Portrait Super Resolution Using GANs (2018)
+[14] Jun-Yan Zhu, Taesung Park, Phillip Isola, Alexei A. Efros: Unpaired Image-to-Image Translation using Cycle-Consistent Adversarial Networks (2017)</p>
+
+						</div><!-- /.content -->
+					</div>
+					
+				</div><!-- /.row -->
+			</div><!-- /.container -->
+		</div><!-- /.section -->
+		
+		<div class="js-footer-area">
+			
+			
+	<footer class="site-footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-6">
+					
+					
+						<!-- <hr> -->
+						<p class="site-footer__copyright">Copyright &copy; 2024. - Stanford University <br>All rights reserved.</p>
+					
+				</div><!-- /.col -->
+				
+			</div><!-- /.row -->
+		</div><!-- /.container -->
+	</footer><!-- /.site-footer -->
+
+
+<script src="/doks-theme/assets/js/vendor/jquery.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/vendor/bootstrap/affix.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/vendor/bootstrap/scrollspy.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/vendor/matchHeight.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/scripts.min.js"></script>
+
+		</div><!-- /.js-footer-area -->
+	</body>
+</html>

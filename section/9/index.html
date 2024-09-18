@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, minimum-scale=1.0">
+<title>Section 9 (Week 9)</title>
+
+	<meta name="description" content="Writing a Deep Learning Paper (Featuring Previous Projects!)">
+
+
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat:400,400i,500,500i,700,700i|Noto+Sans:400,400i,700,700i|Source+Code+Pro&amp;subset=latin-ext">
+<link rel="stylesheet" href="/doks-theme/assets/css/style.css">
+<script type="text/javascript" async
+  src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+<script>
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-124237072-3', 'auto');
+	ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+	</head>
+	<body class="blue" data-spy="scroll" data-target=".js-scrollspy">
+		
+	<div class="offcanvas visible-xs">
+		<ul class="offcanvas__nav">
+			
+				<li><a href="/syllabus">Syllabus</a></li>
+			
+				<li><a href="/officehours">Office Hours</a></li>
+			
+				<li><a href="/project">Project</a></li>
+			
+				<li><a href="/section">Section</a></li>
+			
+				<li><a href="/lecture">Lecture</a></li>
+			
+				<li><a href="/blog">Blog</a></li>
+			
+				<li><a href="/faq">FAQ</a></li>
+			
+		</ul><!-- /.offcanvas__nav -->
+	</div><!-- /.offcanvas -->
+
+
+
+	<header class="site-header">
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12">
+					
+						<a href="/" class="site-header__logo">
+							<img src="/doks-theme/assets/images/layout/logo.png">
+							CS230
+						</a>
+					
+					
+						<ul class="site-header__nav hidden-xs">
+							
+								<li><a href="/syllabus">Syllabus</a></li>
+							
+								<li><a href="/officehours">Office Hours</a></li>
+							
+								<li><a href="/project">Project</a></li>
+							
+								<li><a href="/section">Section</a></li>
+							
+								<li><a href="/lecture">Lecture</a></li>
+							
+								<li><a href="/blog">Blog</a></li>
+							
+								<li><a href="/faq">FAQ</a></li>
+							
+						</ul><!-- /.site-header__nav -->
+						<button class="offcanvas-toggle visible-xs">
+							<span></span>
+							<span></span>
+							<span></span>
+						</button><!-- /.offcanvas-toggle -->
+					
+				</div><!-- /.col -->
+			</div><!-- /.row -->
+		</div><!-- /.container -->
+	</header><!-- /.site-header -->
+
+
+		<div class="hero-subheader">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-7">
+						<div class="align-container" data-mh>
+							<div class="align-inner">
+								
+									<h1 class="hero-subheader__title">Section 9 (Week 9)</h1>
+								
+								
+									<p class="hero-subheader__desc">Writing a Deep Learning Paper (Featuring Previous Projects!)</p>
+								
+								
+								
+							</div><!-- /.align-inner -->
+						</div><!-- /.align-container -->
+					</div><!-- /.col -->
+						<div class="col-md-4 col-md-offset-1 hidden-xs hidden-sm">
+							<div class="align-container" data-mh>
+								<div class="align-inner">
+									<div class="hero-subheader__author">
+										<h4>Instructors</h4>
+                                                                               
+                                                                               
+                                                                                    <div class="instructor">
+                                        <a target="_blank" href="">
+                    <img class="headshot" src="/doks-theme/assets/images/headshot/kian.jpg" style="text-align:center;">
+                <div style="text-align:center;">Kian Katanforoosh<br>Instructor</div>
+	</a>
+        </div>
+    
+
+                                                                               
+                                                                                    <div class="instructor">
+                                        <a target="_blank" href="">
+                    <img class="headshot" src="/doks-theme/assets/images/headshot/andrew.jpg" style="text-align:center;">
+                <div style="text-align:center;">Andrew Ng<br>Instructor</div>
+	</a>
+        </div>
+    
+
+                                                                               
+
+                                                                               
+
+                                                                               
+
+										<h4>Time and Location</h4>
+                                                                                <p>In person lectures are on Tuesdays 11:30am-1:20pm. <br> Hewlett Teaching Center 200</p>
+									</div><!-- /.hero-subheader__author -->
+								</div><!-- /.align-inner -->
+							</div><!-- /.align-container -->
+						</div><!-- /.col -->
+				</div><!-- /.row -->
+			</div><!-- /.container -->
+		</div><!-- /.hero-subheader -->
+		<div class="section">
+			<div class="container">
+				<div class="row">
+					
+					<div class="col-md-7">
+						<div class="content">
+							<h2 id="general-ideas">General Ideas</h2>
+
+<p>When writing your paper, always remember your audience. In particular,</p>
+
+<ul>
+  <li>Your audience is already well-versed in deep learning. Hence, there is no need to describe in detail common deep learning techniques. For example, you can refer to methods such as convolutions, pooling, dropout, batch normalization, recurrent neural networks or L2 regularization without explaining their meaning.  If you are using well-known data augmentation methods such as image rotation and translation, you can mention it without showing the augmented images.</li>
+  <li>Your audience is busy. Hence, be as short and concise as possible and focus on the key insights of your paper. If the key insight of your paper is the loss function, write out the loss function and elaborate on it. If the key insight of your paper is the model architecture, draw it out and explain the key differences with prior work. For all other details that are common in deep learning, it’s best to state it concisely.</li>
+  <li>Your audience may want to reimplement your paper. Hence, it’s important to give details which will help them to reimplement it. Once again, there’s no need to go overboard with details. Think about what will help you re-implement your own paper, and what were the main difficulties you faced when implementing your project were: elaborate more on those points.</li>
+</ul>
+
+<p>The abstract, introduction and conclusion are essential parts of a paper. When writing these parts, it’s important to describe the <em>context</em> of your paper, the <em>motivation</em> behind your work and the <em>key insights</em> drawn from your work. It is also good to mention some results to entice your audience to read more. Refer to the section below on how to write an abstract for more details.</p>
+
+<p>It is also important to provide explanations behind your decisions. Instead of stating that you tuned the number of frozen layers in your network, go beyond that and explain why you believe that a certain hyperparameter is the most important to tune in your network. Doing so also helps your audience fine-tune your network for their own dataset.</p>
+
+<h2 id="how-to-write-an-abstract">How to write an abstract?</h2>
+
+<table class="image">
+<caption align="bottom"><small>Realistic Image Synthesis and Classification - Chris Fontas, Wendy Li, Emanuel Mendiola, Fall 2018 (<a href="http://cs230.stanford.edu/projects_fall_2018/reports/12447290.pdf">source</a>)</small></caption> 
+<tr><td><img src="/doks-theme/assets/images/section/9/image4.png" style="width: 100%" /></td></tr>
+</table>
+
+<p>In general, the abstract (and the introduction) should address the following questions (from Professor Emma Brunskill):</p>
+
+<ul>
+  <li>What is the problem to be addressed?</li>
+  <li>Why is the problem important and why is it hard?</li>
+  <li>What are the key limitations of prior work (with associated references)?</li>
+  <li>What are the key insights of this paper?</li>
+  <li>What are the key results in this paper?</li>
+</ul>
+
+<p>Why is this good?</p>
+
+<ul>
+  <li>Concise and clear</li>
+  <li>Addresses most of the above questions</li>
+</ul>
+
+<h2 id="how-to-describe-prior-work">How to describe prior work?</h2>
+
+<table class="image">
+<caption align="bottom"><small>Deep Energies for Estimating Three-Dimensional Facial Pose and Expression - Jane Wu, Xinwei Yao, Fall 2018 (<a href="http://cs230.stanford.edu/projects_fall_2018/reports/12409058.pdf">source</a>)</small></caption> 
+<tr><td><img src="/doks-theme/assets/images/section/9/image6.png" style="width: 100%" /></td></tr>
+</table>
+
+<p>Why is this good?</p>
+
+<ul>
+  <li>Classifies relevant prior work in broad categories. For each category, papers are grouped by their more specific topics.</li>
+  <li>Related work is not just mentioned: its relation to this work is explicitly shown.</li>
+  <li>The writing is clear and succinct. As a rule of thumb, when writing a paper, remove any words that aren’t bringing meaningful information. For instance, “our convolutional neural network performs object detection by outputting all-sized bounding boxes” could be written as “our object detector outputs bounding boxes” if there’s no need for the reader to know that the object detector is a CNN and outputs bounding boxes of all-size.</li>
+  <li>References are mentioned throughout the paragraph to help a curious reader delve deeper into each discussed topic.</li>
+</ul>
+
+<p>How can this be improved?</p>
+
+<ul>
+  <li>Elaborate more on limitations/benefits of prior work. For instance, briefly mention what previous optical flow networks tend to succeed or fail on.</li>
+  <li>Elaborate more on which prior work inspired your work, if any.</li>
+</ul>
+
+<h2 id="how-to-describe-or-visualize-your-dataset">How to describe or visualize your dataset?</h2>
+
+<table class="image">
+<caption align="bottom"><small>Human Protein Atlas Image Classification - Amita Patil, Rudra Bandhu, Fall 2018 (<a href="http://cs230.stanford.edu/projects_fall_2018/reports/12449275.pdf">source</a>)</small></caption> 
+<tr><td><img src="/doks-theme/assets/images/section/9/image12.png" style="width: 100%" /></td></tr>
+</table>
+
+<table class="image">
+<caption align="bottom"><small>Human Protein Atlas Image Classification - Amita Patil, Rudra Bandhu, Fall 2018 (<a href="http://cs230.stanford.edu/projects_fall_2018/reports/12449275.pdf">source</a>)</small></caption> 
+<tr><td><img src="/doks-theme/assets/images/section/9/image15.png" style="width: 100%" /></td></tr>
+</table>
+
+<p>Why is this good?</p>
+
+<ul>
+  <li>The authors analyzed their dataset and reported key figures such as dataset size and format. They also displayed sample images from the dataset to help the reader grasp the problem they are solving.</li>
+  <li>They also discussed key challenges related to their dataset such as the class imbalance and low-data regime.</li>
+  <li>They mentioned using data augmentation and preprocessing to alleviate the data-related challenges.</li>
+  <li>You may also include dataset collection/scraping if you’ve done so.</li>
+  <li>Other ways to visualize data: word cloud, histograms, etc.</li>
+</ul>
+
+<p>What should be improved?</p>
+
+<ul>
+  <li>The authors haven’t explicitly formulated the split between training, validation and test sets. Be sure to include this, either in your dataset section or in your methods section!</li>
+</ul>
+
+<h2 id="how-to-describe-a-deep-learning-architecture">How to describe a deep learning architecture?</h2>
+
+<table class="image">
+<caption align="bottom"><small>You Only Look Once: Unified, Real-Time Object Detection - Redmon et. al, 2015 (<a href="https://arxiv.org/abs/1506.02640">source</a>)</small></caption> 
+<tr><td><img src="/doks-theme/assets/images/section/9/image5.png" style="width: 100%" /></td></tr>
+</table>
+
+<table class="image">
+<caption align="bottom"><small>You Only Look Once: Unified, Real-Time Object Detection - Redmon et. al, 2015 (<a href="https://arxiv.org/abs/1506.02640">source</a>)</small></caption> 
+<tr><td><img src="/doks-theme/assets/images/section/9/image14.png" style="width: 100%" /></td></tr>
+</table>
+
+<table class="image">
+<caption align="bottom"><small>You Only Look Once: Unified, Real-Time Object Detection - Redmon et. al, 2015 (<a href="https://arxiv.org/abs/1506.02640">source</a>)</small></caption> 
+<tr><td><img src="/doks-theme/assets/images/section/9/image7.png" style="width: 100%" /></td></tr>
+</table>
+
+<p>Why is this good?</p>
+
+<ul>
+  <li>Model architecture is drawn clearly. Convolutions and maxpool are shown with their hyperparameters.</li>
+  <li>Dimensions of each layer are also shown clearly for ease of re-implementation.</li>
+  <li>Key insight of dividing image into grids and using each grid to do bounding box regression is clear from the first image. (Always remember what you want the audience to take away from your paper. It’s not always just about drawing the model architecture. For example, if your key insight is a certain type of data augmentation for example, use a diagram to illustrate it and compare it with other types of data augmentation).</li>
+  <li>Loss function is another key insight in this paper since it’s about repurposing regressors for object detections. Hence, describing the loss function is importance in this case. But it’s not always important. If you’re using a common loss function such as cross-entropy loss, there’s no need to write down the formula.</li>
+</ul>
+
+<p>Other interesting points:</p>
+
+<ul>
+  <li>Loss function: Why sqrt the width and height before taking L2 distance? (think ratios. If the actual width is 10 and prediction is 11 vs. if actual width is 1 and prediction is 2).</li>
+  <li>Repurposing regressors as object detectors (vs. RCNN which uses classifiers as object detectors).</li>
+</ul>
+
+<h2 id="how-to-describe-a-deep-learning-architecture-for-gans">How to describe a deep learning architecture (for GANs)</h2>
+
+<table class="image">
+<caption align="bottom"><small>Human Portrait Super Resolution Using GANs - Yujie Shu, Fall 2018 (<a href="http://cs230.stanford.edu/projects_fall_2018/reports/12365342.pdf">source</a>)</small></caption> 
+<tr><td><img src="/doks-theme/assets/images/section/9/image13.png" style="width: 100%" /></td></tr>
+</table>
+
+<p>Why is this good?</p>
+
+<ul>
+  <li>Clear description of model architecture of both generator and discriminator for ease of reimplementation.</li>
+</ul>
+
+<p>How can this be improved?</p>
+
+<ul>
+  <li>Also describe the output size at each layer for ease of re-implementation.</li>
+</ul>
+
+<table class="image">
+<caption align="bottom"><small>Image-to-Image Translation with Conditional-GAN - Jason Hu, Weiyi Yu, Zhouchangwan Yu, Spring 2018 (<a href="http://cs230.stanford.edu/projects_spring_2018/reports/8289557.pdf">source</a>)</small></caption> 
+<tr><td><img src="/doks-theme/assets/images/section/9/image10.png" style="width: 100%" /></td></tr>
+</table>
+
+<p>Why is this good?</p>
+
+<ul>
+  <li>Quickly see the difference between the two types of architecture that are being compared: U-Net and ResNet.</li>
+</ul>
+
+<p>How can this be improved?</p>
+
+<ul>
+  <li>Describe the actual conv params and maxpool params used. (Refer to YOLOv1)</li>
+</ul>
+
+<h3 id="gan-qualitative-evaluation">GAN Qualitative Evaluation</h3>
+
+<table class="image">
+<caption align="bottom"><small>Human Portrait Super Resolution Using GANs - Yujie Shu, Fall 2018 (<a href="http://cs230.stanford.edu/projects_fall_2018/reports/12365342.pdf">source</a>)</small></caption> 
+<tr><td><img src="/doks-theme/assets/images/section/9/image16.png" style="width: 100%" /></td></tr>
+</table>
+
+<table class="image">
+<caption align="bottom"><small>Image-to-Image Translation with Conditional-GAN - Jason Hu, Weiyi Yu, Zhouchangwan Yu, Spring 2018 (<a href="http://cs230.stanford.edu/projects_spring_2018/reports/8289557.pdf">source</a>)</small></caption> 
+<tr><td><img src="/doks-theme/assets/images/section/9/image9.png" style="width: 100%" /></td></tr>
+</table>
+
+<table class="image">
+<caption align="bottom"><small>Photorealistic Neural Style Transfer: Generating Realistic Images without GANs - Richard R. Yang, Fall 2018 (<a href="http://cs230.stanford.edu/projects_fall_2018/reports/12447446.pdf">source</a>)</small></caption> 
+<tr><td><img src="/doks-theme/assets/images/section/9/image11.png" style="width: 100%" /></td></tr>
+</table>
+
+<p>Why is this good?</p>
+
+<ul>
+  <li>Quick comparison between different approaches</li>
+  <li>Quantitative figures are also given in the top figure since the images themselves are hard to differentiate.</li>
+  <li>See the CycleGAN paper for more nice figures.</li>
+</ul>
+
+<p>How can this be improved?</p>
+
+<ul>
+  <li>For more convincing evaluation, don’t curate (hand pick and choose) your generated images, and tell your user your figures are uncurated. See https://arxiv.org/pdf/1812.04948.pdf for great examples.</li>
+</ul>
+
+<h3 id="gan-quantitative-evaluation">GAN Quantitative Evaluation</h3>
+
+<ul>
+  <li>Classifying using GANs as Feature Extractor</li>
+  <li>Inception Score</li>
+  <li>Frechet Inception Distance</li>
+  <li>For a great overview, see <a href="https://arxiv.org/pdf/1802.03446.pdf">Ali Borji’s paper summarizing GAN evaluation measures</a>.</li>
+</ul>
+
+<h2 id="how-to-describe-hyperparameter-tuning-steps">How to describe hyperparameter tuning steps?</h2>
+
+<p>A general approach could be:</p>
+
+<p>Step 1: Describe which hyperparameters you tuned.</p>
+
+<p>Step 2: Explain why you chose to tune these hyperparameters.</p>
+
+<p>Step 3: Elaborate on how you tuned these hyperparameters. (e.g. Did you use a dev set or train-dev set or leave-one-out cross validation? Was there a variance/bias problem? What range of hyperparameters did you use? Any other fancy approaches such as Bayesian Optimization?)</p>
+
+<p>Step 4: State the results of tuning these hyperparameters.</p>
+
+<p>Step 5: Conclude by saying which hyperparameters you tuned were the most sensitive to the performance of your model.</p>
+
+<p>The key here is in the explanation. Instead of blindly tuning all your hyperparameters, it is better to focus on a few hyperparameters that you believe is important. Doing so also helps the reader reimplement your paper since they understand which hyperparameters they should focus on tuning.</p>
+
+<h2 id="how-to-present-classification-results-and-handle-unbalanced-datasets">How to present classification results and handle unbalanced datasets?</h2>
+
+<table class="image">
+<caption align="bottom"><small>Human Protein Atlas Image Classification - Amita Patil, Rudra Bandhu, Fall 2018 (<a href="http://cs230.stanford.edu/projects_fall_2018/reports/12449275.pdf">source</a>)</small></caption> 
+<tr><td><img src="/doks-theme/assets/images/section/9/image8.png" style="width: 100%" /></td></tr>
+</table>
+
+<p>Why is this good?</p>
+
+<ul>
+  <li>Presents all metrics clearly in the table with the most relevant hyperparameters and architectures.</li>
+  <li>Highlights best results.</li>
+  <li>Uses F1 score, Precision and Recall to evaluate since dataset is unbalanced.</li>
+</ul>
+
+<table class="image">
+<caption align="bottom"><small>Transfer Learning-based CNN Classification for Simpsons Characters - Yueheng Li, Winter 2019 (<a href="http://cs230.stanford.edu/projects_winter_2019/reports/15811843.pdf">source</a>)</small></caption> 
+<tr><td><img src="/doks-theme/assets/images/section/9/image2.png" style="width: 100%" /></td></tr>
+</table>
+
+<table class="image">
+<caption align="bottom"><small>Deep Architectural Style Classification - Paavani Dua, Alan Flores-Lopez, Alex Wade, Winter 2019 (<a href="http://cs230.stanford.edu/projects_winter_2019/reports/15811944.pdf">source</a>)</small></caption> 
+<tr><td><img src="/doks-theme/assets/images/section/9/image1.png" style="width: 100%" /></td></tr>
+</table>
+
+<p>Why is this good?</p>
+
+<ul>
+  <li>We can see how the classifier does on each individual class, as well as holistically. This works with any dataset balance!</li>
+  <li>Having counts of number of examples of each class is great. Highlighting the best model for each row helps immensely with readability.</li>
+</ul>
+
+<h2 id="how-to-cite-other-publications-and-projects">How to cite other publications and projects?</h2>
+
+<table class="image">
+<caption align="bottom"><small>You Only Look Once: Unified, Real-Time Object Detection - Redmon et. al, 2015 (<a href="https://arxiv.org/abs/1506.02640">source</a>)</small></caption> 
+<tr><td><img src="/doks-theme/assets/images/section/9/image3.png" style="width: 100%" /></td></tr>
+</table>
+
+<p>Why is this good:</p>
+
+<ul>
+  <li>All authors are listed, and all citations are in a standard format.</li>
+  <li>Conference/venue listed and year</li>
+  <li>Can do this automatically using BibTeX or Word, with in-text citations linking to the referenced citation.</li>
+</ul>
+
+						</div><!-- /.content -->
+					</div><!-- /.col -->
+					<div class="col-md-4 col-md-offset-1">
+						<div class="sections-list-wrapper">
+							<div class="sections-list js-sections js-affix js-scrollspy hidden-xs hidden-sm"></div><!-- /.sections-list -->
+						</div>
+					</div><!-- /.col -->
+					
+				</div><!-- /.row -->
+			</div><!-- /.container -->
+		</div><!-- /.section -->
+		
+		<div class="js-footer-area">
+			
+			
+	<footer class="site-footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-6">
+					
+					
+						<!-- <hr> -->
+						<p class="site-footer__copyright">Copyright &copy; 2024. - Stanford University <br>All rights reserved.</p>
+					
+				</div><!-- /.col -->
+				
+			</div><!-- /.row -->
+		</div><!-- /.container -->
+	</footer><!-- /.site-footer -->
+
+
+<script src="/doks-theme/assets/js/vendor/jquery.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/vendor/bootstrap/affix.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/vendor/bootstrap/scrollspy.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/vendor/matchHeight.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/scripts.min.js"></script>
+
+		</div><!-- /.js-footer-area -->
+	</body>
+</html>

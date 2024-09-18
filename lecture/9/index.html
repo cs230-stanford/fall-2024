@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, minimum-scale=1.0">
+<title>Lecture 9</title>
+
+	<meta name="description" content="Add short description.">
+
+
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat:400,400i,500,500i,700,700i|Noto+Sans:400,400i,700,700i|Source+Code+Pro&amp;subset=latin-ext">
+<link rel="stylesheet" href="/doks-theme/assets/css/style.css">
+<script type="text/javascript" async
+  src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+<script>
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-124237072-3', 'auto');
+	ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+	</head>
+	<body class="blue" data-spy="scroll" data-target=".js-scrollspy">
+		
+	<div class="offcanvas visible-xs">
+		<ul class="offcanvas__nav">
+			
+				<li><a href="/syllabus">Syllabus</a></li>
+			
+				<li><a href="/officehours">Office Hours</a></li>
+			
+				<li><a href="/project">Project</a></li>
+			
+				<li><a href="/section">Section</a></li>
+			
+				<li><a href="/lecture">Lecture</a></li>
+			
+				<li><a href="/blog">Blog</a></li>
+			
+				<li><a href="/faq">FAQ</a></li>
+			
+		</ul><!-- /.offcanvas__nav -->
+	</div><!-- /.offcanvas -->
+
+
+
+	<header class="site-header">
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12">
+					
+						<a href="/" class="site-header__logo">
+							<img src="/doks-theme/assets/images/layout/logo.png">
+							CS230
+						</a>
+					
+					
+						<ul class="site-header__nav hidden-xs">
+							
+								<li><a href="/syllabus">Syllabus</a></li>
+							
+								<li><a href="/officehours">Office Hours</a></li>
+							
+								<li><a href="/project">Project</a></li>
+							
+								<li><a href="/section">Section</a></li>
+							
+								<li><a href="/lecture">Lecture</a></li>
+							
+								<li><a href="/blog">Blog</a></li>
+							
+								<li><a href="/faq">FAQ</a></li>
+							
+						</ul><!-- /.site-header__nav -->
+						<button class="offcanvas-toggle visible-xs">
+							<span></span>
+							<span></span>
+							<span></span>
+						</button><!-- /.offcanvas-toggle -->
+					
+				</div><!-- /.col -->
+			</div><!-- /.row -->
+		</div><!-- /.container -->
+	</header><!-- /.site-header -->
+
+
+		<div class="hero-subheader">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-7">
+						<div class="align-container" data-mh>
+							<div class="align-inner">
+								
+									<h1 class="hero-subheader__title">Lecture 9</h1>
+								
+								
+									<p class="hero-subheader__desc">Add short description.</p>
+								
+								
+								
+							</div><!-- /.align-inner -->
+						</div><!-- /.align-container -->
+					</div><!-- /.col -->
+						<div class="col-md-4 col-md-offset-1 hidden-xs hidden-sm">
+							<div class="align-container" data-mh>
+								<div class="align-inner">
+									<div class="hero-subheader__author">
+										<h4>Instructors</h4>
+                                                                               
+                                                                               
+                                                                                    <div class="instructor">
+                                        <a target="_blank" href="">
+                    <img class="headshot" src="/doks-theme/assets/images/headshot/kian.jpg" style="text-align:center;">
+                <div style="text-align:center;">Kian Katanforoosh<br>Instructor</div>
+	</a>
+        </div>
+    
+
+                                                                               
+                                                                                    <div class="instructor">
+                                        <a target="_blank" href="">
+                    <img class="headshot" src="/doks-theme/assets/images/headshot/andrew.jpg" style="text-align:center;">
+                <div style="text-align:center;">Andrew Ng<br>Instructor</div>
+	</a>
+        </div>
+    
+
+                                                                               
+
+                                                                               
+
+                                                                               
+
+										<h4>Time and Location</h4>
+                                                                                <p>In person lectures are on Tuesdays 11:30am-1:20pm. <br> Hewlett Teaching Center 200</p>
+									</div><!-- /.hero-subheader__author -->
+								</div><!-- /.align-inner -->
+							</div><!-- /.align-container -->
+						</div><!-- /.col -->
+				</div><!-- /.row -->
+			</div><!-- /.container -->
+		</div><!-- /.hero-subheader -->
+		<div class="section">
+			<div class="container">
+				<div class="row">
+					
+					<div class="col-md-12">
+						<div class="content">
+							<h1 id="lecture-9-deep-reinforcement-learning">Lecture 9: Deep-Reinforcement Learning</h1>
+
+<p>In this lecture, we will see how we can use Deep Learning techniques to solve Reinforcement Learning (RL) problems.</p>
+
+<p>But first, what is Reinforcement Learning? Reinforcement Learning is an area of Machine Learning. It is about automatically learning to make the best sequences of decisions to achieve a goal.</p>
+
+<p>In previous lectures, we saw how Deep Neural Networks are universal function approximators. Today we will see how we can leverage this property in RL problems. This is what we call Deep-Reinforcement Learning.</p>
+
+<p>Course plan</p>
+<ol>
+  <li>Motivation</li>
+  <li>Introduction to RL</li>
+  <li>Deep Q-Networks</li>
+  <li>An application of Deep Q-Network</li>
+  <li>Tips to train Deep Q-Network</li>
+</ol>
+
+<h2 id="1-motivation">1. Motivation</h2>
+<p>To motivate our interest, we will start by having a look at two major success stories in the Deep-RL field.</p>
+
+<h3 id="a-alphago">a) AlphaGo</h3>
+<p><strong>AlphaGo</strong> became widely known as the first computer computer program to be able to beat a professional player at the game of Go. This accomplishment attracted a vast public interest. A documentary <a href="https://www.alphagomovie.com/">film</a> was even made around the event.</p>
+
+<p>What is Go? Go is an abstract strategy board game which opposes two competitive players. The aim is to surround more territory than the opponent.</p>
+
+<p>What are the basic rules of the game of Go?</p>
+<ul>
+  <li>the standard Go board is composed of a 19x19 line grid;</li>
+  <li>each player is assigned a set of stones (black stones for one player, white stones for the other);</li>
+  <li>players alternatively put one of their stones at grid intersections to surround the other player’s stones;</li>
+  <li>at the end, the player with the biggest territory wins.
+If you want to know more about Go, you can read the corresponding Wikipedia <a href="https://en.wikipedia.org/wiki/Go_(game)">article</a>.</li>
+</ul>
+
+<p><strong>include image of Go board with stones. Ex: https://senseis.xmp.net/diagrams/33/dabbc36a3bca16d97597be8b198c0f9b.png</strong></p>
+
+<p>A little bit of history:</p>
+<ul>
+  <li>1997: IBM’s computer Deep Blue beat world chess champion Garry Kasparov</li>
+  <li>2016: Deep Mind’s program AlphaGo beat 9-dan professional player Lee Sedol</li>
+</ul>
+
+<p>Why such a time gap between the two events? Solving the game of Go is much more challenging than solving Chess. This is mainly because the state space is a lot bigger (see below).</p>
+
+<p><strong>How could you try to solve the game of Go using conventional Deep Learning techniques?</strong></p>
+
+<p>Here is one possible way to define a dataset:</p>
+<ul>
+  <li>input = current state of the board: positions and colors of the stones placed on the board;</li>
+  <li>label = best next move: given by a professional player.</li>
+</ul>
+
+<p>There are three major problems that would make this system unlikely to perform well on this task:
+1) The input space is huge. There are $3^{11 \time 11}$ different configurations of the board. The dataset can only cover a very small fraction of the possible inputs, it is unlikely that the algorithm will generalize well to unseen situations.
+2) The model can only be as good as the professional player that made the labels. Here the labels are not the ground truth i.e. the best next moves. Our model cannot achieve super-human performances.
+3) Only short term understanding. The model only plan one move ahead, it does not have any long term strategy. The issue is that an action that may not seem as the best move according to the previous one-step model might actually increase the probability of winning.</p>
+
+<p>To solve these issues, <strong>Reinforcement Learning techniques were used</strong>. RL is well-suited in this setup because the labels we are really interested in are delayed labels: either 1 = ‘winning the game’ or 0 = ‘losing the game’. RL allow to learn a strategy to achieve long term goals.</p>
+
+<p>If you want to learn more about AlphaGo, you can read the corresponding <a href="https://deepmind.com/documents/119/agz_unformatted_nature.pdf">paper</a> from DeepMind.</p>
+
+<h3 id="b-human-level-control-through-deep-reinforcement-learning">b) “Human Level Control through Deep Reinforcement Learning”</h3>
+
+<p>This refers to a specific algorithm that was conceived to achieve <strong>super-human performances on a set of video games</strong>.</p>
+
+<p>We will explain this algorithm in more details in part 4).</p>
+
+<p><strong>include Nature cover image:  https://twitter.com/nature/status/571242468441788416</strong></p>
+
+<p>If you want to learn more about this algorithm, you can read the corresponding <a href="https://storage.googleapis.com/deepmind-media/dqn/DQNNaturePaper.pdf">paper</a> from DeepMind.</p>
+
+<h2 id="2-a-gentle-introduction-to-reinforcement-learning">2. A gentle introduction to Reinforcement Learning</h2>
+
+<p><strong>Case study: a simple game “Recycling is good”</strong></p>
+
+<p>The problem is as follows: you have an object that needs to be thrown away. You can either throw it in a normal bin or (better) throw it in a recycle bin. On the way to the recycle bin, there is a chocolate bar that you can eat, and you like chocolate!</p>
+
+<p><strong>Problem statement</strong>:</p>
+<ul>
+  <li>States: 5 states.  1 initial state (yellow cell) ; 2 normal states (gray) ; 2 terminal states (blue).</li>
+  <li>Actions: 2 actions. You can either ‘go right’ or ‘go left’, you cannot stay idle.</li>
+  <li>Initialization: you start in state 2.</li>
+  <li>Termination: either you reach one of the terminal state or you move for 3 time steps.</li>
+</ul>
+
+<p>Each action (cell change) takes you 1 time step. The time termination condition is to deter you from eating chocolate until the end of time!</p>
+
+<p>To match the problem goals, here is a way to define the rewards for this problem:</p>
+<ul>
+  <li>Rewards: +1 if you reach state 4 (you are happy to eat chocolate) ; +2 if you reach state 1 (you throw your waste in the normal bin) ; +10 if you reach state 5 (better: you throw your waste in the recycle bin)</li>
+</ul>
+
+<p><strong>include images of the board + rewards from the course slides</strong></p>
+
+<p><strong>How to evaluate a series of action?</strong> 
+A straight-forward approach would just be to sum the rewards collected along the way. A more general approach is to compute the discounted return. 
+The <strong>discounted return</strong> $R$ is the discounted sum of the rewards collected along the way (see formula below).
+$R = \sum \limits_{t=0}^{\infty } \gamma^t r_t = r_0 + \gamma r_1 + \gamma^2 r_2 + \cdots$
+$0 \leq \gamma \leq 1$ is called the discount factor.</p>
+
+<p>Why to we need to discount return? In real life, you are less confident about reaching long term goals. For example, a robot consumes some of its energy at each step. It is better for him to get rewards early than later when it may not have any energy left anymore.</p>
+
+<p>The choice of the discount factor $\gamma$ is an hyperparameter of your problem. Changing $\gamma$ changes the optimal strategy.</p>
+
+<p><strong>A strategy is defined by a policy</strong>. A policy is simply a function that tells you what action to take in a given state. Policy $\pi : s -&gt; a$. <strong>The policy that achieves the best return is called the optimal policy</strong> $^\pi^*$.</p>
+
+<p>What do we need to learn the optimal policy?
+We define what is called a <strong>Q-table</strong>. The Q-table is a matrix where element $Q^*(s,a)$ is the best return you can get if you take action $a$ in state $s$ and then act optimally.</p>
+
+<p>If you know this Q-table, then the problem is solved. If you are in a given state $s$, you can just take the action $a$ that maximizes your return: $\pi^<em>(s) = a = \arg \max_{a’} Q^</em>(s, a’)$.</p>
+
+<p>How to compute this Q-table? The corresponding optimal $Q^<em>$ function must satisfy the <strong>Bellman equation</strong>:
+$Q^</em>(s,a) = r + \gamma \max_{a’} Q^*(s’, a’)$
+Where $s’$ is the next state if you take action $a’$ in state $s$.</p>
+
+<p>The table below is the optimal Q-table for our problem with a discount factor $\gamma = 0.9$.
+| state \ action | left | right|</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
+    <tr>
+      <td>2</td>
+      <td>2</td>
+      <td>9</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
+    <tr>
+      <td>3</td>
+      <td>8.1</td>
+      <td>10</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
+    <tr>
+      <td>4</td>
+      <td>9</td>
+      <td>10</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
+    <tr>
+      <td>5</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>We can now compute the best policy by taking the argmax along the lines of the Q-table.
+<strong>insert optimal policy image from slides</strong></p>
+
+<p><strong>Conclusion</strong>: This approach works well for our “toy” example. However we cannot solve the game of Go like this. Indeed in the game of Go the number of states is too big. We cannot store or work with a Q-table that big. In the next parts, we will see how we can use Neural Network to approximate the Q-function. This is what we call Deep-RL.</p>
+
+<h2 id="3-deep-q-learning">3. Deep Q-Learning</h2>
+
+<p>The main idea is to replace our Q-table with a Neural Network that learns a Q-function, which takes as input the id of the states defined as a one-hot vector and the output will be the Q-value for all possible actions.</p>
+
+<p>The question become how do we train such a network?</p>
+
+<p>Notice that this is a regression task.  To train out network we might use the following loss,</p>
+
+\[L = (y - Q(s,a))^2.\]
+
+<p>The problem is we don’t have the target value \(y\).  To solve this we will use the Bellman equation at each iteration to approximate \(y\).  The more our agent explores, the better our approximation of \(y\).  Suprsiingly, this process will converge.  To see a proof of the convergence of Q-learning check out this paper by <a href="http://users.isr.ist.utl.pt/~mtjspaan/readingGroup/ProofQlearning.pdf">Franscisco Melo</a>.</p>
+
+<h2 id="4-applications-of-deep-q-learning">4. Applications of Deep Q-Learning</h2>
+
+<p>Lets consider the classic game Breakout.  You have a paddle controlled by the player and the goal is to break all the bricks with the ball without letting it pass by the paddle.</p>
+
+<p>[insert Breakout game GIF]</p>
+
+<p>How would you define the rewards?  Whats the input of Q-network?  And the output?</p>
+
+<p>The rewards will be positive for breaking bricks and winning and negative for loosing.
+The actions are (idle, left, right)
+The states will be a couple frames of the game.</p>
+
+<p>We will define a CNN for our Q-network with the following architecture</p>
+
+<p>[add architecture image]</p>
+
+<p><strong>UNFINISHED…</strong></p>
+
+<p>Often we will need preprocessing of our states.</p>
+
+<p>We will also need to define our initial and terminal states.  (around min 50)</p>
+
+<h3 id="training-tricks">Training Tricks</h3>
+
+<ul>
+  <li>Experience replay - the problem with training one experience at a time, then an experience might only be seen once.  Also, often the correct action will be the</li>
+</ul>
+
+<p>Experience reply instead holds experiences in an replay memory and then samples from the memory uniformly when training.</p>
+
+<ul>
+  <li>Exploration vs. Exploitation -</li>
+</ul>
+
+<p>Using the epislon greedy action we will randomly choose actions with probability epsioon and with probability (1 - \epsilon) we will use the action output by our Q-Network.  We will often use a large \epsilon at the begining of training and decay during training.</p>
+
+<p>Incorperating these tricks here is pseudo code for our</p>
+
+<p>The same network has been applied to a variety of Atari games and has done very well.</p>
+
+<h2 id="5-advanced-topics">5. Advanced Topics</h2>
+
+<p>Tree Search
+Policy gradient methods - instead of learning a Q-value associated with a staate and action,  it learns directly the function that maps states to actions.
+Meta learning - If you have a distribution of tasks that look similar you don’t need to train from scratch.</p>
+
+
+						</div><!-- /.content -->
+					</div>
+					
+				</div><!-- /.row -->
+			</div><!-- /.container -->
+		</div><!-- /.section -->
+		
+		<div class="js-footer-area">
+			
+			
+	<footer class="site-footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-6">
+					
+					
+						<!-- <hr> -->
+						<p class="site-footer__copyright">Copyright &copy; 2024. - Stanford University <br>All rights reserved.</p>
+					
+				</div><!-- /.col -->
+				
+			</div><!-- /.row -->
+		</div><!-- /.container -->
+	</footer><!-- /.site-footer -->
+
+
+<script src="/doks-theme/assets/js/vendor/jquery.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/vendor/bootstrap/affix.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/vendor/bootstrap/scrollspy.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/vendor/matchHeight.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/scripts.min.js"></script>
+
+		</div><!-- /.js-footer-area -->
+	</body>
+</html>

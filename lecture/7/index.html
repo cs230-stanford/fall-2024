@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, minimum-scale=1.0">
+<title>Lecture 7</title>
+
+	<meta name="description" content="Add short description.">
+
+
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat:400,400i,500,500i,700,700i|Noto+Sans:400,400i,700,700i|Source+Code+Pro&amp;subset=latin-ext">
+<link rel="stylesheet" href="/doks-theme/assets/css/style.css">
+<script type="text/javascript" async
+  src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+<script>
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-124237072-3', 'auto');
+	ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+	</head>
+	<body class="blue" data-spy="scroll" data-target=".js-scrollspy">
+		
+	<div class="offcanvas visible-xs">
+		<ul class="offcanvas__nav">
+			
+				<li><a href="/syllabus">Syllabus</a></li>
+			
+				<li><a href="/officehours">Office Hours</a></li>
+			
+				<li><a href="/project">Project</a></li>
+			
+				<li><a href="/section">Section</a></li>
+			
+				<li><a href="/lecture">Lecture</a></li>
+			
+				<li><a href="/blog">Blog</a></li>
+			
+				<li><a href="/faq">FAQ</a></li>
+			
+		</ul><!-- /.offcanvas__nav -->
+	</div><!-- /.offcanvas -->
+
+
+
+	<header class="site-header">
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12">
+					
+						<a href="/" class="site-header__logo">
+							<img src="/doks-theme/assets/images/layout/logo.png">
+							CS230
+						</a>
+					
+					
+						<ul class="site-header__nav hidden-xs">
+							
+								<li><a href="/syllabus">Syllabus</a></li>
+							
+								<li><a href="/officehours">Office Hours</a></li>
+							
+								<li><a href="/project">Project</a></li>
+							
+								<li><a href="/section">Section</a></li>
+							
+								<li><a href="/lecture">Lecture</a></li>
+							
+								<li><a href="/blog">Blog</a></li>
+							
+								<li><a href="/faq">FAQ</a></li>
+							
+						</ul><!-- /.site-header__nav -->
+						<button class="offcanvas-toggle visible-xs">
+							<span></span>
+							<span></span>
+							<span></span>
+						</button><!-- /.offcanvas-toggle -->
+					
+				</div><!-- /.col -->
+			</div><!-- /.row -->
+		</div><!-- /.container -->
+	</header><!-- /.site-header -->
+
+
+		<div class="hero-subheader">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-7">
+						<div class="align-container" data-mh>
+							<div class="align-inner">
+								
+									<h1 class="hero-subheader__title">Lecture 7</h1>
+								
+								
+									<p class="hero-subheader__desc">Add short description.</p>
+								
+								
+								
+							</div><!-- /.align-inner -->
+						</div><!-- /.align-container -->
+					</div><!-- /.col -->
+						<div class="col-md-4 col-md-offset-1 hidden-xs hidden-sm">
+							<div class="align-container" data-mh>
+								<div class="align-inner">
+									<div class="hero-subheader__author">
+										<h4>Instructors</h4>
+                                                                               
+                                                                               
+                                                                                    <div class="instructor">
+                                        <a target="_blank" href="">
+                    <img class="headshot" src="/doks-theme/assets/images/headshot/kian.jpg" style="text-align:center;">
+                <div style="text-align:center;">Kian Katanforoosh<br>Instructor</div>
+	</a>
+        </div>
+    
+
+                                                                               
+                                                                                    <div class="instructor">
+                                        <a target="_blank" href="">
+                    <img class="headshot" src="/doks-theme/assets/images/headshot/andrew.jpg" style="text-align:center;">
+                <div style="text-align:center;">Andrew Ng<br>Instructor</div>
+	</a>
+        </div>
+    
+
+                                                                               
+
+                                                                               
+
+                                                                               
+
+										<h4>Time and Location</h4>
+                                                                                <p>In person lectures are on Tuesdays 11:30am-1:20pm. <br> Hewlett Teaching Center 200</p>
+									</div><!-- /.hero-subheader__author -->
+								</div><!-- /.align-inner -->
+							</div><!-- /.align-container -->
+						</div><!-- /.col -->
+				</div><!-- /.row -->
+			</div><!-- /.container -->
+		</div><!-- /.hero-subheader -->
+		<div class="section">
+			<div class="container">
+				<div class="row">
+					
+					<div class="col-md-12">
+						<div class="content">
+							<p>Lecture 7: Interpretability of Neural Networks</p>
+
+<h1 id="introduction">Introduction</h1>
+<p>In this lecture, we discuss how to interpret the output of trained neural networks. We see how to derive saliency maps from input images and introduce some new ideas for object detection and localization. We then shift our discussion to visualizing neural nets from the inside and interpreting the output of different activations inside a trained neural network. With these tools, we can better understand and interpret the complex black box of deep neural networks.</p>
+
+<h1 id="interpreting-the-neural-networks-outputs">Interpreting the neural networks’ outputs</h1>
+<p>Consider the following situation. We have trained a CNN for animal classification to be used in a pet shop. The manager of the pet shop is a little reluctant to use our CNN classifier, since he has doubts about the decision process of our complex CNN function. We want to explain to the manager about the rationale behind our CNN’s decision and look for different ways to convince the manager that our CNN decides after it properly localizes the animal in the input image. How do we show that the model is actually looking at the animal?</p>
+
+<h2 id="building-saliency-maps-through-derivative-analysis">Building saliency maps through derivative analysis</h2>
+<p>One way to approach this task is to look at the derivative (gradient) of our trained CNN’s score assigned to a particular animal label (e.g. dog’s score $s_{\text{dog}}$ ) with respect to the input image. Note that by the CNN’s score we mean the pre-softmax layer’s assigned score, since the post-softmax score which has been normalized to report a probability takes all animals’ scores into account. The derivative $\frac{\partial s_{\text{dog}}(x)}{\partial x}$ provides a saliency map indicating which pixels need to be changed at least to affect the class score the most. This saliency map can further be employed for image segmentation, as it provides a measure describing how important each pixel will be for assigning the selected label to that input image.</p>
+
+<h2 id="building-probability-maps-via-analyzing-occlusion-sensitivity">Building probability maps via analyzing occlusion sensitivity</h2>
+<p>Another approach to interpret the CNN’s decision is through an occlusion sensitivity analysis. Here, we block a rectangle with some fixed size in the input image and evaluate how much the occlusion affects the CNN’s score. We evaluate this score for all different ways of positioning the blocking rectangle and build a probability map showing the CNN’s confidence score after blocking the rectangular regions. Since blocking the regions where the animal is located has a higher impact on the confidence score, the resulted probability map will provide a nice visualization of the CNN’s decision-making mechanism.</p>
+
+<h2 id="interpreting-nns-in-order-to-localize-objects">Interpreting NNs in order to localize objects</h2>
+<p>Suppose that the pet shop also wants to localize animals in the input pictures. Can we somehow use the trained CNN for this job? Here we discuss a useful idea for this task. In a typical CNN architecture, we usually flatten the output of the last conv-maxpool layer and then pass the output through a fully-connected layer before the final softmax layer. Note that flattening the conv layer’s output removes the location-based information of the CNN transformation. In order to preserve the local information, we can replace the flattening operation with a global average pooling. The global average pooling maintains the local knowledge of the image. Since we have changed the architecture of the CNN after the last convolution layer, we need to train the new weights for the last fully-connected layer. Then, taking the average based on the new trained weights of the final conv layer mapping will give a good estimate of the location of the particular object. This idea shows hot to turn a classifier CNN to a localizer CNN.</p>
+
+<h1 id="visualizing-neural-networks-from-the-inside">Visualizing Neural Networks from the inside</h1>
+<p>Given a trained neural network, we can ask this basic question that how the trained model thinks of a particular object. We discuss two ideas based on gradient ascent algorithm and dataset search tools to address this problem.</p>
+
+<h2 id="gradient-ascent-optimizer-for-visualizing-nns">Gradient Ascent Optimizer for Visualizing NNs</h2>
+<p>To understand how the CNN model thinks of an object (e.g. a dog), we can maximize the score corresponding to that object after applying a regularization penalty to ensure that the optimal solution looks natural. The loss function can therefore be $L = s_{\text{dog}}(x) - \lambda ||x||^2$. We can apply the gradient ascent algorithm to find the optimal solution. To do this, we repeat the following process for a certain number of iterations:</p>
+
+<ol>
+  <li>Forward propagate $x$</li>
+  <li>Compute the objective $L$</li>
+  <li>Backpropagate to get $dL/dx$</li>
+  <li>Update x’s pixels with gradient Ascent</li>
+</ol>
+
+<p>This method can further be applied to the output of any activation of the neural net, i.e. we replace $s_{\text{dog}}(x)$ to $a_j(x)$ with $a^l_j$ denoting the output of the $l$th activation in the CNN’s $j$th layer.</p>
+
+<h2 id="dataset-search-for-visualizing-nns">Dataset Search for Visualizing NNs</h2>
+<p>Instead of optimizing the input x for visualizing the neural net, we can search the entire dataset and list the top k (e.g. k = 5) images to find the type of the images activating a particular activation the most. For example, after trying this idea on the output of one maxpool layer we might obtain the shirt pictures or the pictures with some certain green-red pattern.</p>
+
+<h1 id="the-deconvolution-and-its-applications">The deconvolution and its applications</h1>
+<h2 id="introduction-1">Introduction</h2>
+<p>The concept of ‘deconvolution’ can be seen as a transpose convolution, or as an inverse operation of a convolution.</p>
+
+<p>One main motivation for this tool can be found in GANs. How can we make sure that the generator can produce an image from a given vector array? One possible way of doing it would be to have a fully connected layer with the correct output size. However, we are going to see that the same is possible with deconvolutions.</p>
+
+<p>Another application is semantic segmentation, where a system is an encoder/decoder compresses information and then produces a mask that encompasses the input image.</p>
+
+<h2 id="motivation">Motivation</h2>
+<p>From a trained convolutional network architecture, we would like from a given activation map to trace back all the steps back to the input and plot the pixels that triggered these activations.</p>
+
+<p>In order to do so, we are going to keep the maximum value of the activation map and set other values to zero. In order to trace back the signal to the input, we see that the mathematical concept related to this operation would be a sort of inversion. To do so, we use all inverse operations used in the forward pass in reverse order to find a reconstruction of the input.</p>
+
+<h2 id="walkthrough-with-a-1d-example">Walkthrough with a 1D example</h2>
+<h3 id="convolution">Convolution</h3>
+<p>Suppose we have a vector of 8 elements with a padding of two. In other words, let’s consider the 12-dimensional vector
+\begin{align<em>}
+x =
+\begin{bmatrix}
+0 <br />
+0 <br />
+x_1 <br />
+\vdots <br />
+x_8 <br />
+0 <br />
+0
+\end{bmatrix}
+\end{align</em>}
+and perform 1D convolution on it with a filter of size $f = 4$ and stride $s =2$. By using the formula $n_y = \lceil \frac{n_x -f}{s} \rceil +1$, we see that the output shape is of $n_y = 5$.</p>
+
+<p>We can see the convolution operation a matrix-vector operation: $y = W x$ where $W$ is the $5 \times 12$ matrix such that we get the system of equations:
+\begin{align<em>}
+y_1 = w_1 \cdot 0 + w_2 \cdot 0 + w_3 \cdot x_1 + w_4 \cdot x_2 <br />
+y_2 = w_1 \cdot x_1 + w_2 \cdot x_2 + w_3 \cdot x_3 + w_4 \cdot x_4 <br />
+\vdots <br />
+y_5 = w_1 \cdot x_7 + w_2 \cdot x_8 + w_3 \cdot 0 + w_4 \cdot 0
+\end{align</em>}</p>
+
+<h3 id="deconvolution">Deconvolution</h3>
+<p>The interesting part of this observation is that we can give a simple meaning to the inverse operation of the convolution operation, namely the inverse of $W$ through the equation $x = W^{-1} y$.</p>
+
+<p>For now, let’s assume that $W$ is an orthogonal matrix, or in other words that $W^{-1} = W^T$. We can also characterize these matrices by the fact that rows are two by two orthogonal.</p>
+
+<p>In the example of an edge detector, we would have $(w_1, w_2, w_3, w_4) = (-1, 0, 0, 0,1)$, which indeed gives an orthogonal matrix. With this assumption, we can see that it is very simple to reconstruct $x$ through the matrix-vector multiplication $x = W^T y$.</p>
+
+<p>However, we note that there is one caveat to this approach: each dot product done between rows of the matrix $W^T$ and the vector $y$ contain just parts of the filter weights, which prevents us from having an implementation that is as efficient as the convolution operation.</p>
+
+<h3 id="trick-subpixel-convolution">Trick: subpixel convolution</h3>
+<p>The idea is to tweak the convolution operation in a way so that the deconvolution operation can be done in a similar fashion. We do so by introducing some padding on the $y$ vector:
+\begin{align<em>}
+0 <br />
+0 <br />
+0 <br />
+y_1 <br />
+0
+y_2 <br />
+0 <br />
+\vdots <br />
+y_5 <br />
+0 <br />
+0 <br />
+0
+\end{align</em>}</p>
+
+<p>That way, the matrix involved in the operation mapping $y$ to $x$ is the same we had during the convolution operation except that:</p>
+<ul>
+  <li>the weights at each row of the matrix are flipped in order (i.e. $(w_1,w_2,w_3,w_4)$ becomes $(w_4,w_3,w_2,w_1)$)</li>
+  <li>there is no more ‘stride’ between two consecutive rows of the matrix</li>
+</ul>
+
+<h2 id="unpooling">Unpooling</h2>
+<p>Similarly, the unpooling operation is the inverse operation of max-pool. To do so, we use the mask (called ‘switches’) that selected maximum entries in the pooling operations in order to restore their original positions. We then set the other values to 0.</p>
+
+						</div><!-- /.content -->
+					</div>
+					
+				</div><!-- /.row -->
+			</div><!-- /.container -->
+		</div><!-- /.section -->
+		
+		<div class="js-footer-area">
+			
+			
+	<footer class="site-footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-6">
+					
+					
+						<!-- <hr> -->
+						<p class="site-footer__copyright">Copyright &copy; 2024. - Stanford University <br>All rights reserved.</p>
+					
+				</div><!-- /.col -->
+				
+			</div><!-- /.row -->
+		</div><!-- /.container -->
+	</footer><!-- /.site-footer -->
+
+
+<script src="/doks-theme/assets/js/vendor/jquery.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/vendor/bootstrap/affix.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/vendor/bootstrap/scrollspy.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/vendor/matchHeight.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/scripts.min.js"></script>
+
+		</div><!-- /.js-footer-area -->
+	</body>
+</html>

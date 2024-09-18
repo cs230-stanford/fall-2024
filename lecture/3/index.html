@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, minimum-scale=1.0">
+<title>Lecture 3</title>
+
+	<meta name="description" content="Add short description.">
+
+
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat:400,400i,500,500i,700,700i|Noto+Sans:400,400i,700,700i|Source+Code+Pro&amp;subset=latin-ext">
+<link rel="stylesheet" href="/doks-theme/assets/css/style.css">
+<script type="text/javascript" async
+  src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+<script>
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-124237072-3', 'auto');
+	ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+	</head>
+	<body class="blue" data-spy="scroll" data-target=".js-scrollspy">
+		
+	<div class="offcanvas visible-xs">
+		<ul class="offcanvas__nav">
+			
+				<li><a href="/syllabus">Syllabus</a></li>
+			
+				<li><a href="/officehours">Office Hours</a></li>
+			
+				<li><a href="/project">Project</a></li>
+			
+				<li><a href="/section">Section</a></li>
+			
+				<li><a href="/lecture">Lecture</a></li>
+			
+				<li><a href="/blog">Blog</a></li>
+			
+				<li><a href="/faq">FAQ</a></li>
+			
+		</ul><!-- /.offcanvas__nav -->
+	</div><!-- /.offcanvas -->
+
+
+
+	<header class="site-header">
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12">
+					
+						<a href="/" class="site-header__logo">
+							<img src="/doks-theme/assets/images/layout/logo.png">
+							CS230
+						</a>
+					
+					
+						<ul class="site-header__nav hidden-xs">
+							
+								<li><a href="/syllabus">Syllabus</a></li>
+							
+								<li><a href="/officehours">Office Hours</a></li>
+							
+								<li><a href="/project">Project</a></li>
+							
+								<li><a href="/section">Section</a></li>
+							
+								<li><a href="/lecture">Lecture</a></li>
+							
+								<li><a href="/blog">Blog</a></li>
+							
+								<li><a href="/faq">FAQ</a></li>
+							
+						</ul><!-- /.site-header__nav -->
+						<button class="offcanvas-toggle visible-xs">
+							<span></span>
+							<span></span>
+							<span></span>
+						</button><!-- /.offcanvas-toggle -->
+					
+				</div><!-- /.col -->
+			</div><!-- /.row -->
+		</div><!-- /.container -->
+	</header><!-- /.site-header -->
+
+
+		<div class="hero-subheader">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-7">
+						<div class="align-container" data-mh>
+							<div class="align-inner">
+								
+									<h1 class="hero-subheader__title">Lecture 3</h1>
+								
+								
+									<p class="hero-subheader__desc">Add short description.</p>
+								
+								
+								
+							</div><!-- /.align-inner -->
+						</div><!-- /.align-container -->
+					</div><!-- /.col -->
+						<div class="col-md-4 col-md-offset-1 hidden-xs hidden-sm">
+							<div class="align-container" data-mh>
+								<div class="align-inner">
+									<div class="hero-subheader__author">
+										<h4>Instructors</h4>
+                                                                               
+                                                                               
+                                                                                    <div class="instructor">
+                                        <a target="_blank" href="">
+                    <img class="headshot" src="/doks-theme/assets/images/headshot/kian.jpg" style="text-align:center;">
+                <div style="text-align:center;">Kian Katanforoosh<br>Instructor</div>
+	</a>
+        </div>
+    
+
+                                                                               
+                                                                                    <div class="instructor">
+                                        <a target="_blank" href="">
+                    <img class="headshot" src="/doks-theme/assets/images/headshot/andrew.jpg" style="text-align:center;">
+                <div style="text-align:center;">Andrew Ng<br>Instructor</div>
+	</a>
+        </div>
+    
+
+                                                                               
+
+                                                                               
+
+                                                                               
+
+										<h4>Time and Location</h4>
+                                                                                <p>In person lectures are on Tuesdays 11:30am-1:20pm. <br> Hewlett Teaching Center 200</p>
+									</div><!-- /.hero-subheader__author -->
+								</div><!-- /.align-inner -->
+							</div><!-- /.align-container -->
+						</div><!-- /.col -->
+				</div><!-- /.row -->
+			</div><!-- /.container -->
+		</div><!-- /.hero-subheader -->
+		<div class="section">
+			<div class="container">
+				<div class="row">
+					
+					<div class="col-md-12">
+						<div class="content">
+							<h1 id="lecture-3-deep-learning-intuition">Lecture 3: Deep Learning Intuition</h1>
+
+<p>In this lecture, we will learn tips and tricks to:</p>
+
+<ul>
+  <li>
+    <p>Analyze a problem from a deep learning approach</p>
+  </li>
+  <li>
+    <p>Choose an <strong>architecture</strong></p>
+  </li>
+  <li>
+    <p>Choose a <strong>loss</strong> and a <strong>training strategy</strong></p>
+  </li>
+</ul>
+
+<p>by going through the following problems:</p>
+
+<ul>
+  <li>
+    <p><span style="color:black">Day’n’Night Classification</span></p>
+  </li>
+  <li>
+    <p><span style="color:black">Face Verification and Recognition</span></p>
+  </li>
+  <li>
+    <p><span style="color:black">Neural Style Transfer (Art Generation)</span></p>
+  </li>
+  <li>
+    <p><span style="color:black">Trigger-word Detection</span></p>
+  </li>
+  <li>
+    <p><span style="color:black">App Implementation</span></p>
+  </li>
+</ul>
+
+<h2 id="0-primer">0. Primer</h2>
+<p>We are already familiar with the Logistic Regression setup for a binary classifier for cat. Now let’s suppose we want to expand the model to a multi-class classifier so that it can classify cat, dog and giraffe.</p>
+
+<p align="center">
+<img src="binary_classification.png" alt="binary_classification" width="500" />
+</p>
+
+<ul>
+  <li><strong>Architecture</strong>: Modify the model so that it has 3 neurons, each classifying cat, dog or giraffe.</li>
+  <li><strong>Data</strong>: Add dog and giraffe data. Use one-hot encoding for the label if there’s at most a single class in the image, or multi-hot encoding for the label if there can be multiple classes in a image at the same time.</li>
+  <li><strong>Activation</strong> function choice:
+    <ul>
+      <li>Sigmoid: outputs of the neurons are independent. So there could be more than one probability that is greater than the threshold.</li>
+      <li>Softmax: outputs of the neurons are dependent, sum up to 1, and each indicate what’s the probability of one class versus another. A good choice if we constrain each image to have only one class.</li>
+    </ul>
+  </li>
+</ul>
+
+<p>In deeper neural networks, the earlier layers contain low-level information such as edges. Higher level layers will usually contain more complex features of regions such as eyes, noses, and faces. These lower-dimensional representations of the data are called encodings.</p>
+
+<p align="center">
+<img src="encoding.png" alt="encoding" width="500" />
+</p>
+
+<h2 id="1-daynnight-classification">1. Day’n’Night Classification</h2>
+
+<p>Let’s start with an easy warm-up. Here, our <strong>Goal</strong> is to classify a given image as taken “during the day” (0) or “taken during the night” (1).</p>
+
+<ol>
+  <li>
+    <p><strong>Data:</strong> Images of nights and days could be found easily on the Internet. Therefore, we can start with 10,000 images, and increase the size later if needed. Split? Bias?</p>
+  </li>
+  <li><strong>Input:</strong> Next, we need to decide about the size of our input image. One way to think about this is by comparing the complexity of the task with previous tasks that we have worked on. Eariler in this course, you trained a cat classification model with an input size of 64x64x3. Day’n’Night classification seems like an easier task; thus, the same input size -providing the same level of detail- would be a good starting point.
+    <p align="center">
+ <img src="louvre.png" alt="louvre" width="250" />
+ </p>
+  </li>
+  <li>
+    <p><strong>Output:</strong> As mentioned above, the output of the model should be 0 or 1, for day and night respectively. Hence, Sigmoid function would be a good fit for our final layer activation function.</p>
+  </li>
+  <li>
+    <p><strong>Architecture:</strong> Considering our cat classification model, by which we achieved a high accuracy using a 4-layer neural network, a shallow network should do the job pretty well.</p>
+  </li>
+  <li><strong>Loss:</strong> Since the last layer will be using Sigmoid activation function, cross-entropy loss function will be set as model’s objective:
+\(L = -[y \log(\hat{y}) + (1-y) \log(1-\hat{y})]\)</li>
+</ol>
+
+<h2 id="2-face-verification-and-recognition">2. Face Verification and Recognition</h2>
+
+<p>A school wants to use face verification for validating student ID’s in facilities (dining halls, gym, etc.). Person requesting access will swipe his/her student ID, providing the model with the name and label to locate student’s stored image on the database. Model will then compare his current picture (captured by a camera at the location) with the saved image, to verify his/her ID.</p>
+
+<ol>
+  <li><strong>Data:</strong> The school has access to a dataset with one picture for every student labeled with their name.</li>
+</ol>
+<p align="center">
+<img src="bert_ID.png" alt="bert_ID" width="150" />
+</p>
+
+<ol>
+  <li><strong>Input:</strong> Compared with the previous problem, face recognition is a more complicated task. Model should be robust to changes in position of the face, brightness of the picture, facial details (e.g. beard or sunglasses), etc. Therefore, the model must be provided with more details on the face, leading to a higher resolution for the inputs. 412x412x3 would be a good place to start.
+    <p align="center">
+ <img src="bert_cur.png" alt="bert_cur" width="150" />
+ </p>
+  </li>
+  <li>
+    <p><strong>Output:</strong> Output of the model should be “ID verified” (1) or “ID not verified” (0). Thus, Sigmoid function would be the ideal activation for the final layer.</p>
+  </li>
+  <li><strong>Architecture:</strong> A simple solution would be to compute pixel-by-pixel distance between the two images, and predict “ID verified” (1) if the distance is less than a threshold. However, this model will not perform well due to the following issues:
+    <ul>
+      <li>Background lighting differences</li>
+      <li>Person wearing make-up or having a beard</li>
+      <li>ID photo being outdated</li>
+      <li>…</li>
+    </ul>
+
+    <p>A better solution is to train a deep network to encode information about a picture in a vector. We can then, gather all student faces’ encodings in a database. Given a new picture, we compute its distance with the encoding of the card holder. If the distance is less than a threshold, the model predicts “ID verified” (1).</p>
+  </li>
+</ol>
+
+<p>Now, let’s consider a more complicated task, Face Recognition. Here, the <strong>goal</strong> to recognize the face of the person: given only an image, the model should verify if the person is indeed an student in the database or not. We need more data (multiple pictures of same people) so that our model can understand how to encode. We can use public face datasets for our training.</p>
+
+<p>What we want is for our model to generate similar encodings for different pictures of the same person, and different encodings, when the two pictures belong to different people.
+    &lt;p align=center&gt;
+    <img src="face_rec_goal.png" alt="face_rec_goal" width="400" />
+    &lt;/p&gt;</p>
+
+<p>Our training approach is as follows. Triplets are generated containing an <em>anchor</em> image, an image similar to the anchor, <em>positive</em>, and one different from it, <em>negative</em>. Optimization goal is defined to minimize encoding distance between <em>anchor</em> and <em>positive</em> while maximizing encoding distance between <em>anchor</em> and <em>negative</em>.
+    &lt;p align=center&gt;
+    <img src="triplets.png" alt="triplets" width="400" />
+    &lt;/p&gt;</p>
+
+<ol>
+  <li><strong>Loss:</strong> Objective function takes the following form.
+ \(L = {||Enc(A) - Enc(P)||_2}^2 - {||Enc(A) - Enc(N)||_2}^2 + \alpha\)
+ Note that a constant, $\alpha$, is added to the loss function in order to make sure the model avoids using zero function as encoding.</li>
+</ol>
+
+<p>Our final model is as below.
+    &lt;p align=center&gt;
+    <img src="fr_model.png" alt="fr_model" width="500" />
+    &lt;/p&gt;</p>
+
+<h2 id="3-neural-style-transfer-art-generation">3. Neural Style Transfer (Art Generation)</h2>
+
+<p>In Neural Style Transfer, our <strong>goal</strong> is to modify the style of the input image to match that of the style image, so that it looks beautiful!</p>
+
+<ol>
+  <li>
+    <p><strong>Data:</strong> Let’s assume that we have access to any required data, and move on to the next part.</p>
+  </li>
+  <li><strong>Input:</strong> Content and style images are given as input.
+    <p align="center">
+ <img src="content_style.png" alt="content_style" width="300" />
+ </p>
+  </li>
+  <li><strong>Output:</strong> The output is the content image as if it was painted with the same style as in the style image.
+    <p align="center">
+ <img src="gen_img.png" alt="gen_img" width="200" />
+ </p>
+  </li>
+  <li><strong>Architecture:</strong> Note that we need the model to <strong>understand</strong> the image very well. Research has shown that models trained on images, <em>see</em> (or <em>understand</em>) contents of an image, meaning contours and curves, in the earlier layers, while information about style is <em>captured</em> (or <em>understood</em>) in the deeper layers. Thus, we use an <strong>existing model trained on ImageNet</strong> to retrieve such information from the image.
+    <p align="center">
+ <img src="art.png" alt="art" width="400" />
+ </p>
+
+    <p>When this image forward propagates, we can get information about its content and its style by inspecting the layers.</p>
+
+    <p>(For more information, refer to <em>Leon A. Gatys, Alexander S. Ecker, Matthias Bethge: A Neural Algorithm of Artistic Style, 2015</em>)</p>
+  </li>
+  <li><strong>Loss:</strong> Objective function should take the following form:
+ \(L = {||Content_C - Content_G||_2}^2 - {||Style_S - Style_G||_2}^2\), 
+ where $G$ represents the target image, $C$ denotes content image, and $S$ denotes style image.
+ Note that here, we are not learning parameters by minimizing $L$. We are learning an image!</li>
+</ol>
+
+<p align="center">
+<img src="art_fin.png" alt="art_fin" width="600" />
+</p>
+
+<h2 id="4-trigger-word-detection">4. Trigger-word Detection</h2>
+
+<p>Given 10-second audio speech, we want to detect the word “activate”.</p>
+
+<ol>
+  <li>
+    <p><strong>Data:</strong> A bunch of 10s audio clips. Distribution of positive (“activate”) and negative words (all other words) should be balanced. And should include data of different accent, gender, age, etc.</p>
+  </li>
+  <li>
+    <p><strong>Input:</strong> x = 10s audio clips from above. For a good resolution/sample rate choice, we can consult experts in speech.</p>
+  </li>
+  <li><strong>Output:</strong> We can use Sigmoid for activation at every timestep. And we have different ways for what the model should output:
+    <ul>
+      <li>y = 0 or y = 1. This indicates if a 10s audio clip contains the trigger word or not. But if we set it up this way, we need gigantic amount of data to train the model.</li>
+      <li>y = 000…1…000. In this method, we output 1 where the audio has the trigger word. Compared to the first method, we will need less data.</li>
+      <li>y = 000…111…000. However, the second method will have highly unbalanced data since there’s one 1 and 0 everywhere else. To mitigate this problem, we can add in more 1s where the trigger word is.
+ <img src="trigger_word.png" alt="trigger_word.jpg" /></li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Architecture:</strong> RNN (which will be covered later in the course).</p>
+  </li>
+  <li><strong>Loss:</strong> Since there are two classes, binary cross entropy at every timestep should be good. Another way is to use triplet loss as we do for Face Recognition.</li>
+</ol>
+
+<p>For this project, it is important to use a <strong>strategic data collection/labeling</strong> process. Instead of going out and collecting 10s audio clips of people saying different words, we can collect people saying positive words, negative words, and background noises separately, and later synthesize the data by overlaying positive and negative words onto the background noises. This way we also have a more automated way of labeling the data - where you insert the positive word is where the label should have 1s, and 0 everywhere else. Otherwise, we would have to go through all the 10s clips and manually label them.</p>
+
+<h2 id="5-app-implementation">5. App Implementation</h2>
+<p>We have been building an algorithm to classify cats. Now suppose we want to ship it with a phone app, i.e. we want to build an app with which you can take a picture and the app tells you if there’s a cat in the picture or not.</p>
+
+<p>There are two ways of doing it and each with its own advantages:</p>
+<ul>
+  <li>Server-based: server holds the model architecture and learned parameters. The phone takes a picture, sends it to the server, the server runs the picture through the model, gets an output, and sends the output back to the phone.
+    <ul>
+      <li>Advantage:
+        <ul>
+          <li>App is light weight: model architecture and parameters are on server server.</li>
+          <li>App is easy to update: you only need to modify or retrain the model on the server.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>On-device: Everything happens on the device! The device holds the model architecture and learned parameters.
+    <ul>
+      <li>Advantage:
+        <ul>
+          <li>Faster prediction: your phone doesn’t need send requests to server and wait for a response from server.</li>
+          <li>Works offline: your app works even when there’s no internet.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+						</div><!-- /.content -->
+					</div>
+					
+				</div><!-- /.row -->
+			</div><!-- /.container -->
+		</div><!-- /.section -->
+		
+		<div class="js-footer-area">
+			
+			
+	<footer class="site-footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-6">
+					
+					
+						<!-- <hr> -->
+						<p class="site-footer__copyright">Copyright &copy; 2024. - Stanford University <br>All rights reserved.</p>
+					
+				</div><!-- /.col -->
+				
+			</div><!-- /.row -->
+		</div><!-- /.container -->
+	</footer><!-- /.site-footer -->
+
+
+<script src="/doks-theme/assets/js/vendor/jquery.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/vendor/bootstrap/affix.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/vendor/bootstrap/scrollspy.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/vendor/matchHeight.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/scripts.min.js"></script>
+
+		</div><!-- /.js-footer-area -->
+	</body>
+</html>

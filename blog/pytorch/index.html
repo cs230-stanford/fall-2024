@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, minimum-scale=1.0">
+<title>Introduction to Pytorch Code Examples</title>
+
+	<meta name="description" content="An overview of training, models, loss functions and optimizers">
+
+
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat:400,400i,500,500i,700,700i|Noto+Sans:400,400i,700,700i|Source+Code+Pro&amp;subset=latin-ext">
+<link rel="stylesheet" href="/doks-theme/assets/css/style.css">
+<script type="text/javascript" async
+  src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+<script>
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-124237072-3', 'auto');
+	ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+	</head>
+	<body class="blue" data-spy="scroll" data-target=".js-scrollspy">
+		
+	<div class="offcanvas visible-xs">
+		<ul class="offcanvas__nav">
+			
+				<li><a href="/syllabus">Syllabus</a></li>
+			
+				<li><a href="/officehours">Office Hours</a></li>
+			
+				<li><a href="/project">Project</a></li>
+			
+				<li><a href="/section">Section</a></li>
+			
+				<li><a href="/lecture">Lecture</a></li>
+			
+				<li><a href="/blog">Blog</a></li>
+			
+				<li><a href="/faq">FAQ</a></li>
+			
+		</ul><!-- /.offcanvas__nav -->
+	</div><!-- /.offcanvas -->
+
+
+
+	<header class="site-header">
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12">
+					
+						<a href="/" class="site-header__logo">
+							<img src="/doks-theme/assets/images/layout/logo.png">
+							CS230
+						</a>
+					
+					
+						<ul class="site-header__nav hidden-xs">
+							
+								<li><a href="/syllabus">Syllabus</a></li>
+							
+								<li><a href="/officehours">Office Hours</a></li>
+							
+								<li><a href="/project">Project</a></li>
+							
+								<li><a href="/section">Section</a></li>
+							
+								<li><a href="/lecture">Lecture</a></li>
+							
+								<li><a href="/blog">Blog</a></li>
+							
+								<li><a href="/faq">FAQ</a></li>
+							
+						</ul><!-- /.site-header__nav -->
+						<button class="offcanvas-toggle visible-xs">
+							<span></span>
+							<span></span>
+							<span></span>
+						</button><!-- /.offcanvas-toggle -->
+					
+				</div><!-- /.col -->
+			</div><!-- /.row -->
+		</div><!-- /.container -->
+	</header><!-- /.site-header -->
+
+
+		<div class="hero-subheader">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-7">
+						<div class="align-container" data-mh>
+							<div class="align-inner">
+								
+									<h1 class="hero-subheader__title">Introduction to Pytorch Code Examples</h1>
+								
+								
+									<p class="hero-subheader__desc">An overview of training, models, loss functions and optimizers</p>
+								
+								
+									
+									
+										<a href="/blog/handsigns" class="btn btn--dark btn--rounded btn--w-icon">
+											<i class="icon icon--arrow-right"></i>
+											Next page
+										</a>
+									
+								
+								
+							</div><!-- /.align-inner -->
+						</div><!-- /.align-container -->
+					</div><!-- /.col -->
+						<div class="col-md-4 col-md-offset-1 hidden-xs hidden-sm">
+							<div class="align-container" data-mh>
+								<div class="align-inner">
+									<div class="hero-subheader__author">
+										<h4>Instructors</h4>
+                                                                               
+                                                                               
+                                                                                    <div class="instructor">
+                                        <a target="_blank" href="">
+                    <img class="headshot" src="/doks-theme/assets/images/headshot/kian.jpg" style="text-align:center;">
+                <div style="text-align:center;">Kian Katanforoosh<br>Instructor</div>
+	</a>
+        </div>
+    
+
+                                                                               
+                                                                                    <div class="instructor">
+                                        <a target="_blank" href="">
+                    <img class="headshot" src="/doks-theme/assets/images/headshot/andrew.jpg" style="text-align:center;">
+                <div style="text-align:center;">Andrew Ng<br>Instructor</div>
+	</a>
+        </div>
+    
+
+                                                                               
+
+                                                                               
+
+                                                                               
+
+										<h4>Time and Location</h4>
+                                                                                <p>In person lectures are on Tuesdays 11:30am-1:20pm. <br> Hewlett Teaching Center 200</p>
+									</div><!-- /.hero-subheader__author -->
+								</div><!-- /.align-inner -->
+							</div><!-- /.align-container -->
+						</div><!-- /.col -->
+				</div><!-- /.row -->
+			</div><!-- /.container -->
+		</div><!-- /.hero-subheader -->
+		<div class="section">
+			<div class="container">
+				<div class="row">
+					
+					<div class="col-md-7">
+						<div class="content">
+							<p>This post follows the <a href="/blog/tips">main</a> post announcing the CS230 Project Code Examples. Here we explain some details of the PyTorch part of the code from our <a href="https://github.com/cs230-stanford/cs230-code-examples">github repository</a>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pytorch</span><span class="o">/</span>
+    <span class="n">vision</span><span class="o">/</span>
+    <span class="n">nlp</span><span class="o">/</span>
+</code></pre></div></div>
+
+<p>This tutorial is among a series explaining the code examples:</p>
+
+<ul>
+  <li><a href="/blog/tips">getting started: installation, getting started with the code for the projects</a></li>
+  <li>this post: global structure of the PyTorch code</li>
+  <li><a href="/blog/handsigns">predicting labels from images of hand signs</a></li>
+  <li><a href="/blog/namedentity">NLP: Named Entity Recognition (NER) tagging for sentences</a></li>
+</ul>
+
+<h2 id="goals-of-this-tutorial"><strong>Goals of this tutorial</strong></h2>
+<ul>
+  <li>learn more about PyTorch</li>
+  <li>learn an example of how to correctly structure a deep learning project in PyTorch</li>
+  <li>understand the key aspects of the code well-enough to modify it to suit your needs</li>
+</ul>
+
+<h2 id="resources"><strong>Resources</strong></h2>
+<ul>
+  <li>The main PyTorch <a href="https://pytorch.org">homepage</a>.</li>
+  <li>The <a href="https://pytorch.org/tutorials/">official tutorials</a> cover a wide variety of use cases- attention based sequence to sequence models, Deep Q-Networks, neural transfer and much more!</li>
+  <li>A quick <a href="https://pytorch.org/tutorials/beginner/deep_learning_60min_blitz.html">crash course</a> in PyTorch.</li>
+  <li>Justin Johnson’s <a href="https://github.com/jcjohnson/pytorch-examples">repository</a> that introduces fundamental PyTorch concepts through self-contained examples.</li>
+  <li>Tons of resources in this <a href="https://github.com/ritchieng/the-incredible-pytorch">list</a>.</li>
+</ul>
+
+<h2 id="code-layout"><strong>Code Layout</strong></h2>
+<p>The code for each PyTorch example (Vision and NLP) shares a common structure:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">data</span><span class="o">/</span>
+<span class="n">experiments</span><span class="o">/</span>
+<span class="n">model</span><span class="o">/</span>
+    <span class="n">net</span><span class="p">.</span><span class="n">py</span>
+    <span class="n">data_loader</span><span class="p">.</span><span class="n">py</span>
+<span class="n">train</span><span class="p">.</span><span class="n">py</span>
+<span class="n">evaluate</span><span class="p">.</span><span class="n">py</span>
+<span class="n">search_hyperparams</span><span class="p">.</span><span class="n">py</span>
+<span class="n">synthesize_results</span><span class="p">.</span><span class="n">py</span>
+<span class="n">evaluate</span><span class="p">.</span><span class="n">py</span>
+<span class="n">utils</span><span class="p">.</span><span class="n">py</span>
+</code></pre></div></div>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">model/net.py</code>: specifies the neural network architecture, the loss function and evaluation metrics</li>
+  <li><code class="language-plaintext highlighter-rouge">model/data_loader.py</code>: specifies how the data should be fed to the network</li>
+  <li><code class="language-plaintext highlighter-rouge">train.py</code>: contains the main training loop</li>
+  <li><code class="language-plaintext highlighter-rouge">evaluate.py</code>: contains the main loop for evaluating the model</li>
+  <li><code class="language-plaintext highlighter-rouge">utils.py</code>: utility functions for handling hyperparams/logging/storing model</li>
+</ul>
+
+<p>We recommend reading through <code class="language-plaintext highlighter-rouge">train.py</code> to get a high-level overview.</p>
+
+<p>Once you get the high-level idea, depending on your task and dataset, you might want to modify</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">model/net.py</code> to change the model, i.e. how you transform your input into your prediction as well as your loss, etc.</li>
+  <li><code class="language-plaintext highlighter-rouge">model/data_loader.py</code> to change the way you feed data to the model.</li>
+  <li><code class="language-plaintext highlighter-rouge">train.py</code> and <code class="language-plaintext highlighter-rouge">evaluate.py</code> to make changes specific to your problem, if required</li>
+</ul>
+
+<p>Once you get something working for your dataset, feel free to edit any part of the code to suit your own needs.</p>
+
+<h2 id="tensors-and-variables"><strong>Tensors and Variables</strong></h2>
+<p>Before going further, I strongly suggest you go through this <a href="https://pytorch.org/tutorials/beginner/deep_learning_60min_blitz.html">60 Minute Blitz with PyTorch</a> to gain an understanding of PyTorch basics. Here’s a sneak peak.</p>
+
+<p>PyTorch Tensors are similar in behaviour to NumPy’s arrays.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">torch</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">Tensor</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]])</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="mi">1</span>  <span class="mi">2</span>
+<span class="mi">3</span>  <span class="mi">4</span>
+<span class="p">[</span><span class="n">torch</span><span class="p">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">2</span><span class="n">x2</span><span class="p">]</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="mi">1</span>   <span class="mi">4</span>
+<span class="mi">9</span>  <span class="mi">16</span>
+<span class="p">[</span><span class="n">torch</span><span class="p">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">2</span><span class="n">x2</span><span class="p">]</span>
+</code></pre></div></div>
+
+<p>PyTorch Variables allow you to wrap a Tensor and record operations performed on it. This allows you to perform automatic differentiation.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">torch.autograd</span> <span class="kn">import</span> <span class="n">Variable</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="n">Variable</span><span class="p">(</span><span class="n">torch</span><span class="p">.</span><span class="n">Tensor</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]]),</span> <span class="n">requires_grad</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="n">Variable</span> <span class="n">containing</span><span class="p">:</span>
+<span class="mi">1</span>  <span class="mi">2</span>
+<span class="mi">3</span>  <span class="mi">4</span>
+<span class="p">[</span><span class="n">torch</span><span class="p">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">2</span><span class="n">x2</span><span class="p">]</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">a</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="c1"># 1 + 4 + 9 + 16
+</span><span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="n">Variable</span> <span class="n">containing</span><span class="p">:</span>
+<span class="mi">30</span>
+<span class="p">[</span><span class="n">torch</span><span class="p">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">1</span><span class="p">]</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">y</span><span class="p">.</span><span class="n">backward</span><span class="p">()</span>       <span class="c1"># compute gradients of y wrt a
+</span><span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">grad</span><span class="p">)</span>      <span class="c1"># print dy/da_ij = 2*a_ij for a_11, a_12, a21, a22
+</span><span class="n">Variable</span> <span class="n">containing</span><span class="p">:</span>
+<span class="mi">2</span>  <span class="mi">4</span>
+<span class="mi">6</span>  <span class="mi">8</span>
+<span class="p">[</span><span class="n">torch</span><span class="p">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">2</span><span class="n">x2</span><span class="p">]</span>
+</code></pre></div></div>
+
+<p>This prelude should give you a sense of the things to come. PyTorch packs elegance and expressiveness in its minimalist and intuitive syntax. Familiarize yourself with some more examples from the <a href="/blog/pytorch">Resources</a> section before moving ahead.</p>
+
+<h2 id="core-training-step"><strong>Core Training Step</strong></h2>
+<p>Let’s begin with a look at what the heart of our training algorithm looks like. The five lines below pass a batch of inputs through the model, calculate the loss, perform backpropagation and update the parameters.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">output_batch</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">train_batch</span><span class="p">)</span>           <span class="c1"># compute model output
+</span><span class="n">loss</span> <span class="o">=</span> <span class="n">loss_fn</span><span class="p">(</span><span class="n">output_batch</span><span class="p">,</span> <span class="n">labels_batch</span><span class="p">)</span>  <span class="c1"># calculate loss
+</span>
+<span class="n">optimizer</span><span class="p">.</span><span class="n">zero_grad</span><span class="p">()</span>  <span class="c1"># clear previous gradients
+</span><span class="n">loss</span><span class="p">.</span><span class="n">backward</span><span class="p">()</span>        <span class="c1"># compute gradients of all variables wrt loss
+</span>
+<span class="n">optimizer</span><span class="p">.</span><span class="n">step</span><span class="p">()</span>       <span class="c1"># perform updates using calculated gradients
+</span></code></pre></div></div>
+
+<p>Each of the variables <code class="language-plaintext highlighter-rouge">train_batch</code>, <code class="language-plaintext highlighter-rouge">labels_batch</code>, <code class="language-plaintext highlighter-rouge">output_batch</code> and <code class="language-plaintext highlighter-rouge">loss</code> is a PyTorch Variable and allows derivates to be automatically calculated.</p>
+
+<p>All the other code that we write is built around this- the exact specification of the model, how to fetch a batch of data and labels, computation of the loss and the details of the optimizer. In this post, we’ll cover how to write a simple model in PyTorch, compute the loss and define an optimizer. The subsequent posts each cover a case of fetching data- one for image data and another for text data.</p>
+
+<h2 id="models-in-pytorch"><strong>Models in PyTorch</strong></h2>
+<p>A model can be defined in PyTorch by subclassing the <code class="language-plaintext highlighter-rouge">torch.nn.Module class</code>. The model is defined in two steps. We first specify the parameters of the model, and then outline how they are applied to the inputs. For operations that do not involve trainable parameters (activation functions such as ReLU, operations like maxpool), we generally use the <code class="language-plaintext highlighter-rouge">torch.nn.functional</code> module. Here’s an example of a single hidden layer neural network borrowed from <a href="https://github.com/jcjohnson/pytorch-examples#pytorch-custom-nn-modules">here</a>:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="n">nn</span>
+<span class="kn">import</span> <span class="nn">torch.nn.functional</span> <span class="k">as</span> <span class="n">F</span>
+
+<span class="k">class</span> <span class="nc">TwoLayerNet</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">D_in</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">D_out</span><span class="p">):</span>
+        <span class="s">"""
+        In the constructor we instantiate two nn.Linear modules and assign them as
+        member variables.
+
+        D_in: input dimension
+        H: dimension of hidden layer
+        D_out: output dimension
+        """</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">TwoLayerNet</span><span class="p">,</span> <span class="bp">self</span><span class="p">).</span><span class="n">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">linear1</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">D_in</span><span class="p">,</span> <span class="n">H</span><span class="p">)</span> 
+        <span class="bp">self</span><span class="p">.</span><span class="n">linear2</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="n">D_out</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="s">"""
+        In the forward function we accept a Variable of input data and we must 
+        return a Variable of output data. We can use Modules defined in the 
+        constructor as well as arbitrary operators on Variables.
+        """</span>
+        <span class="n">h_relu</span> <span class="o">=</span> <span class="n">F</span><span class="p">.</span><span class="n">relu</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">linear1</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+        <span class="n">y_pred</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">linear2</span><span class="p">(</span><span class="n">h_relu</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">y_pred</span>
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">__init__ </code>function initialises the two linear layers of the model. PyTorch takes care of the proper initialization of the parameters you specify. In the <code class="language-plaintext highlighter-rouge">forward</code> function, we first apply the first linear layer, apply ReLU activation and then apply the second linear layer. The module assumes that the first dimension of <code class="language-plaintext highlighter-rouge">x</code> is the batch size. If the input to the network is simply a vector of dimension 100, and the batch size is 32, then the dimension of <code class="language-plaintext highlighter-rouge">x</code> would be 32,100. Let’s see an example of how to define a model and compute a forward pass:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#N is batch size; D_in is input dimension;
+#H is the dimension of the hidden layer; D_out is output dimension.
+</span><span class="n">N</span><span class="p">,</span> <span class="n">D_in</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">D_out</span> <span class="o">=</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">10</span>
+
+<span class="c1">#Create random Tensors to hold inputs and outputs, and wrap them in Variables
+</span><span class="n">x</span> <span class="o">=</span> <span class="n">Variable</span><span class="p">(</span><span class="n">torch</span><span class="p">.</span><span class="n">randn</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">D_in</span><span class="p">))</span>  <span class="c1"># dim: 32 x 100
+</span>
+<span class="c1">#Construct our model by instantiating the class defined above
+</span><span class="n">model</span> <span class="o">=</span> <span class="n">TwoLayerNet</span><span class="p">(</span><span class="n">D_in</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">D_out</span><span class="p">)</span>
+
+<span class="c1">#Forward pass: Compute predicted y by passing x to the model
+</span><span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>   <span class="c1"># dim: 32 x 10
+</span></code></pre></div></div>
+
+<p>More complex models follow the same layout, and we’ll see two of them in the subsequent posts.</p>
+
+<h2 id="loss-function"><strong>Loss Function</strong></h2>
+
+<p>PyTorch comes with many standard loss functions available for you to use in the <code class="language-plaintext highlighter-rouge">torch.nn</code> <a href="https://pytorch.org/docs/master/nn.html#loss-functions">module</a>. Here’s a simple example of how to calculate Cross Entropy Loss. Let’s say our model solves a multi-class classification problem with <code class="language-plaintext highlighter-rouge">C</code> labels. Then for a batch of size <code class="language-plaintext highlighter-rouge">N</code>, <code class="language-plaintext highlighter-rouge">out</code> is a PyTorch Variable of dimension <code class="language-plaintext highlighter-rouge">NxC</code> that is obtained by passing an input batch through the model. We also have a <code class="language-plaintext highlighter-rouge">target</code> Variable of size <code class="language-plaintext highlighter-rouge">N</code>, where each element is the class for that example, i.e. a label in <code class="language-plaintext highlighter-rouge">[0,...,C-1]</code>. You can define the loss function and compute the loss as follows:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">loss_fn</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">CrossEntropyLoss</span><span class="p">()</span>
+<span class="n">loss</span> <span class="o">=</span> <span class="n">loss_fn</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>PyTorch makes it very easy to extend this and write your own custom loss function. We can write our own Cross Entropy Loss function as below (note the NumPy-esque syntax):</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">myCrossEntropyLoss</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
+    <span class="n">batch_size</span> <span class="o">=</span> <span class="n">outputs</span><span class="p">.</span><span class="n">size</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>            <span class="c1"># batch_size
+</span>    <span class="n">outputs</span> <span class="o">=</span> <span class="n">F</span><span class="p">.</span><span class="n">log_softmax</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>   <span class="c1"># compute the log of softmax values
+</span>    <span class="n">outputs</span> <span class="o">=</span> <span class="n">outputs</span><span class="p">[</span><span class="nb">range</span><span class="p">(</span><span class="n">batch_size</span><span class="p">),</span> <span class="n">labels</span><span class="p">]</span> <span class="c1"># pick the values corresponding to the labels
+</span>    <span class="k">return</span> <span class="o">-</span><span class="n">torch</span><span class="p">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">outputs</span><span class="p">)</span><span class="o">/</span><span class="n">num_examples</span>
+</code></pre></div></div>
+
+<p>This was a fairly simple example of writing our own loss function. In the section on <a href="/blog/namedentity">NLP</a>, we’ll see an interesting use of custom loss functions.</p>
+
+<h2 id="optimizer"><strong>Optimizer</strong></h2>
+
+<p>The <code class="language-plaintext highlighter-rouge">torch.optim</code> <a href="https://pytorch.org/docs/master/optim.html">package</a> provides an easy to use interface for common optimization algorithms. Defining your optimizer is really as simple as:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#pick an SGD optimizer
+</span><span class="n">optimizer</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">optim</span><span class="p">.</span><span class="n">SGD</span><span class="p">(</span><span class="n">model</span><span class="p">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span> <span class="o">=</span> <span class="mf">0.01</span><span class="p">,</span> <span class="n">momentum</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
+
+<span class="c1">#or pick ADAM
+</span><span class="n">optimizer</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">optim</span><span class="p">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">model</span><span class="p">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span> <span class="o">=</span> <span class="mf">0.0001</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>You pass in the parameters of the model that need to be updated every iteration. You can also specify more complex methods such as per-layer or even per-parameter learning rates.</p>
+
+<p>Once gradients have been computed using <code class="language-plaintext highlighter-rouge">loss.backward()</code>, calling <code class="language-plaintext highlighter-rouge">optimizer.step()</code> updates the parameters as defined by the optimization algorithm.</p>
+
+<h2 id="training-vs-evaluation"><strong>Training vs Evaluation</strong></h2>
+
+<p>Before training the model, it is imperative to call <code class="language-plaintext highlighter-rouge">model.train()</code>. Likewise, you must call <code class="language-plaintext highlighter-rouge">model.eval()</code> before testing the model. This corrects for the differences in dropout, batch normalization during training and testing.</p>
+
+<h2 id="computing-metrics"><strong>Computing Metrics</strong></h2>
+
+<p>By this stage you should be able to understand most of the code in <code class="language-plaintext highlighter-rouge">train.py</code> and <code class="language-plaintext highlighter-rouge">evaluate.py</code> (except how we fetch the data, which we’ll come to in the subsequent posts). Apart from keeping an eye on the loss, it is also helpful to monitor other metrics such as accuracy and precision/recall. To do this, you can define your own metric functions for a batch of model outputs in the <code class="language-plaintext highlighter-rouge">model/net.py</code> file. In order to make it easier, we convert the PyTorch Variables into NumPy arrays before passing them into the metric functions. For a multi-class classification problem as set up in the section on Loss Function, we can write a function to compute accuracy using NumPy as:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">accuracy</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
+    <span class="n">outputs</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="p">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">outputs</span><span class="o">==</span><span class="n">labels</span><span class="p">)</span><span class="o">/</span><span class="nb">float</span><span class="p">(</span><span class="n">labels</span><span class="p">.</span><span class="n">size</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>You can add your own metrics in the <code class="language-plaintext highlighter-rouge">model/net.py</code> file. Once you are done, simply add them to the <code class="language-plaintext highlighter-rouge">metrics</code> dictionary:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">metrics</span> <span class="o">=</span> <span class="p">{</span> <span class="s">'accuracy'</span><span class="p">:</span> <span class="n">accuracy</span><span class="p">,</span>
+            <span class="c1">##add your own custom metrics,
+</span>          <span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="saving-and-loading-models"><strong>Saving and Loading Models</strong></h2>
+
+<p>We define utility functions to save and load models in <code class="language-plaintext highlighter-rouge">utils.py</code>. To save your model, call:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">state</span> <span class="o">=</span> <span class="p">{</span><span class="s">'epoch'</span><span class="p">:</span> <span class="n">epoch</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="s">'state_dict'</span><span class="p">:</span> <span class="n">model</span><span class="p">.</span><span class="n">state_dict</span><span class="p">(),</span>
+        <span class="s">'optim_dict'</span> <span class="p">:</span> <span class="n">optimizer</span><span class="p">.</span><span class="n">state_dict</span><span class="p">()}</span>
+<span class="n">utils</span><span class="p">.</span><span class="n">save_checkpoint</span><span class="p">(</span><span class="n">state</span><span class="p">,</span>
+                      <span class="n">is_best</span><span class="o">=</span><span class="n">is_best</span><span class="p">,</span>      <span class="c1"># True if this is the model with best metrics
+</span>                      <span class="n">checkpoint</span><span class="o">=</span><span class="n">model_dir</span><span class="p">)</span> <span class="c1"># path to folder
+</span></code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">utils.py</code> internally uses the <code class="language-plaintext highlighter-rouge">torch.save(state, filepath)</code> method to save the state dictionary that is defined above. You can add more items to the dictionary, such as metrics. The <code class="language-plaintext highlighter-rouge">model.state_dict()</code> stores the parameters of the model and <code class="language-plaintext highlighter-rouge">optimizer.state_dict()</code> stores the state of the optimizer (such as per-parameter learning rate).</p>
+
+<p>To load the saved state from a checkpoint, you may use:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">utils</span><span class="p">.</span><span class="n">load_checkpoint</span><span class="p">(</span><span class="n">restore_path</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">optimizer</code> argument is optional and you may choose to restart with a new optimizer. <code class="language-plaintext highlighter-rouge">load_checkpoint</code> internally loads the saved checkpoint and restores the model weights and the state of the optimizer.</p>
+
+<h2 id="using-the-gpu"><strong>Using the GPU</strong></h2>
+
+<p>Interspersed through the code you will find lines such as:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="n">model</span> <span class="o">=</span> <span class="n">net</span><span class="p">.</span><span class="n">Net</span><span class="p">(</span><span class="n">params</span><span class="p">).</span><span class="n">cuda</span><span class="p">()</span> <span class="k">if</span> <span class="n">params</span><span class="p">.</span><span class="n">cuda</span> <span class="k">else</span> <span class="n">net</span><span class="p">.</span><span class="n">Net</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+
+<span class="o">&gt;</span> <span class="k">if</span> <span class="n">params</span><span class="p">.</span><span class="n">cuda</span><span class="p">:</span>
+    <span class="n">batch_data</span><span class="p">,</span> <span class="n">batch_labels</span> <span class="o">=</span> <span class="n">batch_data</span><span class="p">.</span><span class="n">cuda</span><span class="p">(),</span> <span class="n">batch_labels</span><span class="p">.</span><span class="n">cuda</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>PyTorch makes the use of the GPU explicit and transparent using these commands. Calling <code class="language-plaintext highlighter-rouge">.cuda()</code> on a model/Tensor/Variable sends it to the GPU. In order to train a model on the GPU, all the relevant parameters and Variables must be sent to the GPU using <code class="language-plaintext highlighter-rouge">.cuda()</code>.</p>
+
+<h2 id="painless-debugging"><strong>Painless Debugging</strong></h2>
+<p>With its clean and minimal design, PyTorch makes debugging a breeze. You can place breakpoints using pdb.set_trace() at any line in your code. You can then execute further computations, examine the PyTorch Tensors/Variables and pinpoint the root cause of the error.</p>
+
+<p>That concludes the introduction to the PyTorch code examples. You can proceed to the <a href="/blog/handsigns">Vision</a> example and/or the <a href="/blog/namedentity">NLP</a> example to understand how we load data and define models specific to each domain.</p>
+
+
+						</div><!-- /.content -->
+					</div><!-- /.col -->
+					<div class="col-md-4 col-md-offset-1">
+						<div class="sections-list-wrapper">
+							<div class="sections-list js-sections js-affix js-scrollspy hidden-xs hidden-sm"></div><!-- /.sections-list -->
+						</div>
+					</div><!-- /.col -->
+					
+				</div><!-- /.row -->
+			</div><!-- /.container -->
+		</div><!-- /.section -->
+		
+		<div class="js-footer-area">
+			
+				<nav class="page-nav">
+					<div class="container">
+						<div class="row">
+							<div class="col-xs-12">
+								
+								
+									<a href="/blog/handsigns" class="page-nav__item page-nav__item--next">
+										Next page
+										<i class="icon icon--arrow-right"></i>
+									</a><!-- /.page-nav__item -->
+								
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.container -->
+				</nav><!-- /.page-nav --> 
+			<div class="micro-nav">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12">
+				<a href="/blog" class="micro-nav__back">
+					<i class="icon icon--arrow-left"></i>
+					Back to Blog
+				</a><!-- /.micro-nav__back -->
+			</div><!-- /.col -->
+		</div><!-- /.row -->
+	</div><!-- /.container -->
+</div><!-- /.micro-nav -->
+
+			
+			
+	<footer class="site-footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-6">
+					
+					
+						<!-- <hr> -->
+						<p class="site-footer__copyright">Copyright &copy; 2024. - Stanford University <br>All rights reserved.</p>
+					
+				</div><!-- /.col -->
+				
+			</div><!-- /.row -->
+		</div><!-- /.container -->
+	</footer><!-- /.site-footer -->
+
+
+<script src="/doks-theme/assets/js/vendor/jquery.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/vendor/bootstrap/affix.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/vendor/bootstrap/scrollspy.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/vendor/matchHeight.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/scripts.min.js"></script>
+
+		</div><!-- /.js-footer-area -->
+	</body>
+</html>

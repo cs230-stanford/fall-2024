@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, minimum-scale=1.0">
+<title>Create and train a Model</title>
+
+	<meta name="description" content="Using tf.layers, tf.train, tf.metrics, Tensorboard">
+
+
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat:400,400i,500,500i,700,700i|Noto+Sans:400,400i,700,700i|Source+Code+Pro&amp;subset=latin-ext">
+<link rel="stylesheet" href="/doks-theme/assets/css/style.css">
+<script type="text/javascript" async
+  src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+<script>
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-124237072-3', 'auto');
+	ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+	</head>
+	<body class="blue" data-spy="scroll" data-target=".js-scrollspy">
+		
+	<div class="offcanvas visible-xs">
+		<ul class="offcanvas__nav">
+			
+				<li><a href="/syllabus">Syllabus</a></li>
+			
+				<li><a href="/officehours">Office Hours</a></li>
+			
+				<li><a href="/project">Project</a></li>
+			
+				<li><a href="/section">Section</a></li>
+			
+				<li><a href="/lecture">Lecture</a></li>
+			
+				<li><a href="/blog">Blog</a></li>
+			
+				<li><a href="/faq">FAQ</a></li>
+			
+		</ul><!-- /.offcanvas__nav -->
+	</div><!-- /.offcanvas -->
+
+
+
+	<header class="site-header">
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12">
+					
+						<a href="/" class="site-header__logo">
+							<img src="/doks-theme/assets/images/layout/logo.png">
+							CS230
+						</a>
+					
+					
+						<ul class="site-header__nav hidden-xs">
+							
+								<li><a href="/syllabus">Syllabus</a></li>
+							
+								<li><a href="/officehours">Office Hours</a></li>
+							
+								<li><a href="/project">Project</a></li>
+							
+								<li><a href="/section">Section</a></li>
+							
+								<li><a href="/lecture">Lecture</a></li>
+							
+								<li><a href="/blog">Blog</a></li>
+							
+								<li><a href="/faq">FAQ</a></li>
+							
+						</ul><!-- /.site-header__nav -->
+						<button class="offcanvas-toggle visible-xs">
+							<span></span>
+							<span></span>
+							<span></span>
+						</button><!-- /.offcanvas-toggle -->
+					
+				</div><!-- /.col -->
+			</div><!-- /.row -->
+		</div><!-- /.container -->
+	</header><!-- /.site-header -->
+
+
+		<div class="hero-subheader">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-7">
+						<div class="align-container" data-mh>
+							<div class="align-inner">
+								
+									<h1 class="hero-subheader__title">Create and train a Model</h1>
+								
+								
+									<p class="hero-subheader__desc">Using tf.layers, tf.train, tf.metrics, Tensorboard</p>
+								
+								
+									
+										<a href="/blog/datapipeline" class="btn btn--dark btn--rounded btn--w-icon btn--w-icon-left">
+											<i class="icon icon--arrow-left"></i>
+											Previous page
+										</a>
+									
+									
+								
+								
+							</div><!-- /.align-inner -->
+						</div><!-- /.align-container -->
+					</div><!-- /.col -->
+						<div class="col-md-4 col-md-offset-1 hidden-xs hidden-sm">
+							<div class="align-container" data-mh>
+								<div class="align-inner">
+									<div class="hero-subheader__author">
+										<h4>Instructors</h4>
+                                                                               
+                                                                               
+                                                                                    <div class="instructor">
+                                        <a target="_blank" href="">
+                    <img class="headshot" src="/doks-theme/assets/images/headshot/kian.jpg" style="text-align:center;">
+                <div style="text-align:center;">Kian Katanforoosh<br>Instructor</div>
+	</a>
+        </div>
+    
+
+                                                                               
+                                                                                    <div class="instructor">
+                                        <a target="_blank" href="">
+                    <img class="headshot" src="/doks-theme/assets/images/headshot/andrew.jpg" style="text-align:center;">
+                <div style="text-align:center;">Andrew Ng<br>Instructor</div>
+	</a>
+        </div>
+    
+
+                                                                               
+
+                                                                               
+
+                                                                               
+
+										<h4>Time and Location</h4>
+                                                                                <p>In person lectures are on Tuesdays 11:30am-1:20pm. <br> Hewlett Teaching Center 200</p>
+									</div><!-- /.hero-subheader__author -->
+								</div><!-- /.align-inner -->
+							</div><!-- /.align-container -->
+						</div><!-- /.col -->
+				</div><!-- /.row -->
+			</div><!-- /.container -->
+		</div><!-- /.hero-subheader -->
+		<div class="section">
+			<div class="container">
+				<div class="row">
+					
+					<div class="col-md-7">
+						<div class="content">
+							<p>This post is part of a series of post explaining how to structure a deep learning project in TensorFlow. We will explain here how to easily define a deep learning model in TensorFlow using <code class="language-plaintext highlighter-rouge">tf.layers</code>, and how to train it. The entire code examples can be found in our github repository.</p>
+
+<p>This tutorial is among a series explaining how to structure a deep learning project:</p>
+<ul>
+  <li><a href="/blog/tips">installation, get started with the code for the projects</a></li>
+  <li><a href="/blog/moretensorflow">(TensorFlow only): explain the global structure of the code</a></li>
+  <li><a href="/blog/datapipeline">(TensorFlow only): how to feed data into the model using <code class="language-plaintext highlighter-rouge">tf.data</code></a></li>
+  <li><strong>this post: how to create the model and train it</strong></li>
+</ul>
+
+<h2 id="goals-of-this-tutorial"><strong>Goals of this tutorial</strong></h2>
+
+<ul>
+  <li>learn more about TensorFlow</li>
+  <li>learn how to easily build models using <code class="language-plaintext highlighter-rouge">tf.layers</code></li>
+  <li>…</li>
+</ul>
+
+<h2 id="defining-the-model"><strong>Defining the model</strong></h2>
+
+<p>Great, now we have this <code class="language-plaintext highlighter-rouge">input</code> dictionnary containing the Tensor corresponding to the data, let’s explain how we build the model.</p>
+
+<p><strong>Introduction to tf.layers</strong></p>
+
+<p>This high-level Tensorflow API lets you build and prototype models in a few lines. You can have a look at the <a href="https://www.tensorflow.org/tutorials/estimators/cnn#getting_started">official tutorial for computer vision</a>, or at the <a href="https://www.tensorflow.org/tutorials/estimators/cnn#getting_started">list of available layers</a>. The idea is quite simple so we’ll just give an example.</p>
+
+<p>Let’s get an input Tensor with a similar mechanism than the one explained in the previous part. Remember that <strong>None</strong> corresponds to the batch dimension.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#shape = [None, 64, 64, 3]
+</span><span class="n">images</span> <span class="o">=</span> <span class="n">inputs</span><span class="p">[</span><span class="s">"images"</span><span class="p">]</span>
+</code></pre></div></div>
+
+<p>Now, let’s apply a convolution, a relu activation and a max-pooling. This is as simple as</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">out</span> <span class="o">=</span> <span class="n">images</span>
+<span class="n">out</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">layers</span><span class="p">.</span><span class="n">conv2d</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="s">'same'</span><span class="p">)</span>
+<span class="n">out</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">nn</span><span class="p">.</span><span class="n">relu</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+<span class="n">out</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">layers</span><span class="p">.</span><span class="n">max_pooling2d</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Finally, use this final tensor to predict the labels of the image (6 classes). We first need to reshape the output of the max-pooling to a vector</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#First, reshape the output into [batch_size, flat_size]
+</span><span class="n">out</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">32</span> <span class="o">*</span> <span class="mi">32</span> <span class="o">*</span> <span class="mi">16</span><span class="p">])</span>
+<span class="c1">#Now, logits is [batch_size, 6]
+</span><span class="n">logits</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">layers</span><span class="p">.</span><span class="n">dense</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Note the use of <code class="language-plaintext highlighter-rouge">-1</code>: Tensorflow will compute the corresponding dimension so that the total size is preserved.</p>
+
+<p>The logits will be unnormalized scores for each example.</p>
+
+<p>In the code examples, the transformation from <code class="language-plaintext highlighter-rouge">inputs</code> to <code class="language-plaintext highlighter-rouge">logits</code> is done in the <code class="language-plaintext highlighter-rouge">build_model</code> function.</p>
+
+<p><strong>Training ops</strong></p>
+
+<p>At this point, we have defined the <code class="language-plaintext highlighter-rouge">logits</code> of the model. We need to define our predictions, our loss, etc. You can have a look at the <code class="language-plaintext highlighter-rouge">model_fn</code> in <code class="language-plaintext highlighter-rouge">model/model_fn.py</code>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#Get the labels from the input data pipeline
+</span><span class="n">labels</span> <span class="o">=</span> <span class="n">inputs</span><span class="p">[</span><span class="s">'labels'</span><span class="p">]</span>
+<span class="n">labels</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">cast</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">tf</span><span class="p">.</span><span class="n">int64</span><span class="p">)</span>
+
+<span class="c1">#Define the prediction as the argmax of the scores
+</span><span class="n">predictions</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">logits</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="c1">#Define the loss
+</span><span class="n">loss</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">losses</span><span class="p">.</span><span class="n">sparse_softmax_cross_entropy</span><span class="p">(</span><span class="n">labels</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span> <span class="n">logits</span><span class="o">=</span><span class="n">logits</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">1</code> in <code class="language-plaintext highlighter-rouge">tf.argmax</code> tells Tensorflow to take the argmax on the axis = 1 (remember that axis = 0 is the batch dimension)</p>
+
+<p>Now, let’s use Tensorflow built-in functions to create nodes and operators that will train our model at each iteration !</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#Create an optimizer that will take care of the Gradient Descent
+</span><span class="n">optimizer</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">train</span><span class="p">.</span><span class="n">AdamOptimizer</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span>
+
+<span class="c1">#Create the training operation
+</span><span class="n">train_op</span> <span class="o">=</span> <span class="n">optimizer</span><span class="p">.</span><span class="n">minimize</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>All these nodes are created by <code class="language-plaintext highlighter-rouge">model_fn</code> that returns a dictionnary <code class="language-plaintext highlighter-rouge">model_spec</code> containing all the necessary nodes and operators of the graph. This dictionnary will later be used for actually running the training operations etc.</p>
+
+<p>And that’s all ! Our model is ready to be trained. Remember that all the objects we defined so far are nodes or operators that are part of the Tensorflow graph. To evaluate them, we actually need to execute them in a session. Simply run</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">with</span> <span class="n">tf</span><span class="p">.</span><span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">sess</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_batches</span><span class="p">):</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">loss_val</span> <span class="o">=</span> <span class="n">sess</span><span class="p">.</span><span class="n">run</span><span class="p">([</span><span class="n">train_op</span><span class="p">,</span> <span class="n">loss</span><span class="p">])</span>
+</code></pre></div></div>
+
+<p>Notice how we don’t need to feed data to the session as the <code class="language-plaintext highlighter-rouge">tf.data</code> nodes automatically iterate over the dataset ! At every iteration of the loop, it will move to the next batch (remember the <code class="language-plaintext highlighter-rouge">tf.data</code> part), compute the loss, and execute the <code class="language-plaintext highlighter-rouge">train_op</code> that will perform one update of the weights !</p>
+
+<p>For more details, have a look at the <code class="language-plaintext highlighter-rouge">model/training.py</code> file that defines the <code class="language-plaintext highlighter-rouge">train_and_evaluate</code> function.</p>
+
+<p><strong>Putting input_fn and model_fn together</strong></p>
+
+<p>To summarize the different steps, we just give a high-level overview of what needs to be done in train.py</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#1. Create the iterators over the Training and Evaluation datasets
+</span><span class="n">train_inputs</span> <span class="o">=</span> <span class="n">input_fn</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span> <span class="n">train_filenames</span><span class="p">,</span> <span class="n">train_labels</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+<span class="n">eval_inputs</span> <span class="o">=</span> <span class="n">input_fn</span><span class="p">(</span><span class="bp">False</span><span class="p">,</span> <span class="n">eval_filenames</span><span class="p">,</span> <span class="n">eval_labels</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+
+<span class="c1">#2. Define the model
+</span><span class="n">logging</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="s">"Creating the model..."</span><span class="p">)</span>
+<span class="n">train_model_spec</span> <span class="o">=</span> <span class="n">model_fn</span><span class="p">(</span><span class="s">'train'</span><span class="p">,</span> <span class="n">train_inputs</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+<span class="n">eval_model_spec</span> <span class="o">=</span> <span class="n">model_fn</span><span class="p">(</span><span class="s">'eval'</span><span class="p">,</span> <span class="n">eval_inputs</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">reuse</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="c1">#3. Train the model (where a session will actually run the different ops)
+</span><span class="n">logging</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="s">"Starting training for {} epoch(s)"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">params</span><span class="p">.</span><span class="n">num_epochs</span><span class="p">))</span>
+<span class="n">train_and_evaluate</span><span class="p">(</span><span class="n">train_model_spec</span><span class="p">,</span> <span class="n">eval_model_spec</span><span class="p">,</span> <span class="n">args</span><span class="p">.</span><span class="n">model_dir</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">args</span><span class="p">.</span><span class="n">restore_from</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">train_and_evaluate</code> function performs a given number of epochs (= full pass on the <code class="language-plaintext highlighter-rouge">train_inputs</code>). At the end of each epoch, it evaluates the performance on the development set (<code class="language-plaintext highlighter-rouge">dev</code> or <code class="language-plaintext highlighter-rouge">train-dev</code> in the course material).</p>
+
+<p>Remember the discussion about different graphs for Training and Evaluation. Here, notice how the <code class="language-plaintext highlighter-rouge">eval_model_spec</code> is given the <code class="language-plaintext highlighter-rouge">reuse=True</code> argument. It will make sure that the nodes of the Evaluation graph which must share weights with the Training graph <strong>do</strong> share their weights.</p>
+
+<p><strong>Evalution and tf.metrics</strong></p>
+
+<p><a href="https://www.tensorflow.org/api_docs/python/tf/metrics">Tensorflow doc</a></p>
+
+<p>So far, we’ve explained how we input data to the graph, how we define the different nodes and training ops, but we don’t know (yet) how to compute some metrics on our dataset. There are basically 2 possibilities</p>
+
+<ol>
+  <li><strong>[run evaluation outside the Tensorflow graph]</strong> Evaluate the prediction over the dataset by running <code class="language-plaintext highlighter-rouge">sess.run(prediction)</code> and use it to evaluate your model (without Tensorflow, with pure python code). This option can also be used if you need to write a file with all the predicitons and use a script (distributed by a conference for instance) to evaluate the performance of your model.</li>
+  <li><strong>[use Tensorflow]</strong> As the above method can be quite complicated for simple metrics, Tensorflow luckily has some built-in tools to run evaluation. Again, we are going to create nodes and operations in the Graph. The concept is simple: we will use the <code class="language-plaintext highlighter-rouge">tf.metrics</code> API to build those, the idea being that we need to update the metric on each batch. At the end of the epoch, we can just query the updated metric !</li>
+</ol>
+
+<p>We’ll cover method 2 as this is the one we implemented in the code examples (but you can definitely go with option 1 by modifying <code class="language-plaintext highlighter-rouge">model/evaluation.py</code>). As most of the nodes of the graph, we define these metrics nodes and ops in <code class="language-plaintext highlighter-rouge">model/model_fn.py</code>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#Define the different metrics
+</span><span class="k">with</span> <span class="n">tf</span><span class="p">.</span><span class="n">variable_scope</span><span class="p">(</span><span class="s">"metrics"</span><span class="p">):</span>
+    <span class="n">metrics</span> <span class="o">=</span> <span class="p">{</span><span class="s">'accuracy'</span><span class="p">:</span> <span class="n">tf</span><span class="p">.</span><span class="n">metrics</span><span class="p">.</span><span class="n">accuracy</span><span class="p">(</span><span class="n">labels</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span> <span class="n">predictions</span><span class="o">=</span><span class="n">predictions</span><span class="p">,</span>
+              <span class="s">'loss'</span><span class="p">:</span> <span class="n">tf</span><span class="p">.</span><span class="n">metrics</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">loss</span><span class="p">)}</span>
+
+<span class="c1">#Group the update ops for the tf.metrics, so that we can run only one op to update them all
+</span><span class="n">update_metrics_op</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">group</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">op</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">op</span> <span class="ow">in</span> <span class="n">metrics</span><span class="p">.</span><span class="n">values</span><span class="p">()])</span>
+
+<span class="c1">#Get the op to reset the local variables used in tf.metrics, for when we restart an epoch
+</span><span class="n">metric_variables</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">get_collection</span><span class="p">(</span><span class="n">tf</span><span class="p">.</span><span class="n">GraphKeys</span><span class="p">.</span><span class="n">LOCAL_VARIABLES</span><span class="p">,</span> <span class="n">scope</span><span class="o">=</span><span class="s">"metrics"</span><span class="p">)</span>
+<span class="n">metrics_init_op</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">variables_initializer</span><span class="p">(</span><span class="n">metric_variables</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Notice that we define the metrics, a grouped update op and an initializer. The use of the <code class="language-plaintext highlighter-rouge">*</code> in <a href="https://www.tensorflow.org/api_docs/python/tf/GraphKeys"><code class="language-plaintext highlighter-rouge">tf.group</code></a> is a pythonic way to tell that the argument given to the function corresponds to an optional positional argument.</p>
+
+<p>Notice also how we define the metrics in a special <code class="language-plaintext highlighter-rouge">variable_scope</code> so that we can query the variables by name when we create the initializer ! When you create nodes, the variables are added to some pre-defined collections of variables (TRAINABLE_VARIABLES, etc.). The variables we need to reset for <code class="language-plaintext highlighter-rouge">tf.metrics</code> are in the <a href="https://www.tensorflow.org/api_docs/python/tf/GraphKeys"><code class="language-plaintext highlighter-rouge">tf.GraphKeys.LOCAL_VARIABLES</code></a> collection. Thus, to query the variables, we get the collection of variables in the right scope !</p>
+
+<p>Now, to evaluate the metrics on a dataset, we’ll just need to run them in a session as we loop over our dataset</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">with</span> <span class="n">tf</span><span class="p">.</span><span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">sess</span><span class="p">:</span>
+    <span class="c1">#Run the initializer to reset the metrics to zero
+</span>    <span class="n">sess</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="n">metrics_init_op</span><span class="p">)</span>
+
+    <span class="c1">#Update the metrics over the dataset
+</span>    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_steps</span><span class="p">):</span>
+        <span class="n">sess</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="n">update_metrics_op</span><span class="p">)</span>
+
+    <span class="c1">#Get the values of the metrics
+</span>    <span class="n">metrics_values</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">metrics</span><span class="p">.</span><span class="n">items</span><span class="p">()}</span>
+    <span class="n">metrics_val</span> <span class="o">=</span> <span class="n">sess</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="n">metrics_values</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>And that’s all ! If you want to compute new metrics for which you can find a <a href="https://www.tensorflow.org/api_docs/python/tf/metrics">Tensorflow implementation</a>, you can define it in the <code class="language-plaintext highlighter-rouge">model_fn.py</code> (add it to the <code class="language-plaintext highlighter-rouge">metrics</code> dictionnary). It will automatically be updated during the training and will be displayed at the end of each epoch.</p>
+
+<h2 id="tensorflow-tips-and-tricks"><strong>Tensorflow Tips and Tricks</strong></h2>
+
+<p><strong>Be careful with initialization</strong></p>
+
+<p>So far, we mentionned 3 different initializer operators.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#1. For all the variables (the weights etc.)
+</span><span class="n">tf</span><span class="p">.</span><span class="n">global_variables_initializer</span><span class="p">()</span>
+
+<span class="c1">#2. For the dataset, so that we can chose to move the iterator back at the beginning
+</span><span class="n">iterator</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">.</span><span class="n">make_initializable_iterator</span><span class="p">()</span>
+<span class="n">next_element</span> <span class="o">=</span> <span class="n">iterator</span><span class="p">.</span><span class="n">get_next</span><span class="p">()</span>
+<span class="n">iterator_init_op</span> <span class="o">=</span> <span class="n">iterator</span><span class="p">.</span><span class="n">initializer</span>
+
+<span class="c1">#3. For the metrics variables, so that we can reset them to 0 at the beginning of each epoch
+</span><span class="n">metrics_init_op</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">variables_initializer</span><span class="p">(</span><span class="n">metric_variables</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>During <code class="language-plaintext highlighter-rouge">train_and_evaluate</code> we perform the following schedule, all in one session</p>
+
+<ol>
+  <li>Loop over the training set, updating the weights and computing the metrics</li>
+  <li>Loop over the evaluation set, computing the metrics</li>
+  <li>Go back to step 1.</li>
+</ol>
+
+<p>We thus need to run</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">tf.global_variable_initializer()</code> at the very beginning (before the first occurence of step 1)</li>
+  <li><code class="language-plaintext highlighter-rouge">iterator_init_op</code> at the beginning of every loop (step 1 and step 2)</li>
+  <li><code class="language-plaintext highlighter-rouge">metrics_init_op</code> at the beginning of every loop (step 1 and step 2), to reset the metrics to zero (we don’t want to compute the metrics averaged over the different epochs or different datasets !)</li>
+</ul>
+
+<p>You can indeed check that this is what we do in <code class="language-plaintext highlighter-rouge">model/evaluation.py</code> or <code class="language-plaintext highlighter-rouge">model/training.py</code> when we actually run the graph !</p>
+
+<p><strong>Saving</strong></p>
+
+<p><a href="https://www.tensorflow.org/guide/saved_model">Official guide</a></p>
+
+<p>Training a model and evaluating is fine, but what about re-using the weights? Also, maybe at some point of the training, our performance started to get worse on the validation set and we want to use the best weights we got during training.</p>
+
+<p>Saving models is easy in Tensorflow. Look at the outline below</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#We need to create an instance of saver
+</span><span class="n">saver</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">train</span><span class="p">.</span><span class="n">Saver</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">batch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+        <span class="n">_</span> <span class="o">=</span> <span class="n">sess</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="n">train_op</span><span class="p">)</span>
+
+    <span class="c1">#Save weights
+</span>    <span class="n">save_path</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">model_dir</span><span class="p">,</span> <span class="s">'last_weights'</span><span class="p">,</span> <span class="s">'after-epoch'</span><span class="p">)</span>
+    <span class="n">saver</span><span class="p">.</span><span class="n">save</span><span class="p">(</span><span class="n">sess</span><span class="p">,</span> <span class="n">last_save_path</span><span class="p">,</span> <span class="n">global_step</span><span class="o">=</span><span class="n">epoch</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>There is not much to say, except that the <code class="language-plaintext highlighter-rouge">saver.save()</code> method takes a session as input. In our implementation, we use 2 savers. A <code class="language-plaintext highlighter-rouge">last_saver = tf.train.Saver()</code> that will keep the weights at the end of the last 5 epochs and a <code class="language-plaintext highlighter-rouge">best_saver = tf.train.Saver(max_to_keep=1)</code> that only keeps one checkpoint corresponding to the weights that achieved the best performance on the validation set !</p>
+
+<p>Later on, to restore the weights of your model, you need to reload the weights thanks to a saver instance, as in</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">with</span> <span class="n">tf</span><span class="p">.</span><span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">sess</span><span class="p">:</span>
+    <span class="c1">#Get the latest checkpoint in the directory
+</span>    <span class="n">restore_from</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">train</span><span class="p">.</span><span class="n">latest_checkpoint</span><span class="p">(</span><span class="s">"model/last_weights"</span><span class="p">)</span>
+    <span class="c1">#Reload the weights into the variables of the graph
+</span>    <span class="n">saver</span><span class="p">.</span><span class="n">restore</span><span class="p">(</span><span class="n">sess</span><span class="p">,</span> <span class="n">restore_from</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>You can look at the files model/training.py and model/evaluation.py for more details.</p>
+
+<p><strong>Tensorboard and summaries</strong></p>
+
+<p><a href="https://www.tensorflow.org/guide/summaries_and_tensorboard">Official guide</a></p>
+
+<p>Tensorflow comes with an excellent visualization tool called <strong>Tensorboard</strong> that enables you to plot different scalars (and much more) in real-time, as you train your model.</p>
+
+<table class="image">
+
+<tr><td><img src="/doks-theme/assets/images//blog/tensorboard.png" style="width: 100%" /></td></tr>
+</table>
+
+<p>The mechanism of Tensorboard is the following</p>
+<ol>
+  <li>define some summaries (nodes of the graph) that will tell Tensorflow which values we want to plot</li>
+  <li>evaluate these nodes in the <code class="language-plaintext highlighter-rouge">session</code></li>
+  <li>write the output to a file thanks to a <code class="language-plaintext highlighter-rouge">tf.summary.FileWriter</code></li>
+</ol>
+
+<p>Then, you only need to launch tensorboard in your web-browser by opening a terminal and writing for instance</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">tensorboard</span> <span class="o">--</span><span class="n">logdir</span><span class="o">=</span><span class="s">"expirements/base_model"</span>
+</code></pre></div></div>
+
+<p>Then, navigate to <a href="http://127.0.0.1:6006/">http://127.0.0.1:6006/</a> and you’ll see the different plots.</p>
+
+<p>In the code examples, we add the summaries in <code class="language-plaintext highlighter-rouge">model/model_fn.py</code>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#Compute different scalars to plot
+</span><span class="n">loss</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">reduce_mean</span><span class="p">(</span><span class="n">losses</span><span class="p">)</span>
+<span class="n">accuracy</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">reduce_mean</span><span class="p">(</span><span class="n">tf</span><span class="p">.</span><span class="n">cast</span><span class="p">(</span><span class="n">tf</span><span class="p">.</span><span class="n">equal</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">predictions</span><span class="p">),</span> <span class="n">tf</span><span class="p">.</span><span class="n">float32</span><span class="p">))</span>
+
+<span class="c1">#Summaries for training
+</span><span class="n">tf</span><span class="p">.</span><span class="n">summary</span><span class="p">.</span><span class="n">scalar</span><span class="p">(</span><span class="s">'loss'</span><span class="p">,</span> <span class="n">loss</span><span class="p">)</span>
+<span class="n">tf</span><span class="p">.</span><span class="n">summary</span><span class="p">.</span><span class="n">scalar</span><span class="p">(</span><span class="s">'accuracy'</span><span class="p">,</span> <span class="n">accuracy</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Note that we don’t use the metrics that we defined earlier. The reason being that the <code class="language-plaintext highlighter-rouge">tf.metrics</code> returns the running average, but Tensorboard already takes care of the smoothing, so we don’t want to add any additional smoothing. It’s actually rather the opposite: we are interested in real-time progress</p>
+
+<p>Once these nodes are added to the <code class="language-plaintext highlighter-rouge">model_spec</code> dictionnary, we need to evaluate them in a session. In our implementation, this is done every <code class="language-plaintext highlighter-rouge">params.save_summary_steps</code> as you’ll notice in the <code class="language-plaintext highlighter-rouge">model/training.py</code> file.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="n">params</span><span class="p">.</span><span class="n">save_summary_steps</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="c1">#Perform a mini-batch update
+</span>    <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">loss_val</span><span class="p">,</span> <span class="n">summ</span><span class="p">,</span> <span class="n">global_step_val</span> <span class="o">=</span> <span class="n">sess</span><span class="p">.</span><span class="n">run</span><span class="p">([</span><span class="n">train_op</span><span class="p">,</span> <span class="n">update_metrics</span><span class="p">,</span> <span class="n">loss</span><span class="p">,</span> <span class="n">summary_op</span><span class="p">,</span> <span class="n">global_step</span><span class="p">])</span>
+    <span class="c1">#Write summaries for tensorboard
+</span>    <span class="n">writer</span><span class="p">.</span><span class="n">add_summary</span><span class="p">(</span><span class="n">summ</span><span class="p">,</span> <span class="n">global_step_val</span><span class="p">)</span>
+
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">loss_val</span> <span class="o">=</span> <span class="n">sess</span><span class="p">.</span><span class="n">run</span><span class="p">([</span><span class="n">train_op</span><span class="p">,</span> <span class="n">update_metrics</span><span class="p">,</span> <span class="n">loss</span><span class="p">])</span>
+</code></pre></div></div>
+
+<p>You’ll notice that we have 2 different writers</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">train_writer</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">summary</span><span class="p">.</span><span class="n">FileWriter</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">model_dir</span><span class="p">,</span> <span class="s">'train_summaries'</span><span class="p">),</span> <span class="n">sess</span><span class="p">.</span><span class="n">graph</span><span class="p">)</span>
+<span class="n">eval_writer</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">summary</span><span class="p">.</span><span class="n">FileWriter</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">model_dir</span><span class="p">,</span> <span class="s">'eval_summaries'</span><span class="p">),</span> <span class="n">sess</span><span class="p">.</span><span class="n">graph</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>They’ll write summaries for both the training and the evaluation, letting you plot both plots on the same graph !</p>
+
+<p><strong>A note about the global_step</strong></p>
+
+<p><a href="https://www.tensorflow.org/api_docs/python/tf/train/Optimizer#minimize">Official doc</a></p>
+
+<p>In order to keep track of how far we are in the training, we use one of Tensorflow’s training utilities, the <code class="language-plaintext highlighter-rouge">global_step</code>. Once initialized, we give it to the <code class="language-plaintext highlighter-rouge">optimizer.minimize()</code> as explained below. Thus, each time we will run <code class="language-plaintext highlighter-rouge">sess.run(train_op)</code>, it will increment the global_step by 1. This is very useful for summaries (notice how in the Tensorboard part we give the global step to the <code class="language-plaintext highlighter-rouge">writer</code>).</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">global_step</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">train</span><span class="p">.</span><span class="n">get_or_create_global_step</span><span class="p">()</span>
+<span class="n">train_op</span> <span class="o">=</span> <span class="n">optimizer</span><span class="p">.</span><span class="n">minimize</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="n">global_step</span><span class="o">=</span><span class="n">global_step</span><span class="p">)</span>
+</code></pre></div></div>
+
+						</div><!-- /.content -->
+					</div><!-- /.col -->
+					<div class="col-md-4 col-md-offset-1">
+						<div class="sections-list-wrapper">
+							<div class="sections-list js-sections js-affix js-scrollspy hidden-xs hidden-sm"></div><!-- /.sections-list -->
+						</div>
+					</div><!-- /.col -->
+					
+				</div><!-- /.row -->
+			</div><!-- /.container -->
+		</div><!-- /.section -->
+		
+		<div class="js-footer-area">
+			
+				<nav class="page-nav">
+					<div class="container">
+						<div class="row">
+							<div class="col-xs-12">
+								
+									<a href="/blog/datapipeline" class="page-nav__item page-nav__item--prev">
+										<i class="icon icon--arrow-left"></i>
+										Previous page
+									</a><!-- /.page-nav__item -->
+								
+								
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.container -->
+				</nav><!-- /.page-nav --> 
+			<div class="micro-nav">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12">
+				<a href="/blog" class="micro-nav__back">
+					<i class="icon icon--arrow-left"></i>
+					Back to Blog
+				</a><!-- /.micro-nav__back -->
+			</div><!-- /.col -->
+		</div><!-- /.row -->
+	</div><!-- /.container -->
+</div><!-- /.micro-nav -->
+
+			
+			
+	<footer class="site-footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-6">
+					
+					
+						<!-- <hr> -->
+						<p class="site-footer__copyright">Copyright &copy; 2024. - Stanford University <br>All rights reserved.</p>
+					
+				</div><!-- /.col -->
+				
+			</div><!-- /.row -->
+		</div><!-- /.container -->
+	</footer><!-- /.site-footer -->
+
+
+<script src="/doks-theme/assets/js/vendor/jquery.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/vendor/bootstrap/affix.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/vendor/bootstrap/scrollspy.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/vendor/matchHeight.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/scripts.min.js"></script>
+
+		</div><!-- /.js-footer-area -->
+	</body>
+</html>
