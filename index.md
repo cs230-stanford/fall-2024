@@ -13,7 +13,7 @@ micro_nav: true
 - The course content and deadlines for all assignments are listed in our [syllabus](/syllabus).
 - For general inquiries, please contact <{{ site.course.qa }}>.
 - Please DO NOT reach out to the instructors’ emails or individual teaching staff’s emails. Instead, please contact the teaching staff at <{{ site.course.qa }}> for the fastest response. Because of the size of the course, emails tend to get lost when reaching out to individuals in the teaching team. General inquiries to the mailing list (<{{ site.course.qa }}>) will help us get back to you in a timely manner.
-- If you are interested in auditing the course, fill out this [form](https://forms.gle/gzf4fNEHQ3HRrXHN8).
+- If you are interested in auditing the course, fill out this [form](https://forms.gle/zDCxE7ZvZDvFCxcH6).
 
 <!-- Course Staff -->
 {% include staff.html %}
@@ -23,7 +23,7 @@ All course announcements take place through the [CS230 Ed forum]({{ site.course.
 #### Class components
 
 CS230 has the following components:
-* In class (in-person) lecture - once a week (at {{site.course.venue}}). You can access lectures by going to the "Zoom" tab of Canvas.
+* In-person lecture - once a week at {{site.course.venue}}. You can access lectures by going to the "Panopto Course Videos" tab of Canvas.
 * Video lectures, programming assignments, and quizzes on Coursera
 * A midterm covering material from the first half of the quarter
 * [The final project](/project)
@@ -32,7 +32,7 @@ CS230 has the following components:
 #### The flipped classroom format
 
 CS230 follows a flipped-classroom format, every week you will have:
-* In-class lectures on Tuesdays: these lectures will be a mix of advanced lectures on a specific subject that hasn't been treated in depth in the videos or guest lectures from industry experts. You can access these lectures on the [Zoom tab on Canvas](https://canvas.stanford.edu/courses/135687/external_tools/5384), and they will also be posted afterwards on [Canvas](https://canvas.stanford.edu/).
+* In-person lectures on Tuesdays: these lectures will be a mix of advanced lectures on a specific subject that hasn't been treated in depth in the videos or guest lectures from industry experts. You can access these lectures on Canvas, and they will also be posted afterwards as well.
 * Two modules from the [deeplearning.ai](https://www.deeplearning.ai/) [Deep Learning Specialization](https://www.deeplearning.ai/deep-learning-specialization/) on Coursera. You will watch videos at home, solve quizzes and programming assignments hosted on online notebooks.
 * TA-led sections on Fridays: Teaching Assistants will teach you hands-on tips and tricks to succeed in your projects, but also theorethical foundations of deep learning.
 * Project meeting with your TA mentor: CS230 is a project-based class. Through personalized guidance, TAs will help you succeed in implementing a successful deep learning project within a quarter.

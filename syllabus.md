@@ -11,12 +11,14 @@ micro_nav: false
 
 ## Announcements
 - The course website for Fall offering of 2024 is still in the process of updating. Please keep in mind that changes will be made up until 9/23 so please refer to the website for the most up-to-date information on the first day of the quarter.
-- Please check out the [FAQ](/faq) for a list of changes to the course for the remote offering.
 - Please join [Ed]({{site.course.ed}}) during the first week. This is where the majority of course announcements will be found.
-- If you would like to audit the course, pplease fill out the following [request form](https://forms.gle/zDCxE7ZvZDvFCxcH6).
+- Video cameras located in the back of the room will capture the instructor presentations in this course. For your convenience, you can access these recordings by logging into the course Canvas site. These recordings might be reused in other Stanford courses, viewed by other Stanford students, faculty, or staff, or used for other education and research purposes. Note that while the cameras are positioned with the intention of recording only the instructor, occasionally a part of your image or voice might be incidentally captured. If you have questions, please contact a member of the teaching team.
+- Since the exam will be in-person, SCPD/CGOE students will need to nominate exam monitors for both exams and coordinate the exam process with the SCPD exams team. Please refer to this [link](https://online.stanford.edu/programs/graduate-education/exams-homework-faqs) for more information on the process. For any additional questions, please reach out to the SCPD exams team at scpd-exams@stanford.edu.
+- If you would like to audit the course, please fill out the following [request form](https://forms.gle/zDCxE7ZvZDvFCxcH6).
 
 ## Syllabus
-
+- Modules are equivalent to “Weeks” in the Coursera courses. For example, C1M1 refers to C1 Week 1.
+- Note that the in-class lecture topics are subject to change as the quarter progresses.
 <table id="schedule" class="table table-bordered no-more-tables" style="width: 100%; font-size: 0.8em;">
     <colgroup>
         <col>
@@ -58,7 +60,7 @@ micro_nav: false
         </tr>
         <tr>
             <td>Lecture&nbsp;2</td>
-            <td> 10/1 </td>
+            <td> 10/01 </td>
             <td>
                 <strong>Topics: </strong>Deep Learning Intuition <a href="spring_2022/lecture_2.pdf">(slides)</a>
             </td>
@@ -87,7 +89,7 @@ micro_nav: false
         </tr>
         <tr>
             <td>Lecture&nbsp;3</td>
-            <td>10/8</td>
+            <td>10/08</td>
             <td>
                 <strong>Topics:</strong> Adversarial examples - GANs <a href="spring_2022/lecture_3.pdf">(slides)</a>
                 <ul>
@@ -123,7 +125,7 @@ micro_nav: false
             <td><a href="/project/#proposal">Instructions</a></td>
             <td></td>
             <td>
-                <strong>Meet with any TA between 9/24 and 10/8 to discuss your proposal.</strong>
+                <strong>Meet with any TA between 9/24 and 10/08 to discuss your proposal.</strong>
             </td>
         </tr>
         <tr style="background-color:#b7ffbf">
@@ -237,32 +239,8 @@ micro_nav: false
             </td>
         </tr>
         <tr>
-            <td>Midterm Review</td>
-            <td> TBD </td>
-            <td><strong>Past midterms:</strong>
-                <ul>
-                    <li>Fall 2018 Midterm <a href="/files/cs230exam_fall18.pdf">(without solutions)</a>, <a href="/files/cs230exam_fall18_soln.pdf">(with solutions)</a></li>
-                    <li>Winter 2019 Midterm <a href="/files/cs230exam_win19.pdf">(without solutions)</a>, <a href="/files/cs230exam_win19_soln.pdf">(with solutions)</a></li>
-                    <li>Fall 2019 Midterm <a href="/files/cs230exam_fall19.pdf">(without solutions)</a>, <a href="/files/cs230exam_fall19_soln.pdf">(with solutions)</a></li>
-                    <li>Winter 2020 Midterm <a href="/files/cs230exam_win20.pdf">(without solutions)</a>, <a href="/files/cs230exam_win20_soln.pdf">(with solutions)</a></li>
-                    <li>Fall 2020 Midterm <a href="/files/cs230exam_fall20.pdf">(without solutions)</a>, <a href="/files/cs230exam_fall20_soln.pdf">(with solutions)</a></li>
-                    <li>Spring 2021 Midterm <a href="fall_2021/cs230exam_spr21.pdf">(without solutions)</a>, <a href="fall_2021/cs230exam_spr21_soln.pdf">(with solutions)</a></li>
-                </ul>
-            </td>
-        </tr>
-        <tr style="background-color:#ffcece" id="midterm">
-            <td><strong>Midterm</strong></td>
-            <td> <strong>10/31</strong></td>
-            <td></td>
-            <td>
-            <br>
-            Details posted on Ed soon (Date subject to change)
-            </td>
-            <td></td>
-        </tr>
-        <tr>
             <td>Lecture&nbsp;7</td>
-            <td>11/5</td>
+            <td>11/05</td>
             <td>
                 <strong>Democracy day:</strong> NO CLASS
             </td>
@@ -287,26 +265,28 @@ micro_nav: false
                 </ul>
             </td>
         </tr>
-        <tr style="background-color:#ffb7bf">
-            <td><strong>Project Meeting #2</strong></td>
-            <td><strong>{{ site.course.project_timeline.milestone | date: site.course.project_timeline.syllabus_date_format }}</strong></td>
-            <td><a href="/project/#milestone">Instructions</a></td>
+        <tr>
+            <td>Midterm Review</td>
+            <td> TBD </td>
+            <td><strong>Past midterms:</strong>
+                <ul>
+                    <li>Fall 2018 Midterm <a href="/files/cs230exam_fall18.pdf">(without solutions)</a>, <a href="/files/cs230exam_fall18_soln.pdf">(with solutions)</a></li>
+                    <li>Winter 2019 Midterm <a href="/files/cs230exam_win19.pdf">(without solutions)</a>, <a href="/files/cs230exam_win19_soln.pdf">(with solutions)</a></li>
+                    <li>Fall 2019 Midterm <a href="/files/cs230exam_fall19.pdf">(without solutions)</a>, <a href="/files/cs230exam_fall19_soln.pdf">(with solutions)</a></li>
+                    <li>Winter 2020 Midterm <a href="/files/cs230exam_win20.pdf">(without solutions)</a>, <a href="/files/cs230exam_win20_soln.pdf">(with solutions)</a></li>
+                    <li>Fall 2020 Midterm <a href="/files/cs230exam_fall20.pdf">(without solutions)</a>, <a href="/files/cs230exam_fall20_soln.pdf">(with solutions)</a></li>
+                    <li>Spring 2021 Midterm <a href="fall_2021/cs230exam_spr21.pdf">(without solutions)</a>, <a href="fall_2021/cs230exam_spr21_soln.pdf">(with solutions)</a></li>
+                </ul>
+            </td>
+        </tr>
+        <tr style="background-color:#ffcece" id="midterm">
+            <td><strong>Midterm</strong></td>
+            <td> <strong>11/06</strong></td>
             <td></td>
             <td>
-                <strong>Meet with your assigned TA between 10/8 and 11/15 to discuss your milestone report.</strong>
+            <br>
             </td>
-        </tr>
-        <tr style="background-color:#b7ffbf">
-            <td><strong>Project Milestone Due</strong></td>
-            <td><strong>{{ site.course.project_timeline.milestone | date: site.course.project_timeline.syllabus_date_format }}</strong></td>
-            <td><a href="/project/#milestone">Instructions</a></td>
             <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td id="Module_5" colspan="5" style="text-align:center; vertical-align:middle;background-color:#fffde7">
-                <strong>Sequence Models</strong>  <a href="https://www.coursera.org/learn/nlp-sequence-models">(Course 5)</a>
-            </td>
         </tr>
         <tr>
             <td>Lecture&nbsp;8</td>
@@ -340,6 +320,27 @@ micro_nav: false
                     <li>Dinosaur Land -- Character-level Language Modeling</li>
                     <li>Jazz improvisation with LSTM</li>
                 </ul>
+            </td>
+        </tr>
+        <tr style="background-color:#ffb7bf">
+            <td><strong>Project Meeting #2</strong></td>
+            <td><strong>{{ site.course.project_timeline.milestone | date: site.course.project_timeline.syllabus_date_format }}</strong></td>
+            <td><a href="/project/#milestone">Instructions</a></td>
+            <td></td>
+            <td>
+                <strong>Meet with your assigned TA between 10/08 and 11/15 to discuss your milestone report.</strong>
+            </td>
+        </tr>
+        <tr style="background-color:#b7ffbf">
+            <td><strong>Project Milestone Due</strong></td>
+            <td><strong>{{ site.course.project_timeline.milestone | date: site.course.project_timeline.syllabus_date_format }}</strong></td>
+            <td><a href="/project/#milestone">Instructions</a></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td id="Module_5" colspan="5" style="text-align:center; vertical-align:middle;background-color:#fffde7">
+                <strong>Sequence Models</strong>  <a href="https://www.coursera.org/learn/nlp-sequence-models">(Course 5)</a>
             </td>
         </tr>
         <tr>
@@ -382,7 +383,7 @@ micro_nav: false
         </tr>
         <tr>
             <td>Lecture&nbsp;10</td>
-            <td>12/3</td>
+            <td>12/03</td>
             <td>
                 <strong>Topics:</strong> <a href="fall_2021/lecture_10.pdf">(slides)</a>
                 <ul>
@@ -404,7 +405,7 @@ micro_nav: false
             <td><a href="/project/#final-report">Instructions</a></td>
             <td></td>
             <td>
-                <strong>Meet with your assigned TA between 11/15 and 12/3 (before class) to discuss your final project report.</strong>
+                <strong>Meet with your assigned TA between 11/15 and 12/03 (before class) to discuss your final project report.</strong>
             </td>
         </tr>
         <tr style="background-color:#b7ffbf">
@@ -415,6 +416,13 @@ micro_nav: false
             <td>
                 <strong>Please read over the final project guidelines <a href="/project/#final-report">here</a> for information on the rubric and late submissions.</strong>
             </td>
+        </tr>
+        <tr style="background-color:#ffcece" id="midterm">
+            <td><strong>Project Poster Session</strong></td>
+            <td> <strong>12/13 Friday 11:30 AM - 3:00 PM</strong></td>
+            <td></td>
+            <td></td>
+            <td><strong> Location: AOERC Basketball courts</strong></td>
         </tr>
     </tbody>
 </table>

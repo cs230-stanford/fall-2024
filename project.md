@@ -95,7 +95,7 @@ We link one past example of a good project proposal [here](/winter2020/example_p
 | **Project mentors** | Based off of the topic you choose in your proposal, we’ll suggest a project mentor given the areas of expertise of the TAs. This is just a recommendation; feel free to speak with other TAs as well.
 | **Format** | Your proposal should be a PDF document, giving the title of the project, the project category, the full names of all of your team members, the SUNet ID of your team members, and a 300-500 word description of what you plan to do.
 | **Grading** | The project proposal is mainly intended to make sure you decide on a project topic and get feedback from TAs early. As long as your proposal follows the instructions above and the project seems to have been thought out with a reasonable plan, you should do well on the proposal.
-| **Submission** | Fill out the [project form](https://forms.gle/YcXG3xkQB3ugHmSp6) and submit the proposal on Gradescope (see description under deadline for instructions)
+| **Submission** | Fill out the form shared on Ed and submit the proposal on Gradescope (see description under deadline for instructions)
 
 ## Milestone
 

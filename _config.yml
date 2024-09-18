@@ -57,15 +57,15 @@ course:
     quarter: 2024 Fall
     time: In person lectures are on Tuesdays 11:30am-1:20pm.
     section_time: TBD
-    venue:  Hewlett Teaching Center 200.
+    venue:  Hewlett Teaching Center 200
     ed: &ed 'https://edstem.org/us/courses/65934'
-    gradescope: 'https://www.gradescope.com/courses/379380'
+    gradescope: 'https://www.gradescope.com/courses/866681'
     queuestatus:
         url: &qs 'https://queuestatus.com'
         name: 'CS230 (2022 Spring)'
     canvas: &cvs 'https://canvas.stanford.edu/courses/195135'
     qa: &qa 'cs230-qa@cs.stanford.edu'
-    midterm_time: ''
+    midterm_time: '2024-11-06'
     project_timeline:
         proposal: 2024-10-08T23:59:00-07:00
         milestone: 2024-11-15T23:59:00-07:00
@@ -151,7 +151,7 @@ course:
         video:
             icon:
             content: Lecture videos (Canvas)
-            url: 'https://canvas.stanford.edu/courses/154237/external_tools/3367'
+            url: 'https://canvas.stanford.edu/courses/195135/external_tools/69960'
             external_url: true
         canvas:
             icon:
@@ -181,9 +181,17 @@ course:
           url:
           image: andrew.jpg
         - name: Amelie Byun
-          type: Course Advisor
+          type: Course Manager
           url:
           image: amelie.jpg
+        - name: Swati Dube Batra
+          type: Course Advisor
+          url: 
+          image: swati.jpg
+          zoom_id:
+          zoom_link:
+          calendly:
+          area:
         - name: Shahab Mousavi
           type: Head TA
           url: 
@@ -193,21 +201,29 @@ course:
           calendly:
           area:
     ta:
+        - name: JB Lim
+          type: TA
+          url: 
+          image: lim.jpg
+          zoom_id:
+          zoom_link:
+          calendly: https://calendly.com/stanfordcs230/jb-project-oh
+          area: LLM agents, Ethics, Applications in social science
         - name: Hee Jung Choi
           type: TA
           url: 
           image: choi.jpg
           zoom_id:
           zoom_link:
-          calendly: 
+          calendly: https://calendly.com/stanfordcs230/heejung-oh
           area: Healthcare
         - name: Johnny Chang
           type: TA
           url: 
-          image: unknown.jpg
+          image: Johnny.jpg
           zoom_id:
           zoom_link:
-          calendly: 
+          calendly: https://calendly.com/stanfordcs230/30min
           area:
         - name: Sri Jaladi
           type: TA
@@ -215,21 +231,13 @@ course:
           image: jaladi.png
           zoom_id:
           zoom_link:
-          calendly: 
+          calendly: https://calendly.com/stanfordcs230/sri-project-oh
           area: Acceleration of models, Sequential models, Image models, Convolutional-based projects (1d, 2d)
-        - name: JB (Jong Beom) Lim
-          type: TA
-          url: 
-          image: lim.jpg
-          zoom_id:
-          zoom_link:
-          calendly: 
-          area: LLM agents, Ethics
-        - name: 
+        - name: Raghav Ganesh
           type: TA
           url: 
           image: unknown.jpg
           zoom_id:
           zoom_link:
-          calendly: 
+          calendly: https://calendly.com/stanfordcs230/raghav-project-oh
           area: 
