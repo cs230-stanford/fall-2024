@@ -198,8 +198,8 @@ course:
           image: shahab.jpg
           zoom_id:
           zoom_link:
-          calendly:
-          area:
+          calendly: https://calendly.com/stanfordcs230/shahab-project-oh
+          area: AI for Energy, sustainability, climate, and finance; CV; ASR; Autonomous vehicles
     ta:
         - name: JB Lim
           type: TA
