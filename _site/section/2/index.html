@@ -9,31 +9,37 @@
 	<meta name="description" content="Understanding gradient descent and backpropagation. We will go through four different neural network examples and explicitly compute the backpropagation equations.">
 
 
-<link rel="icon" href="/favicon.ico" type="image/x-icon">
+<link rel="icon" href="/cs230-2024-fall/favicon.ico" type="image/x-icon">
 <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat:400,400i,500,500i,700,700i|Noto+Sans:400,400i,700,700i|Source+Code+Pro&amp;subset=latin-ext">
-<link rel="stylesheet" href="/doks-theme/assets/css/style.css">
+<link rel="stylesheet" href="/cs230-2024-fall/doks-theme/assets/css/style.css">
 <script type="text/javascript" async
   src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
 </script>
+<script>
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-124237072-3', 'auto');
+	ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
 	</head>
 	<body class="blue" data-spy="scroll" data-target=".js-scrollspy">
 		
 	<div class="offcanvas visible-xs">
 		<ul class="offcanvas__nav">
 			
-				<li><a href="/syllabus">Syllabus</a></li>
+				<li><a href="/cs230-2024-fall/syllabus">Syllabus</a></li>
 			
-				<li><a href="/officehours">Office Hours</a></li>
+				<li><a href="/cs230-2024-fall/officehours">Office Hours</a></li>
 			
-				<li><a href="/project">Project</a></li>
+				<li><a href="/cs230-2024-fall/project">Project</a></li>
 			
-				<li><a href="/section">Section</a></li>
+				<li><a href="/cs230-2024-fall/section">Section</a></li>
 			
-				<li><a href="/lecture">Lecture</a></li>
+				<li><a href="/cs230-2024-fall/lecture">Lecture</a></li>
 			
-				<li><a href="/blog">Blog</a></li>
+				<li><a href="/cs230-2024-fall/blog">Blog</a></li>
 			
-				<li><a href="/faq">FAQ</a></li>
+				<li><a href="/cs230-2024-fall/faq">FAQ</a></li>
 			
 		</ul><!-- /.offcanvas__nav -->
 	</div><!-- /.offcanvas -->
@@ -45,27 +51,27 @@
 			<div class="row">
 				<div class="col-xs-12">
 					
-						<a href="/" class="site-header__logo">
-							<img src="/doks-theme/assets/images/layout/logo.png">
+						<a href="/cs230-2024-fall/" class="site-header__logo">
+							<img src="/cs230-2024-fall/doks-theme/assets/images/layout/logo.png">
 							CS230
 						</a>
 					
 					
 						<ul class="site-header__nav hidden-xs">
 							
-								<li><a href="/syllabus">Syllabus</a></li>
+								<li><a href="/cs230-2024-fall/syllabus">Syllabus</a></li>
 							
-								<li><a href="/officehours">Office Hours</a></li>
+								<li><a href="/cs230-2024-fall/officehours">Office Hours</a></li>
 							
-								<li><a href="/project">Project</a></li>
+								<li><a href="/cs230-2024-fall/project">Project</a></li>
 							
-								<li><a href="/section">Section</a></li>
+								<li><a href="/cs230-2024-fall/section">Section</a></li>
 							
-								<li><a href="/lecture">Lecture</a></li>
+								<li><a href="/cs230-2024-fall/lecture">Lecture</a></li>
 							
-								<li><a href="/blog">Blog</a></li>
+								<li><a href="/cs230-2024-fall/blog">Blog</a></li>
 							
-								<li><a href="/faq">FAQ</a></li>
+								<li><a href="/cs230-2024-fall/faq">FAQ</a></li>
 							
 						</ul><!-- /.site-header__nav -->
 						<button class="offcanvas-toggle visible-xs">
@@ -106,7 +112,7 @@
                                                                                
                                                                                     <div class="instructor">
                                         <a target="_blank" href="">
-                    <img class="headshot" src="/doks-theme/assets/images/headshot/kian.jpg" style="text-align:center;">
+                    <img class="headshot" src="/cs230-2024-fall/doks-theme/assets/images/headshot/kian.jpg" style="text-align:center;">
                 <div style="text-align:center;">Kian Katanforoosh<br>Instructor</div>
 	</a>
         </div>
@@ -115,7 +121,7 @@
                                                                                
                                                                                     <div class="instructor">
                                         <a target="_blank" href="">
-                    <img class="headshot" src="/doks-theme/assets/images/headshot/andrew.jpg" style="text-align:center;">
+                    <img class="headshot" src="/cs230-2024-fall/doks-theme/assets/images/headshot/andrew.jpg" style="text-align:center;">
                 <div style="text-align:center;">Andrew Ng<br>Instructor</div>
 	</a>
         </div>
@@ -152,7 +158,7 @@
 
 <table class="image">
 <caption align="bottom"><small>The trajectory through a loss landscape for a linear regression model trained with gradient descent. The red dot indicates the value of the loss function corresponding to the initial parameter values. (<a href="https://rawgit.com/danielkunin/Deeplearning-Visualizations/master/optimization/index.html">source</a>)</small></caption> 
-<tr><td><img src="/doks-theme/assets/images/section/3/optimization.png" style="width: 100%" /></td></tr>
+<tr><td><img src="/cs230-2024-fall/doks-theme/assets/images/section/3/optimization.png" style="width: 100%" /></td></tr>
 </table>
 
 <p>This is exactly what <em>gradient descent</em> does!  Apart from the loss value, gradient descent computes the local gradient of the loss when evaluating potential parameters. This information is used to decide which direction the search should go to find better parameter values. This extra piece of information (the local gradient) can be computed relatively easily using <em>backpropagation</em>. This recursive algorithm breaks up complex derivatives into smaller parts through the <em>chain rule</em>.</p>
@@ -164,7 +170,7 @@
 
 <table class="image">
 
-<tr><td><img src="/doks-theme/assets/images/section/3/1/model.png" style="width: 100%" /></td></tr>
+<tr><td><img src="/cs230-2024-fall/doks-theme/assets/images/section/3/1/model.png" style="width: 100%" /></td></tr>
 </table>
 
 <h3 id="forward-propagation">Forward Propagation</h3>
@@ -188,7 +194,7 @@
 <p>Now, consider the case where \(X\) is a matrix of shape \((n,m)\) and \(y\) is still a row vector of shape \((1,m)\). Instead of a single scalar value, the weights will be a vector (one element per feature) of shape \((1,n)\). The bias parameter is still a scalar.</p>
 <table class="image">
 
-<tr><td><img src="/doks-theme/assets/images/section/3/2/model.png" style="width: 100%" /></td></tr>
+<tr><td><img src="/cs230-2024-fall/doks-theme/assets/images/section/3/2/model.png" style="width: 100%" /></td></tr>
 </table>
 
 <h3 id="forward-propagation-1">Forward Propagation</h3>
@@ -209,7 +215,7 @@
 <p>Consider stacking two linear layers together. You can introduce a hidden variable \(Z\) of shape \((k, m)\), which is the output of the first linear layer. The first layer is parameterized by a weight matrix \(W_1\) of shape \((k,n)\) and bias \(b_1\) of shape \((k, 1)\) broadcasted to \((k, m)\). The second layer will be the same as in the multivariate regression case, but its input will be \(Z\) instead of \(X\).</p>
 <table class="image">
 
-<tr><td><img src="/doks-theme/assets/images/section/3/3/model.png" style="width: 100%" /></td></tr>
+<tr><td><img src="/cs230-2024-fall/doks-theme/assets/images/section/3/3/model.png" style="width: 100%" /></td></tr>
 </table>
 
 <h3 id="forward-propagation-2">Forward Propagation</h3>
@@ -233,7 +239,7 @@
 <p>In this example, before sending \(Z\) as the input to the second layer, you will pass it through the sigmoid function. The output is denoted \(A\) and is the input of the second layer.</p>
 <table class="image">
 
-<tr><td><img src="/doks-theme/assets/images/section/3/4/model.png" style="width: 100%" /></td></tr>
+<tr><td><img src="/cs230-2024-fall/doks-theme/assets/images/section/3/4/model.png" style="width: 100%" /></td></tr>
 </table>
 
 <h3 id="forward-propagation-3">Forward Propagation</h3>
@@ -306,11 +312,11 @@
 	</footer><!-- /.site-footer -->
 
 
-<script src="/doks-theme/assets/js/vendor/jquery.min.js"></script>
-<script type="text/javascript" src="/doks-theme/assets/js/vendor/bootstrap/affix.min.js"></script>
-<script type="text/javascript" src="/doks-theme/assets/js/vendor/bootstrap/scrollspy.min.js"></script>
-<script type="text/javascript" src="/doks-theme/assets/js/vendor/matchHeight.min.js"></script>
-<script type="text/javascript" src="/doks-theme/assets/js/scripts.min.js"></script>
+<script src="/cs230-2024-fall/doks-theme/assets/js/vendor/jquery.min.js"></script>
+<script type="text/javascript" src="/cs230-2024-fall/doks-theme/assets/js/vendor/bootstrap/affix.min.js"></script>
+<script type="text/javascript" src="/cs230-2024-fall/doks-theme/assets/js/vendor/bootstrap/scrollspy.min.js"></script>
+<script type="text/javascript" src="/cs230-2024-fall/doks-theme/assets/js/vendor/matchHeight.min.js"></script>
+<script type="text/javascript" src="/cs230-2024-fall/doks-theme/assets/js/scripts.min.js"></script>
 
 		</div><!-- /.js-footer-area -->
 	</body>

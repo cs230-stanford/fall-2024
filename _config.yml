@@ -1,7 +1,7 @@
 # Temporary GitPage Host setup
 title: CS230 Deep Learning
 baseurl: "/cs230-2024-fall"
-repository: "cs230-stanford/website-winter-2022"
+repository: "cs230-stanford/website-fall-2024"
 
 # Theme settings
 doks:
