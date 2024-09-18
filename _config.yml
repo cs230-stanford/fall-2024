@@ -49,7 +49,7 @@ sass:
 plugins_dir: ./_plugins
 layouts_dir: ./doks-theme/_layouts
 includes_dir: ./doks-theme/_includes
-exclude: [ 'README.md', 'CHANGELOG.md', 'scripts']
+exclude: [ 'README.md', 'CHANGELOG.md', 'scripts', 'vendor']
 permalink: /:title/
 
 # Course logistics
