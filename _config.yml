@@ -224,7 +224,7 @@ course:
           zoom_id:
           zoom_link:
           calendly: https://calendly.com/stanfordcs230/30min
-          area:
+          area: LLM, robotics
         - name: Sri Jaladi
           type: TA
           url: 
