@@ -65,8 +65,7 @@ In order to highlight these components, it is important you present a solid disc
 
 **Deadline:** {{ site.course.project_timeline.proposal | date: site.course.project_timeline.long_date_format }}
 
-First, make sure to **submit the following [Google form](https://forms.gle/YcXG3xkQB3ugHmSp6)** so that we can match you to a TA mentor. 
-In the form you will have to provide your project title, team members and relevant research area(s).
+First, make sure to submit a Googleform (which will be posted/shared on Ed) so that we can match you to a TA mentor. In the form you willl have to provide your project title, team members, and relevant research area(s).
 
 In the project proposal, you'll pick a project idea to work on early and receive feedback from the TAs. If your proposed project will be done jointly with a different class' project, you should obtain approval from the other instructor and approval from us. Please come to the project office hours to discuss with us if you would like to do a joint project. You should submit your proposals on Gradescope. All students should already be added to the course page on Gradescope via your SUNet IDs. If you are not, please create a private post on Ed and we will give you access to Gradescope.
 
