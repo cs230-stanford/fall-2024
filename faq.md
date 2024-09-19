@@ -41,8 +41,8 @@ The final project grade will incorporate the following components:
 The project has main deliverables:
  * Proposal
  * Milestone
- * Final video
  * Final report
+ * Poster session Presentation
 
 Deadlines are listed in the project page and on the schedule page of the website.
 
